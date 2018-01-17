@@ -1,5 +1,7 @@
 import React from 'react';
 import { AppRegistry, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Provider } from 'react-redux'; 
+import configureStore from './src/store/configureStore.js'; 
 
 export default class App extends React.Component {
   constructor(props) { 
@@ -11,6 +13,7 @@ export default class App extends React.Component {
   }
   render() {
     return (
+      <Provider store={configureStore()}>
       <View style={styles.container}>
         <Text>I changed this</Text>
         <TextInput
@@ -18,6 +21,7 @@ export default class App extends React.Component {
         onChangeText={(text) => this.setState({text})}
         value={this.state.text} />
       </View>
+      </Provider>
     );
   }
 }
