@@ -11,8 +11,9 @@ class Root extends Component {
         return (<View style={{
                 padding: 10
             }}>
-                <View style={style.container}> 
+                <View> 
                     <CoinButton /> 
+
                 </View>
             </View>)
     }
