@@ -1,12 +1,20 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
-import {View} from 'react-native'; 
+import {View, Text, Image} from 'react-native'; 
+
+import CoinButton from './CoinButton'; 
+
+import style from '../styles/stylesheet'; 
 
 class Root extends Component { 
     render() { 
-        return (<View>
-            
-        </View>)
+        return (<View style={{
+                padding: 10
+            }}>
+                <View style={style.container}> 
+                    <CoinButton /> 
+                </View>
+            </View>)
     }
 }
 
