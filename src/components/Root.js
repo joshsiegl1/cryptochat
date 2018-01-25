@@ -6,7 +6,15 @@ import CoinButton from './CoinButton';
 
 import style from '../styles/stylesheet'; 
 
+const propTypes = { 
+    fetchTopFiftyCryptoCurrencies: PropTypes.func.isRequired
+}
+
 class Root extends Component { 
+    componentWillMount() { 
+
+    }
+
     render() { 
         return (<View style={{
                 padding: 10
@@ -18,5 +26,7 @@ class Root extends Component {
             </View>)
     }
 }
+
+Root.propTypes = propTypes; 
 
 export default Root; 

@@ -11,6 +11,7 @@
     "react-redux": "^5.0.6", 
     "path-to-regexp": "^2.1.0", 
     "camelize": "^1.0.0", 
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3", 
+    "reselect": "^3.0.1"
   }
 }

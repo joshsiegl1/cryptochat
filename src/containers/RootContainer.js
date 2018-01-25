@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import Root from '../components/Root'; 
 
+import { fetchTopFiftyCryptoCurrencies } from '../actions/CoinMarketCapActions'; 
+
 import { 
     INDEX_PATH
 } from '../constants/RouterConstants'; 
@@ -23,5 +25,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-
+    fetchTopFiftyCryptoCurrencies
 })(RootContainer); 
