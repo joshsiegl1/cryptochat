@@ -12,7 +12,11 @@ const propTypes = {
 
 class Root extends Component { 
     componentWillMount() { 
+        const {currencies, fetchTopFiftyCryptoCurrencies} = this.props; 
 
+        if (currencies === null) { 
+            fetchTopFiftyCryptoCurrencies(); 
+        }
     }
 
     render() { 

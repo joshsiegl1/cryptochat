@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Root from '../components/Root'; 
 
 import { fetchTopFiftyCryptoCurrencies } from '../actions/CoinMarketCapActions'; 
+import { getCurrencies } from '../selectors/CommonSelectors'; 
 
 import { 
     INDEX_PATH
@@ -17,6 +18,7 @@ const mapStateToProps = (state) => {
     const { router } = state; 
 
     return { 
+        currencies: getCurrencies(state), 
         router, 
         routes: { 
             [INDEX_PATH]: CoinListContainer
