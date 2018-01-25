@@ -1,6 +1,6 @@
 import camelize from 'camelize'; 
 
-export const callApi = (url, options) => { 
+export const callApi = (url, options) => 
     fetch(url, options)
         .then(
             response => (response.ok
@@ -12,4 +12,3 @@ export const callApi = (url, options) => {
             json => ({json: camelize(json)}), 
             error => ({ error }))
         .catch(error => ({ error })); 
-}

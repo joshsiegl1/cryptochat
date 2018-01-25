@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux'; 
 import router from './router'; 
+import cryptocurrency from './cryptocurrency'; 
 
 const rootReducer = combineReducers({
-    router
+    router, 
+    cryptocurrency
 }); 
 
 export default rootReducer; 
