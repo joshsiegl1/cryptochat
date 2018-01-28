@@ -6,6 +6,7 @@ import {View} from 'react-native';
 import CoinButton from './CoinButton'; 
 
 const propTypes = { 
+    navigateTo: PropTypes.func, 
     currencies: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string
     }))
@@ -14,29 +15,21 @@ const propTypes = {
 class CoinList extends Component { 
     constructor(props) { 
         super(props)
-
-        this.state = { 
-            buttons: []
-        }
-    }
-
-    componentWillMount() { 
-        // if (this.state.currencies === undefined ||
-        //     this.state.currencies.length <= 0) {
-
-        //     const { currencies } = this.props; 
-        //     let buttons = currencies.map((c) => <CoinButton {...c} />); 
-        //     this.setState({ currencies })
-        // }
     }
 
     render() { 
 
-        const { currencies } = this.props; 
+        const { currencies, navigateTo } = this.props; 
         let buttons = (<View />)
         if (currencies !== undefined && currencies !== null) {
             if (currencies.length > 0) {  
-                buttons = currencies.map((c) => <CoinButton {...c} />); 
+                buttons = currencies.map((c) => {
+                    let props = {
+                        ...c, 
+                        navigateTo
+                    }
+                    return (<CoinButton {...props} /> )
+                }); 
             }
         }
 

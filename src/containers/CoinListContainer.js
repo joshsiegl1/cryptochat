@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import CoinList from '../components/CoinList'; 
 
+import { navigateTo } from '../actions/RouterActions'; 
+
 const CoinListContainer = props => <CoinList {...props} />
 
 const mapStateToProps = (state) => { 
@@ -10,5 +12,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { 
-
+    navigateTo
 })(CoinListContainer)

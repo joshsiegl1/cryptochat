@@ -8,8 +8,11 @@ const styles = StyleSheet.create({
         borderRadius: 6, 
         borderWidth: 2, 
         borderColor: 'black', 
-        marginTop: 100, 
+        marginTop: 20, 
         backgroundColor: 'white'
+    }, 
+    touchableOpacity: { 
+        width: '100%'
     }
 })
 
