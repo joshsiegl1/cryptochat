@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component } from 'react'; 
 
-import {View} from 'react-native'; 
+import {View, FlatList} from 'react-native'; 
 
 import CoinButton from './CoinButton'; 
 
@@ -17,25 +17,24 @@ class CoinList extends Component {
         super(props)
     }
 
+    _renderItem = ({item}) => (
+        <CoinButton 
+        id={item.id}
+        naviateTo={this.props.navigateTo} />
+    )
+
+    _keyExtractor = (item, index) => item.id; 
+
     render() { 
+        
+        const { currencies, navigateTo} = this.props; 
 
-        const { currencies, navigateTo } = this.props; 
-        let buttons = (<View />)
-        if (currencies !== undefined && currencies !== null) {
-            if (currencies.length > 0) {  
-                buttons = currencies.map((c) => {
-                    let props = {
-                        ...c, 
-                        navigateTo
-                    }
-                    return (<CoinButton {...props} /> )
-                }); 
-            }
-        }
-
-        return(<View>
-            {buttons}
-        </View>)
+        return (<FlatList
+                 data={currencies} 
+                 extraData={navigateTo} 
+                 keyExtractor={this._keyExtractor} 
+                 renderItem={this._renderItem}
+                 />)
     }
 }
 
