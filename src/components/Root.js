@@ -25,7 +25,6 @@ class Root extends Component {
             }}>
                 <View> 
                     <CoinList currencies={this.props.currencies} /> 
-
                 </View>
             </View>)
     }
