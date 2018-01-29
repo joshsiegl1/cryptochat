@@ -7,10 +7,12 @@ import { fetchTopFiftyCryptoCurrencies } from '../actions/CoinMarketCapActions';
 import { getCurrencies } from '../selectors/CommonSelectors'; 
 
 import { 
-    INDEX_PATH
+    INDEX_PATH, 
+    CHAT_PATH
 } from '../constants/RouterConstants'; 
 
 import CoinListContainer from './CoinListContainer'; 
+import ChatContainer from './ChatContainer'; 
 
 const RootContainer = (props) => <Root {...props} />
 
@@ -21,7 +23,8 @@ const mapStateToProps = (state) => {
         currencies: getCurrencies(state), 
         router, 
         routes: { 
-            [INDEX_PATH]: CoinListContainer
+            [INDEX_PATH]: CoinListContainer, 
+            [CHAT_PATH]: ChatContainer
         }
     }
 }

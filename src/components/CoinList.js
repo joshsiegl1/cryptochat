@@ -20,13 +20,13 @@ class CoinList extends Component {
     _renderItem = ({item}) => (
         <CoinButton 
         id={item.id}
-        naviateTo={this.props.navigateTo} />
+        navigateTo={this.props.navigateTo} />
     )
 
     _keyExtractor = (item, index) => item.id; 
 
     render() { 
-        
+
         const { currencies, navigateTo} = this.props; 
 
         return (<FlatList

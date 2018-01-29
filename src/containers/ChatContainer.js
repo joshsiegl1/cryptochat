@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 
 import { navigateTo} from '../actions/RouterActions'; 
 
-const ChatContainer = props => 
+import Chat from '../components/Chat'; 
+
+const ChatContainer = props => <Chat {...props} />
 
 const mapStateToProps = (state) => { 
     return state; 
