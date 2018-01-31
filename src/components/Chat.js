@@ -18,6 +18,10 @@ class Chat extends Component {
         }; 
     }
 
+    componentWillMount() { 
+        
+    }
+
     onPressPost = () => { 
 
     }
