@@ -5,45 +5,47 @@ const mongoose = require("mongoose")
 
 const url = require("./Config.js").MongoDBConnectionString; 
 
-var kittenSchema = require('./models/kitten_model.js'); 
-
+var chatSchema = require("./models/chat_model.js"); 
 
 var port = process.env.PORT || 3000
 
+app.use(express.json())
+
 app.get('/', (req, res) => res.send('Hello World!'))
 
-app.get('/mongoose/', (req, res) => { 
+app.post('/chat', (req, res) => {
+
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection
 
+    const Chat = mongoose.model('Chat', chatSchema)
 
-    const Kitten = mongoose.model('Kitten', kittenSchema)
+    var newChat = new Chat(req.body); 
 
-    var myNewKitten = new Kitten({"name": "Jeff"})
-
-    myNewKitten.save((err) => { 
+    newChat.save((err) => { 
         if (err) console.log(err); 
-    }); 
+    })
 
-    res.send(myNewKitten)
+    res.send("Success");  
 })
 
-app.get('/test/:myvar', (req, res) => { 
+app.get('/chat/:crypto', (req, res) => { 
 
-    var ret = ""
+    var crypto = req.params.crypto; 
 
-    MongoClient.connect(url, function(err, db) {
-        if (err) res.send(err)
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
 
-        var dbo = db.db("heroku_f44z0d6v")
+    var chats = mongoose.model('Chat', chatSchema); 
 
-        dbo.collection("default").insert({"mytest": req.params.myvar}, (err, result) => { 
-            if (err) ret += err
-            else ret += result
-        })
-    });
-
-    res.send(ret)
+    chats.find({id: crypto}, function(err, chats) { 
+        if (err) { 
+            res.send(err); 
+        }
+        else { 
+            res.send(chats); 
+        }
+    }); 
 })
 
 app.listen(port, () => console.log('Example app listening on port 3000!'))
