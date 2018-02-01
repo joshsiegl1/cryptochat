@@ -6,7 +6,9 @@ import {View, FlatList, TextInput, Button} from 'react-native';
 import { AdMobBanner } from 'expo'; 
 
 const propTypes = { 
-    navigateTo: PropTypes.func
+    id: PropTypes.string, 
+    GetChat: PropTypes.func, 
+    PostChat: PropTypes.func
 }
 
 class Chat extends Component { 
@@ -19,7 +21,7 @@ class Chat extends Component {
     }
 
     componentWillMount() { 
-        
+
     }
 
     onPressPost = () => { 

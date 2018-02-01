@@ -4,10 +4,10 @@ import {View, TouchableOpacity, Text, Image} from 'react-native';
 
 import style from '../styles/stylesheet'; 
 
-import { CHAT_ROUTE } from '../constants/RouterConstants'; 
+import { CHAT_PATH } from '../constants/RouterConstants'; 
 
 const propTypes = { 
-    navigateTo: PropTypes.func, 
+    navigate: PropTypes.func, 
     id: PropTypes.string
 }
 
@@ -18,9 +18,11 @@ class CoinButton extends Component {
 
     onPress = () => { 
 
-        const {id, navigateTo} = this.props; 
+        const {id, navigate} = this.props; 
 
-        navigateTo(CHAT_ROUTE); 
+        console.log(this.props); 
+
+        navigate('Chat', {crypto: id}); 
     }
 
     render(){ 

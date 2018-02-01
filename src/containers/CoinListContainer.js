@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 import CoinList from '../components/CoinList'; 
 
-import { navigateTo } from '../actions/RouterActions'; 
-
 import { getCurrencies } from '../selectors/CommonSelectors'; 
+
+import { fetchTopFiftyCryptoCurrencies } from '../actions/CoinMarketCapActions'; 
 
 const CoinListContainer = props => <CoinList {...props} />
 
@@ -16,5 +16,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { 
-    navigateTo
+    fetchTopFiftyCryptoCurrencies
 })(CoinListContainer)

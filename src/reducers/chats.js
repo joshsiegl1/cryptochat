@@ -11,7 +11,7 @@ const chats = (state = initialState, action) => {
             ...state, 
             chats: { 
                 ...state.chats, 
-                [action.id]: action.comments
+                [action.ticker]: action.comments
             }
         }
 

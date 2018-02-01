@@ -6,7 +6,7 @@ import {View, FlatList} from 'react-native';
 import CoinButton from './CoinButton'; 
 
 const propTypes = { 
-    navigateTo: PropTypes.func, 
+    navigate: PropTypes.func, 
     currencies: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string
     }))
@@ -17,21 +17,36 @@ class CoinList extends Component {
         super(props)
     }
 
+    componentWillMount() { 
+        console.log(this.props); 
+
+        const {currencies, fetchTopFiftyCryptoCurrencies} = this.props; 
+
+        if (currencies === null) { 
+            fetchTopFiftyCryptoCurrencies(); 
+        }
+    }
+
     _renderItem = ({item}) => (
         <CoinButton 
         id={item.id}
-        navigateTo={this.props.navigateTo} />
+        navigate={this.props.navigation.navigate} />
+
     )
 
     _keyExtractor = (item, index) => item.id; 
 
     render() { 
 
-        const { currencies, navigateTo} = this.props; 
+        const { currencies} = this.props; 
+
+        const nav = this.props.navigation.navigate; 
+
+        console.log(nav); 
 
         return (<FlatList
                  data={currencies} 
-                 extraData={navigateTo} 
+                 extraData={nav} 
                  keyExtractor={this._keyExtractor} 
                  renderItem={this._renderItem}
                  />)

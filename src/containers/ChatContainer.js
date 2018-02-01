@@ -1,7 +1,9 @@
 import React from 'react'; 
 import { connect } from 'react-redux'; 
 
-import { navigateTo} from '../actions/RouterActions'; 
+import { parseRoute } from '../utils/RouterUtils'; 
+
+import { GetChat, PostChat } from '../actions/ChatActions'; 
 
 import Chat from '../components/Chat'; 
 
@@ -12,5 +14,6 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { 
-    navigateTo
+    GetChat, 
+    PostChat
 })(ChatContainer)
