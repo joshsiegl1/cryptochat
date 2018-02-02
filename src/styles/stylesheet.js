@@ -5,14 +5,22 @@ const styles = StyleSheet.create({
         display: 'flex', 
         flexDirection: 'row', 
         justifyContent: 'flex-start', 
-        borderRadius: 6, 
-        borderWidth: 2, 
         borderColor: 'black', 
-        marginTop: 20, 
-        backgroundColor: 'white'
+        borderBottomWidth: 1, 
+        backgroundColor: 'white', 
+        padding: 5
+    }, 
+    cryptoButtonText: { 
+        paddingLeft: 10, 
+        paddingTop: 5
     }, 
     touchableOpacity: { 
         width: '100%'
+    }, 
+    chatBox: { 
+        width: '100%', 
+        borderColor: 'black', 
+        borderWidth: 1
     }
 })
 

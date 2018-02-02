@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 
 import {View, FlatList, TextInput, Button} from 'react-native'; 
 
+import styles from '../styles/stylesheet'; 
+
 import { AdMobBanner } from 'expo'; 
 
 const propTypes = { 
@@ -32,6 +34,7 @@ class Chat extends Component {
         return ( 
             <View> 
                 <TextInput 
+                style={styles.chatBox}
                 multiline={true}
                 numberOfLines={4}
                 onChangeText={(text) => this.setState({myText: text})}

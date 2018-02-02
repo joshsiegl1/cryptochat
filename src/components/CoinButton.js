@@ -36,7 +36,7 @@ class CoinButton extends Component {
                 style={{width: 32, height: 32}}
                 source={{uri: `https://files.coinmarketcap.com/static/img/coins/32x32/${id}.png`}}
                 />
-            <Text>{id}</Text>
+            <Text style={style.cryptoButtonText}>{id}</Text>
         </TouchableOpacity>
         )
     }
