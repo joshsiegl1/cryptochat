@@ -10,7 +10,8 @@ import { AdMobBanner } from 'expo';
 const propTypes = { 
     id: PropTypes.string, 
     GetChat: PropTypes.func, 
-    PostChat: PropTypes.func
+    PostChat: PropTypes.func, 
+    chat: PropTypes.shape()
 }
 
 class Chat extends Component { 
@@ -22,8 +23,10 @@ class Chat extends Component {
         }; 
     }
 
-    componentWillMount() { 
+    componentDidMount() { 
 
+        const { id, GetChat } = this.props; 
+        GetChat(id); 
     }
 
     onPressPost = () => { 
@@ -31,8 +34,20 @@ class Chat extends Component {
     }
 
     render() { 
+
+        const { chat } = this.props;
+
+        let chats = []; 
+        console.log(chat); 
+        if (Object.keys(chat).length > 0) {
+            chats = chat.map(c => { 
+                return (<View> {c.body} </View>)
+            })
+        }
+
         return ( 
             <View> 
+                {chats}
                 <TextInput 
                 style={styles.chatBox}
                 multiline={true}
