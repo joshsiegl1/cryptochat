@@ -12,6 +12,7 @@ import Chat from '../components/Chat';
 const ChatContainer = props => <Chat {...props} />
 
 const mapStateToProps = (state) => { 
+    console.log(state); 
     return {
         chat: getChats(state)
     }

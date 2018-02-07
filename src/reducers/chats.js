@@ -6,12 +6,14 @@ const initialState = {
 
 const chats = (state = initialState, action) => { 
     switch (action.type) { 
-        case types.GET_POSTS: 
+        case types.GET_CHAT: 
+        console.log(action); 
+        
         return { 
             ...state, 
             chats: { 
                 ...state.chats, 
-                [action.ticker]: action.comments
+                [action.ticker]: action.chats
             }
         }
 

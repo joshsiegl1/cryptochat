@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import {View, FlatList, TextInput, Button} from 'react-native'; 
+import {View, FlatList, TextInput, Button, Text} from 'react-native'; 
 
 import styles from '../styles/stylesheet'; 
 
@@ -25,24 +25,60 @@ class Chat extends Component {
 
     componentDidMount() { 
 
-        const { id, GetChat } = this.props; 
-        GetChat(id); 
+        const { navigation, GetChat } = this.props; 
+
+        const { crypto } = navigation.state.params; 
+
+        GetChat(crypto); 
+    }
+
+    componentDidUpdate() { 
+
+        const { navigation, GetChat, chat } = this.props;
+
+        const { crypto } = navigation.state.params; 
+
+        console.log(chat); 
+
+        if (Object.keys(chat).length > 0) {
+            const thisChat = chat[crypto]; 
+            if (thisChat === undefined) { 
+                console.log(chat); 
+                GetChat(crypto); 
+            }
+        }
+        
     }
 
     onPressPost = () => { 
 
+        const { navigation, PostChat } = this.props; 
+
+        const { crypto } = navigation.state.params; 
+
+        let text = this.state.myText; 
+        if (text === '') return; 
+
+        PostChat(crypto, "joshsiegl", text); 
     }
 
     render() { 
 
-        const { chat } = this.props;
+        const { chat, navigation } = this.props;
+        const { crypto } = navigation.state.params; 
 
         let chats = []; 
         console.log(chat); 
         if (Object.keys(chat).length > 0) {
-            chats = chat.map(c => { 
-                return (<View> {c.body} </View>)
+            const thisChat = chat[crypto]; 
+            if (thisChat !== undefined) { 
+                console.log(crypto); 
+                console.log(thisChat); 
+                chats = thisChat.map(c => { 
+                    console.log(c.body); 
+                    return (<View><Text>{c.body}</Text></View>)
             })
+        }
         }
 
         return ( 
