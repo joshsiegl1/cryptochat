@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require("body-parser"); 
 const app = express()
 const MongoClient = require("mongodb").MongoClient
 const mongoose = require("mongoose")
@@ -10,6 +11,7 @@ var chatSchema = require("./models/chat_model.js");
 var port = process.env.PORT || 3000
 
 app.use(express.json())
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -21,6 +23,12 @@ app.post('/chat', (req, res) => {
     const Chat = mongoose.model('Chat', chatSchema)
 
     var newChat = new Chat(req.body); 
+
+    console.log(req); 
+    console.log(req.body); 
+    console.log(req.body.id); 
+    console.log("Chat body: " + req.body); 
+    console.log(newChat); 
 
     newChat.save((err) => { 
         if (err) console.log(err); 

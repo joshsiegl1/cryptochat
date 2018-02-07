@@ -5,16 +5,26 @@ import {callApi} from '../utils/ApiUtils';
 
 export const PostChat = (id, userID, message) => async (dispatch) => { 
 
-    let chat = {
+    let chat = { 
         id, 
         userID, 
         body: message
     }
 
-    const { json } = await callApi(POST_CHAT_URL, chat); 
+    let options = {
+        method: 'post', 
+        headers: {
+            'Content-Type': 'application/json'
+        }, 
+        body: JSON.stringify(chat)
+    }
+
+    const { json } = await callApi(POST_CHAT_URL, options); 
+
+    console.log(json); 
 
     if (json === "Success") { 
-        
+
     }
 
     dispatch(GetChat(id)); 
