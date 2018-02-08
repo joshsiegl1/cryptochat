@@ -21,6 +21,17 @@ const styles = StyleSheet.create({
         width: '100%', 
         borderColor: 'black', 
         borderWidth: 1
+    }, 
+    messageBox: { 
+        width: '100%', 
+        backgroundColor: 'white', 
+        borderWidth: 1, 
+        borderColor: 'black', 
+        borderLeftWidth: 10, 
+        borderLeftColor: 'red', 
+        paddingBottom: 5, 
+        paddingLeft: 1, 
+        paddingRight: 1
     }
 })
 

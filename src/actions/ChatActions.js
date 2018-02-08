@@ -23,10 +23,6 @@ export const PostChat = (id, userID, message) => async (dispatch) => {
 
     console.log(json); 
 
-    if (json === "Success") { 
-
-    }
-
     dispatch(GetChat(id)); 
 }
 
@@ -40,6 +36,8 @@ const getChatSuccess = (id, comments) => {
 
 export const GetChat = (id) => async (dispatch) => { 
     const { json } = await callApi(GET_CHAT_URL.replace(':crypto', id));
+
+    console.log(json); 
 
     dispatch(getChatSuccess(id, json))
 }

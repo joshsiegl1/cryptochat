@@ -7,9 +7,14 @@ import { StackNavigator, addNavigationHelpers } from 'react-navigation';
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 
 
+console.disableYellowBox = true; 
+
 const ModalStack = StackNavigator({
   Home: { 
-    screen: CoinListContainer
+    screen: CoinListContainer, 
+    navigationOptions: ({navigation}) => ({
+      title: 'crypto-chat'
+    })
   }, 
   Chat: { 
     path: 'chat/:crypto', 

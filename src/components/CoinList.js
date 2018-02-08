@@ -34,15 +34,13 @@ class CoinList extends Component {
 
     )
 
-    _keyExtractor = (item, index) => item.id; 
+    _keyExtractor = (item, index) => item.Id; 
 
     render() { 
 
         const { currencies} = this.props; 
 
         const nav = this.props.navigation.navigate; 
-
-        console.log(nav); 
 
         return (<FlatList
                  data={currencies} 

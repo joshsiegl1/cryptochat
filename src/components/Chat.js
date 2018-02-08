@@ -29,6 +29,10 @@ class Chat extends Component {
 
         const { crypto } = navigation.state.params; 
 
+        const { setParams } = this.props.navigation; 
+
+        setParams({title: crypto}); 
+
         GetChat(crypto); 
     }
 
@@ -62,39 +66,55 @@ class Chat extends Component {
         PostChat(crypto, "joshsiegl", text); 
     }
 
+    _renderItem = ({item}) => (
+        <View style={styles.messageBox}><Text>{item.body}</Text></View>
+    )
+
+    _keyExtractor = (item, index) => item.id
+
     render() { 
 
         const { chat, navigation } = this.props;
         const { crypto } = navigation.state.params; 
 
         let chats = []; 
-        console.log(chat); 
         if (Object.keys(chat).length > 0) {
-            const thisChat = chat[crypto]; 
-            if (thisChat !== undefined) { 
-                console.log(crypto); 
-                console.log(thisChat); 
-                chats = thisChat.map(c => { 
-                    console.log(c.body); 
-                    return (<View><Text>{c.body}</Text></View>)
-            })
-        }
+
+            chats = chat[crypto]; 
+
+        //     const thisChat = chat[crypto]; 
+        //     if (thisChat !== undefined) { 
+        //         console.log(crypto); 
+        //         console.log(thisChat); 
+        //         chats = thisChat.map(c => { 
+        //             console.log(c.body); 
+        //             return (<View style={styles.messageBox}><Text>{c.body}</Text></View>)
+        //     })
+        // }
         }
 
         return ( 
-            <View> 
-                {chats}
-                <TextInput 
-                style={styles.chatBox}
-                multiline={true}
-                numberOfLines={4}
-                onChangeText={(text) => this.setState({myText: text})}
-                value={this.state.myText} />
-                <Button 
-                title="Post"
-                onPress={this.onPressPost}
-                 /> 
+            <View>
+            <FlatList 
+                data={chats}
+                keyExtractor={this._keyExtractor}
+                renderItem={this._renderItem} /> 
             </View>
+
+
+            // <View> 
+            //     {chats}
+            //     <TextInput 
+            //     style={styles.chatBox}
+            //     multiline={true}
+            //     numberOfLines={4}
+            //     onChangeText={(text) => this.setState({myText: text})}
+            //     value={this.state.myText} />
+            //     <Button 
+            //     title="Post"
+            //     onPress={this.onPressPost}
+            //      /> 
+            // </View>
         )
     }
 }

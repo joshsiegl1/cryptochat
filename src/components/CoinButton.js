@@ -20,9 +20,7 @@ class CoinButton extends Component {
 
         const {id, navigate} = this.props; 
 
-        console.log(this.props); 
-
-        navigate('Chat', {crypto: id}); 
+        navigate('Chat', {title: id, crypto: id}); 
     }
 
     render(){ 
