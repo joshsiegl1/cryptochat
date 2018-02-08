@@ -25,13 +25,15 @@ const styles = StyleSheet.create({
     messageBox: { 
         width: '100%', 
         backgroundColor: 'white', 
-        borderWidth: 1, 
+        borderBottomWidth: 1, 
         borderColor: 'black', 
         borderLeftWidth: 10, 
         borderLeftColor: 'red', 
-        paddingBottom: 5, 
-        paddingLeft: 1, 
-        paddingRight: 1
+    }, 
+    messageText: { 
+        paddingLeft: 10, 
+        paddingTop: 5, 
+        paddingBottom: 5
     }
 })
 

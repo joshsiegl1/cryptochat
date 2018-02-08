@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import {View, FlatList, TextInput, Button, Text} from 'react-native'; 
+import {View, FlatList, TextInput, Button, Text, Image} from 'react-native'; 
 
 import styles from '../styles/stylesheet'; 
 
@@ -67,7 +67,11 @@ class Chat extends Component {
     }
 
     _renderItem = ({item}) => (
-        <View style={styles.messageBox}><Text>{item.body}</Text></View>
+        <View style={styles.messageBox}>
+        <Image style={{width: 16, height: 16}}
+               source={{uri: `https://files.coinmarketcap.com/static/img/coins/32x32/${this.props.navigation.state.params.crypto}.png`}} />
+        <Text style={styles.messageText}>{item.body}</Text>
+        </View>
     )
 
     _keyExtractor = (item, index) => item.id
@@ -81,16 +85,6 @@ class Chat extends Component {
         if (Object.keys(chat).length > 0) {
 
             chats = chat[crypto]; 
-
-        //     const thisChat = chat[crypto]; 
-        //     if (thisChat !== undefined) { 
-        //         console.log(crypto); 
-        //         console.log(thisChat); 
-        //         chats = thisChat.map(c => { 
-        //             console.log(c.body); 
-        //             return (<View style={styles.messageBox}><Text>{c.body}</Text></View>)
-        //     })
-        // }
         }
 
         return ( 
@@ -99,22 +93,17 @@ class Chat extends Component {
                 data={chats}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem} /> 
+                 <TextInput 
+                 style={styles.chatBox}
+                 multiline={true}
+                 numberOfLines={4}
+                 onChangeText={(text) => this.setState({myText: text})}
+                 value={this.state.myText} />
+                 <Button 
+                 title="Post"
+                 onPress={this.onPressPost}
+                  /> 
             </View>
-
-
-            // <View> 
-            //     {chats}
-            //     <TextInput 
-            //     style={styles.chatBox}
-            //     multiline={true}
-            //     numberOfLines={4}
-            //     onChangeText={(text) => this.setState({myText: text})}
-            //     value={this.state.myText} />
-            //     <Button 
-            //     title="Post"
-            //     onPress={this.onPressPost}
-            //      /> 
-            // </View>
         )
     }
 }
