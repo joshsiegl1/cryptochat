@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import {View, FlatList, TextInput, Button, Text, Image} from 'react-native'; 
+import {View, FlatList, TextInput, Button, Text, Image, 
+    KeyboardAvoidingView } from 'react-native'; 
 
 import styles from '../styles/stylesheet'; 
 
@@ -88,22 +89,29 @@ class Chat extends Component {
         }
 
         return ( 
-            <View>
+            <KeyboardAvoidingView
+            behavior="position"
+            keyboardVerticalOffset={50}
+            style={{flex: 1}}> 
             <FlatList 
+                style={{height: '90%'}}
                 data={chats}
                 keyExtractor={this._keyExtractor}
-                renderItem={this._renderItem} /> 
+                renderItem={this._renderItem} />
+                <View style={{
+                    flexDirection: 'row', 
+                    width: '100%'}}>
                  <TextInput 
                  style={styles.chatBox}
-                 multiline={true}
-                 numberOfLines={4}
+                 multiline={false}
                  onChangeText={(text) => this.setState({myText: text})}
                  value={this.state.myText} />
                  <Button 
+                 style={styles.chatButton}
                  title="Post"
-                 onPress={this.onPressPost}
-                  /> 
-            </View>
+                 onPress={this.onPressPost} /> 
+                 </View>
+                  </KeyboardAvoidingView>
         )
     }
 }

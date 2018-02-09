@@ -18,22 +18,25 @@ const styles = StyleSheet.create({
         width: '100%'
     }, 
     chatBox: { 
-        width: '100%', 
-        borderColor: 'black', 
-        borderWidth: 1
+        width: '80%', 
+        height: '100%',
+        backgroundColor: 'white'
     }, 
+    chatButton: { 
+        width: '20%', 
+        height: '100%', 
+        backgroundColor: 'white'
+    },
     messageBox: { 
+        padding: 5, 
+        flexDirection: 'row', 
         width: '100%', 
         backgroundColor: 'white', 
         borderBottomWidth: 1, 
-        borderColor: 'black', 
-        borderLeftWidth: 10, 
-        borderLeftColor: 'red', 
+        borderColor: 'gray', 
     }, 
     messageText: { 
-        paddingLeft: 10, 
-        paddingTop: 5, 
-        paddingBottom: 5
+        paddingLeft: 10
     }
 })
 
