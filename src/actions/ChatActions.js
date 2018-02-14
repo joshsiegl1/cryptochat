@@ -21,8 +21,6 @@ export const PostChat = (id, userID, message) => async (dispatch) => {
 
     const { json } = await callApi(POST_CHAT_URL, options); 
 
-    console.log(json); 
-
     dispatch(GetChat(id)); 
 }
 

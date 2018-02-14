@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react'; 
 
 import {View, FlatList, TextInput, Button, Text, Image, 
-    KeyboardAvoidingView } from 'react-native'; 
+    KeyboardAvoidingView, TouchableOpacity } from 'react-native'; 
 
 import styles from '../styles/stylesheet'; 
 
@@ -15,12 +15,14 @@ const propTypes = {
     chat: PropTypes.shape()
 }
 
+const friendlyGreeting = "Say something to this group"; 
+
 class Chat extends Component { 
     constructor(props) { 
         super(props)
 
         this.state = { 
-            myText: ''
+            myText: friendlyGreeting
         }; 
     }
 
@@ -43,12 +45,9 @@ class Chat extends Component {
 
         const { crypto } = navigation.state.params; 
 
-        console.log(chat); 
-
         if (Object.keys(chat).length > 0) {
             const thisChat = chat[crypto]; 
             if (thisChat === undefined) { 
-                console.log(chat); 
                 GetChat(crypto); 
             }
         }
@@ -65,6 +64,14 @@ class Chat extends Component {
         if (text === '') return; 
 
         PostChat(crypto, "joshsiegl", text); 
+
+        this.setState({myText: ''})
+    }
+
+    onInputFocused = () => { 
+        if (this.state.myText === friendlyGreeting) { 
+            this.setState({myText: ''}); 
+        }
     }
 
     _renderItem = ({item}) => (
@@ -94,34 +101,48 @@ class Chat extends Component {
             keyboardVerticalOffset={50}
             style={{flex: 1}}> 
             <FlatList 
-                style={{height: '90%'}}
+                style={{height: '80%'}}
                 data={chats}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem} />
+                <View
+                    style={{borderColor: 'black', 
+                            backgroundColor: 'white', 
+                            borderWidth: 1, 
+                            paddingLeft: 25, 
+                            paddingRight: 25}}>
+                <AdMobBanner 
+                bannerSize="fullbanner"
+                adUnitID="ca-app-pub-2896471597472603/8703233139"
+                testDeviceID="EMULATOR"
+                didFailToReceiveAdWithError={this.bannerError}
+                /> 
+                </View> 
                 <View style={{
                     flexDirection: 'row', 
-                    width: '100%'}}>
+                    width: '100%', 
+                    height: 50}}>
                  <TextInput 
                  style={styles.chatBox}
                  multiline={false}
                  onChangeText={(text) => this.setState({myText: text})}
-                 value={this.state.myText} />
-                 <Button 
-                 style={styles.chatButton}
-                 title="Post"
-                 onPress={this.onPressPost} /> 
+                 value={this.state.myText} 
+                 onFocus={this.onInputFocused}/>
+                 <TouchableOpacity 
+                    style={styles.chatButton}
+                    onPress={this.onPressPost}>
+                    <Text style={{
+                        paddingLeft: 25, 
+                        paddingTop: 15, 
+                        verticalAlign: 'middle'
+                    }}>Post</Text>
+
+                 </TouchableOpacity>
                  </View>
                   </KeyboardAvoidingView>
         )
     }
 }
-
-{/* <AdMobBanner 
-bannerSize="fullbanner"
-adUnitID="ca-app-pub-2896471597472603/8703233139"
-testDeviceID="EMULATOR"
-didFailToReceiveAdWithError={this.bannerError}
-/>  */}
 
 Chat.propTypes = propTypes; 
 
