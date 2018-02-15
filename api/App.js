@@ -24,12 +24,6 @@ app.post('/chat', (req, res) => {
 
     var newChat = new Chat(req.body); 
 
-    console.log(req); 
-    console.log(req.body); 
-    console.log(req.body.id); 
-    console.log("Chat body: " + req.body); 
-    console.log(newChat); 
-
     newChat.save((err) => { 
         if (err) console.log(err); 
     })

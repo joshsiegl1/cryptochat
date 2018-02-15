@@ -17,13 +17,6 @@ const styles = StyleSheet.create({
     touchableOpacity: { 
         width: '100%'
     }, 
-    chatBox: { 
-        width: '80%', 
-        height: '100%',
-        backgroundColor: 'white', 
-        color: 'darkgrey', 
-        padding: 5
-    }, 
     chatButton: { 
         width: '20%', 
         height: '100%', 

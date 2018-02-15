@@ -6,9 +6,7 @@ const initialState = {
 
 const chats = (state = initialState, action) => { 
     switch (action.type) { 
-        case types.GET_CHAT: 
-        console.log(action); 
-        
+        case types.GET_CHAT:         
         return { 
             ...state, 
             chats: { 

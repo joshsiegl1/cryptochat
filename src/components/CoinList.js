@@ -18,8 +18,6 @@ class CoinList extends Component {
     }
 
     componentWillMount() { 
-        console.log(this.props); 
-
         const {currencies, fetchTopFiftyCryptoCurrencies} = this.props; 
 
         if (currencies === null) { 
