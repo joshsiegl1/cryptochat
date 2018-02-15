@@ -12,6 +12,6 @@ const fetchTopFiftySuccess = (result) => {
 
 export const fetchTopFiftyCryptoCurrencies = () => async (dispatch) => { 
 
-    const { json } = await callApi(TICKER_LIMIT_URL.replace(':limit', 50)); 
+    const { json } = await callApi(TICKER_LIMIT_URL.replace(':limit', 100)); 
     dispatch(fetchTopFiftySuccess(json)); 
 }

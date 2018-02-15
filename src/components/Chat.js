@@ -22,7 +22,8 @@ class Chat extends Component {
         super(props)
 
         this.state = { 
-            myText: friendlyGreeting
+            myText: friendlyGreeting, 
+            chatColor: 'darkgray'
         }; 
 
         this.listHeight = 0
@@ -70,13 +71,15 @@ class Chat extends Component {
 
         PostChat(crypto, "joshsiegl", text); 
 
-        this.setState({myText: ''})
+        this.setState({myText: friendlyGreeting, chatColor: 'darkgrey'})
     }
 
     onInputFocused = () => { 
         if (this.state.myText === friendlyGreeting) { 
             this.setState({myText: ''}); 
         }
+
+        this.setState({chatColor: 'black'}); 
     }
 
     _renderItem = ({item}) => (
@@ -111,6 +114,7 @@ class Chat extends Component {
             behavior="position"
             keyboardVerticalOffset={50}
             style={{flex: 1}}> 
+
             <FlatList 
                 ref={ref => this.flatList = ref}
                 onContentSizeChange={this.onScrollback}
@@ -119,41 +123,52 @@ class Chat extends Component {
                 data={chats}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem} />
+
                 <View
                     style={{borderColor: 'black', 
                             backgroundColor: 'white', 
                             borderWidth: 1, 
                             paddingLeft: 25, 
                             paddingRight: 25}}>
-                <AdMobBanner 
-                bannerSize="fullbanner"
-                adUnitID="ca-app-pub-2896471597472603/8703233139"
-                testDeviceID="EMULATOR"
-                didFailToReceiveAdWithError={this.bannerError}
-                /> 
+
+                    <AdMobBanner 
+                    bannerSize="fullbanner"
+                    adUnitID="ca-app-pub-2896471597472603/8703233139"
+                    testDeviceID="EMULATOR"
+                    didFailToReceiveAdWithError={this.bannerError}
+                    /> 
                 </View> 
                 <View style={{
                     flexDirection: 'row', 
                     width: '100%', 
                     height: 50}}>
+
                  <TextInput 
-                 style={styles.chatBox}
+                 style={{
+                     width: '80%', 
+                     height: '100%', 
+                     backgroundColor: 'white', 
+                     color: this.state.chatColor, 
+                     padding: 5
+                 }}
                  multiline={false}
                  onChangeText={(text) => this.setState({myText: text})}
                  value={this.state.myText} 
                  onFocus={this.onInputFocused}/>
-                 <TouchableOpacity 
+
+                    <TouchableOpacity 
                     style={styles.chatButton}
                     onPress={this.onPressPost}>
-                    <Text style={{
-                        paddingLeft: 25, 
-                        paddingTop: 15, 
-                        verticalAlign: 'middle'
-                    }}>Post</Text>
 
-                 </TouchableOpacity>
-                 </View>
-                  </KeyboardAvoidingView>
+                        <Text style={{
+                            paddingLeft: 25, 
+                            paddingTop: 15, 
+                            verticalAlign: 'middle'
+                        }}>Post</Text>
+
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAvoidingView>
         )
     }
 }
