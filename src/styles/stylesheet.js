@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     },
     messageBox: { 
         padding: 5, 
+        height: 50,
         flexDirection: 'row', 
         width: '100%', 
         backgroundColor: 'white', 

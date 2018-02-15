@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react'; 
 
 import {View, FlatList, TextInput, Button, Text, Image, 
-    KeyboardAvoidingView, TouchableOpacity } from 'react-native'; 
+    KeyboardAvoidingView, TouchableOpacity, Keyboard } from 'react-native'; 
 
 import styles from '../styles/stylesheet'; 
 
@@ -24,6 +24,9 @@ class Chat extends Component {
         this.state = { 
             myText: friendlyGreeting
         }; 
+
+        this.listHeight = 0
+        this.footerY = 0
     }
 
     componentDidMount() { 
@@ -63,6 +66,8 @@ class Chat extends Component {
         let text = this.state.myText; 
         if (text === '') return; 
 
+        Keyboard.dismiss(); 
+
         PostChat(crypto, "joshsiegl", text); 
 
         this.setState({myText: ''})
@@ -84,6 +89,13 @@ class Chat extends Component {
 
     _keyExtractor = (item, index) => item.id
 
+    onScrollback = () => { 
+        try { 
+             this.flatList.scrollToEnd({animated: true}); 
+        }
+        catch(error) {  }
+    }
+
     render() { 
 
         const { chat, navigation } = this.props;
@@ -91,7 +103,6 @@ class Chat extends Component {
 
         let chats = []; 
         if (Object.keys(chat).length > 0) {
-
             chats = chat[crypto]; 
         }
 
@@ -101,6 +112,9 @@ class Chat extends Component {
             keyboardVerticalOffset={50}
             style={{flex: 1}}> 
             <FlatList 
+                ref={ref => this.flatList = ref}
+                onContentSizeChange={this.onScrollback}
+                onLayout={this.onScrollback}
                 style={{height: '80%'}}
                 data={chats}
                 keyExtractor={this._keyExtractor}
