@@ -20,12 +20,11 @@ const styles = StyleSheet.create({
     chatButton: { 
         width: '20%', 
         height: '100%', 
-        backgroundColor: 'white', 
-        lineHeight: 50
+        backgroundColor: 'white'
     },
     messageBox: { 
         padding: 5, 
-        height: 50,
+        height: 80,
         flexDirection: 'row', 
         width: '100%', 
         backgroundColor: 'white', 

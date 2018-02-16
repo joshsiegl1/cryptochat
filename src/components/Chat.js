@@ -16,6 +16,7 @@ const propTypes = {
 }
 
 const friendlyGreeting = "Say something to this group"; 
+const totalChatLength = 200; 
 
 class Chat extends Component { 
     constructor(props) { 
@@ -25,9 +26,6 @@ class Chat extends Component {
             myText: friendlyGreeting, 
             chatColor: 'darkgray'
         }; 
-
-        this.listHeight = 0
-        this.footerY = 0
     }
 
     componentDidMount() { 
@@ -99,6 +97,12 @@ class Chat extends Component {
         catch(error) {  }
     }
 
+    onChangeText = (text) => { 
+        if (this.state.myText.length < totalChatLength) { 
+            this.setState({myText: text}); 
+        }
+    }
+
     render() { 
 
         const { chat, navigation } = this.props;
@@ -125,8 +129,8 @@ class Chat extends Component {
                 renderItem={this._renderItem} />
 
                 <View
-                    style={{borderColor: 'black', 
-                            backgroundColor: 'white', 
+                    style={{borderColor: 'gray', 
+                            backgroundColor: 'black', 
                             borderWidth: 1, 
                             paddingLeft: 25, 
                             paddingRight: 25}}>
@@ -141,28 +145,34 @@ class Chat extends Component {
                 <View style={{
                     flexDirection: 'row', 
                     width: '100%', 
-                    height: 50}}>
+                    height: 60}}>
 
                  <TextInput 
                  style={{
-                     width: '80%', 
+                     width: '60%', 
                      height: '100%', 
                      backgroundColor: 'white', 
                      color: this.state.chatColor, 
                      padding: 5
                  }}
                  multiline={false}
-                 onChangeText={(text) => this.setState({myText: text})}
+                 onChangeText={this.onChangeText}
                  value={this.state.myText} 
                  onFocus={this.onInputFocused}/>
+
+                 <View style={styles.chatButton}>
+                    <Text style={{
+                        paddingTop: 20, 
+                        verticalAlign: 'middle'
+                    }}>{this.state.myText.length} / {totalChatLength}</Text> 
+                 </View>
 
                     <TouchableOpacity 
                     style={styles.chatButton}
                     onPress={this.onPressPost}>
-
                         <Text style={{
-                            paddingLeft: 25, 
-                            paddingTop: 15, 
+                            paddingLeft: 15, 
+                            paddingTop: 20, 
                             verticalAlign: 'middle'
                         }}>Post</Text>
 
