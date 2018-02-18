@@ -6,6 +6,8 @@ import {View, FlatList, TextInput, Button, Text, Image,
 
 import styles from '../styles/stylesheet'; 
 
+import ChatItem from './ChatItem'; 
+
 import { AdMobBanner } from 'expo'; 
 
 const propTypes = { 
@@ -81,11 +83,8 @@ class Chat extends Component {
     }
 
     _renderItem = ({item}) => (
-        <View style={styles.messageBox}>
-        <Image style={{width: 16, height: 16}}
-               source={{uri: `https://files.coinmarketcap.com/static/img/coins/32x32/${this.props.navigation.state.params.crypto}.png`}} />
-        <Text style={styles.messageText}>{item.body}</Text>
-        </View>
+        <ChatItem item={item}
+                  crypto={this.props.navigation.state.params.crypto} />
     )
 
     _keyExtractor = (item, index) => item.id
@@ -120,6 +119,7 @@ class Chat extends Component {
             style={{flex: 1}}> 
 
             <FlatList 
+                removeClippedSubviews
                 ref={ref => this.flatList = ref}
                 onContentSizeChange={this.onScrollback}
                 onLayout={this.onScrollback}
