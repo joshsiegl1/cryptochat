@@ -2,7 +2,7 @@ import React from 'react';
 import { AppRegistry, View } from 'react-native';
 import { Provider } from 'react-redux'; 
 import configureStore from './src/store/configureStore.js'; 
-import { StackNavigator, addNavigationHelpers } from 'react-navigation'; 
+import { StackNavigator, addNavigationHelpers, TabNavigator } from 'react-navigation'; 
  
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 

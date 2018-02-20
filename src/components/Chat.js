@@ -171,7 +171,7 @@ class Chat extends Component {
                     style={styles.chatButton}
                     onPress={this.onPressPost}>
                         <Text style={{
-                            paddingLeft: 15, 
+                            paddingLeft: 20, 
                             paddingTop: 20, 
                             verticalAlign: 'middle'
                         }}>Post</Text>
