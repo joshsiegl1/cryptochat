@@ -20,7 +20,7 @@ class ChatItem extends PureComponent {
 
         return (<View style={styles.messageBox}>
                     <Image style={{width: 16, height: 16}}
-                    source={{uri: `https://files.coinmarketcap.com/static/img/coins/32x32/${this.props.crypto}.png`}} />
+                    source={{uri: `http://www.joshsiegl.com/crypto/${this.props.crypto}.png`}} />
                 <Text style={styles.messageText}>{item.body}</Text>
                 </View> )
     }

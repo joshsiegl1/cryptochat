@@ -32,7 +32,7 @@ class CoinButton extends Component {
                 onPress={this.onPress}> 
             <Image
                 style={{width: 32, height: 32}}
-                source={{uri: `https://files.coinmarketcap.com/static/img/coins/32x32/${id}.png`}}
+                source={{uri: `http://www.joshsiegl.com/crypto/${id}.png`}}
                 />
             <Text style={style.cryptoButtonText}>{id}</Text>
         </TouchableOpacity>

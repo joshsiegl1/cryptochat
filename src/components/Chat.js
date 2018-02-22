@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react'; 
 
 import {View, FlatList, TextInput, Button, Text, Image, 
-    KeyboardAvoidingView, TouchableOpacity, Keyboard } from 'react-native'; 
+    KeyboardAvoidingView, TouchableOpacity, Keyboard, Platform } from 'react-native'; 
 
 import styles from '../styles/stylesheet'; 
 
@@ -102,10 +102,29 @@ class Chat extends Component {
         }
     }
 
+    displayAd = () => { 
+        if (Platform.OS === 'ios') { 
+            return (<AdMobBanner 
+            bannerSize="fullbanner"
+            adUnitID="ca-app-pub-2896471597472603/8703233139"
+            didFailToReceiveAdWithError={this.bannerError}
+            />) 
+        }
+        else { 
+            return (<AdMobBanner 
+            bannerSize="fullbanner"
+            adUnitID="ca-app-pub-2896471597472603/2666295016"
+            didFailToReceiveAdWithError={this.bannerError}
+            />) 
+        }
+    }
+
     render() { 
 
         const { chat, navigation } = this.props;
         const { crypto } = navigation.state.params; 
+
+        let ad = this.displayAd(); 
 
         let chats = []; 
         if (Object.keys(chat).length > 0) {
@@ -135,12 +154,7 @@ class Chat extends Component {
                             paddingLeft: 25, 
                             paddingRight: 25}}>
 
-                    <AdMobBanner 
-                    bannerSize="fullbanner"
-                    adUnitID="ca-app-pub-2896471597472603/8703233139"
-                    testDeviceID="EMULATOR"
-                    didFailToReceiveAdWithError={this.bannerError}
-                    /> 
+                    {ad}
                 </View> 
                 <View style={{
                     flexDirection: 'row', 
@@ -163,7 +177,6 @@ class Chat extends Component {
                  <View style={styles.chatButton}>
                     <Text style={{
                         paddingTop: 20, 
-                        verticalAlign: 'middle'
                     }}>{this.state.myText.length} / {totalChatLength}</Text> 
                  </View>
 
@@ -172,8 +185,7 @@ class Chat extends Component {
                     onPress={this.onPressPost}>
                         <Text style={{
                             paddingLeft: 15, 
-                            paddingTop: 20, 
-                            verticalAlign: 'middle'
+                            paddingTop: 20
                         }}>Post</Text>
 
                     </TouchableOpacity>
