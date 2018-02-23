@@ -16,8 +16,8 @@
     },
     "ios": {
       "bundleIdentifier": "com.joshsiegl.cryptochat", 
-      "buildNumber": "1.0.1", 
-      "supportsTablet": true
+      "buildNumber": "1.0.2", 
+      "supportsTablet": false
     }, 
     "android": { 
       "package": "com.joshsiegl.cryptochat", 
