@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import {View, Text} from 'react-native'; 
+import {View, Text, TextInput} from 'react-native'; 
 
-import styles from '../styles/stylesheet'; 
+import userStyleSheet from '../styles/userstylesheet'; 
 
 const propTypes = { 
 
@@ -12,10 +12,25 @@ const propTypes = {
 class User extends Component { 
     constructor(props) { 
         super(props)
+
+        this.state = { 
+            userName: "username", 
+            password: "password"
+        }
     }
 
     render() { 
-        return (<View><Text>User Page</Text></View>)
+        return (<View style={userStyleSheet.container}>
+                    <View style={userStyleSheet.form}>
+                        <Text style={[userStyleSheet.general, userStyleSheet.loginText]}>LOGIN</Text>
+                        <TextInput
+                         style={[userStyleSheet.input]}
+                         value={this.state.userName} />
+                        <TextInput 
+                        style={[userStyleSheet.input]}
+                        value={this.state.password} />
+                    </View>
+                </View>)
     }
 }
 
