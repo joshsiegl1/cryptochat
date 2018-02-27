@@ -38,14 +38,16 @@ const TabNav = TabNavigator({
     screen: ModalStack, 
     navigationOptions: { 
       tabBarLabel: 'Home', 
-      tabBarIcon: () => <Icon name="home" size={35} />
+      tabBarOptions: {activeTintColor: 'blue'}, 
+      tabBarIcon: ({tintColor}) => <Icon name="home" size={35} color={tintColor} />
     }
   }, 
   User: { 
     screen: UserStack, 
     navigationOptions: { 
       tabBarLabel: 'User', 
-      tabBarIcon: () => <Icon name="user" size={35} />
+      tabBarOptions: {activeTintColor: 'blue'}, 
+      tabBarIcon: ({tintColor}) => <Icon name="person" size={35} color={tintColor}/>
     }
   }
 })
