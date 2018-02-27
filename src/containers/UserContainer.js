@@ -3,12 +3,18 @@ import { connect } from 'react-redux';
 
 import User from '../components/User'; 
 
+import { GetUser } from '../actions/UserActions'; 
+
+import { getUser } from '../selectors/CommonSelectors'; 
+
 const UserContainer = props => <User {...props} />
 
 const mapStateToProps = (state) => { 
-    return state; 
+    return { 
+        User: getUser(state)
+    }
 }
 
 export default connect(mapStateToProps, { 
-
+    GetUser
 })(UserContainer)

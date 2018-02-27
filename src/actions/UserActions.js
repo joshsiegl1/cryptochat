@@ -4,13 +4,14 @@ import { callApi } from '../utils/ApiUtils';
 
 const getUserSuccess = (user) => { 
     return { 
-        type: types.GET_USER
+        type: types.GET_USER, 
         user
     }
 }
 
 export const GetUser = (username, password) => async (dispatch) => { 
     let body = { 
+        username, 
         password
     }; 
 
@@ -23,6 +24,8 @@ export const GetUser = (username, password) => async (dispatch) => {
     }
 
     const { json } = await callApi(GET_USER_URL, options); 
+
+    console.log(json); 
 
     dispatch(getUserSuccess(json)); 
 }
