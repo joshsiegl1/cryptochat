@@ -2,10 +2,12 @@ import React from 'react';
 import { AppRegistry, View } from 'react-native';
 import { Provider } from 'react-redux'; 
 import configureStore from './src/store/configureStore.js'; 
-import { StackNavigator, addNavigationHelpers } from 'react-navigation'; 
+import { StackNavigator, addNavigationHelpers, TabNavigator } from 'react-navigation'; 
+import { Icon } from 'react-native-elements'; 
  
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 
+import UserContainer from './src/containers/UserContainer'; 
 
 console.disableYellowBox = true; 
 
@@ -22,6 +24,32 @@ const ModalStack = StackNavigator({
   }
 })
 
+const UserStack = StackNavigator({
+  User: { 
+    screen: UserContainer, 
+    navigationOptions: ({navigation}) => ({
+      title: 'User'
+    })
+  }
+})
+
+const TabNav = TabNavigator({
+  Home: { 
+    screen: ModalStack, 
+    navigationOptions: { 
+      tabBarLabel: 'Home', 
+      tabBarIcon: () => <Icon name="home" size={35} />
+    }
+  }, 
+  User: { 
+    screen: UserStack, 
+    navigationOptions: { 
+      tabBarLabel: 'User', 
+      tabBarIcon: () => <Icon name="user" size={35} />
+    }
+  }
+})
+
 
 export default class App extends React.Component {
   constructor(props) { 
@@ -32,7 +60,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={configureStore()}>
-        <ModalStack />
+        <TabNav />
       </Provider>
     );
   }

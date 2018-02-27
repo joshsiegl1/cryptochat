@@ -184,8 +184,14 @@ class Chat extends Component {
                     style={styles.chatButton}
                     onPress={this.onPressPost}>
                         <Text style={{
+<<<<<<< HEAD
                             paddingLeft: 15, 
                             paddingTop: 20
+=======
+                            paddingLeft: 20, 
+                            paddingTop: 20, 
+                            verticalAlign: 'middle'
+>>>>>>> v2
                         }}>Post</Text>
 
                     </TouchableOpacity>
