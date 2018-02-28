@@ -10,20 +10,19 @@ const getUserSuccess = (user) => {
 }
 
 export const GetUser = (username, password) => async (dispatch) => { 
-    let body = { 
-        username, 
+    let reqbody = { 
         password
     }; 
 
     let options = { 
         method: 'post', 
         header: {
-            'Content-Type' : 'application/json'
+            'Content-Type': 'application/json'
         }, 
-        body: JSON.stringify(body)
+        body: JSON.stringify(reqbody)
     }
 
-    const { json } = await callApi(GET_USER_URL, options); 
+    const { json } = await callApi(GET_USER_URL.replace(':name', username), options); 
 
     console.log(json); 
 

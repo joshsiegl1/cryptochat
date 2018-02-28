@@ -38,6 +38,12 @@ class User extends Component {
         this.setState({password: text})
     }
 
+    onRegisterClick = () => { 
+        const { navigation } = this.props; 
+
+        navigation.navigate('Register'); 
+    }
+
     render() { 
         return (<View style={userStyleSheet.container}>
                         <Text style={[userStyleSheet.general, userStyleSheet.loginText]}>LOGIN</Text>
@@ -58,7 +64,9 @@ class User extends Component {
                         <Text style={[userStyleSheet.loginButtonText]}>GO</Text>
                         </TouchableOpacity>
                         <Button
-                        title="Need to register instead?" />
+                        title="Need to register instead?"
+                        onPress={this.onRegisterClick} />
+
                 </View>)
     }
 }

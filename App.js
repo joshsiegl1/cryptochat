@@ -8,6 +8,7 @@ import { Icon } from 'react-native-elements';
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 
 import UserContainer from './src/containers/UserContainer'; 
+import RegisterContainer from './src/containers/RegisterContainer'; 
 
 console.disableYellowBox = true; 
 
@@ -30,6 +31,10 @@ const UserStack = StackNavigator({
     navigationOptions: ({navigation}) => ({
       title: 'User'
     })
+  }, 
+  Register: { 
+    path: 'register', 
+    screen: RegisterContainer
   }
 })
 

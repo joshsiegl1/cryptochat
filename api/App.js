@@ -14,6 +14,9 @@ var port = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 
 app.post('/user', (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
@@ -40,6 +43,11 @@ app.post('/user', (req, res) => {
 app.post('/user/:name', (req, res) => { 
     const name = req.params.name
     let newPassword = req.body.password; 
+
+    console.log(newPassword); 
+    console.log(req.body);
+    console.log(req.body.password);  
+    console.log(name); 
 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection
