@@ -12,9 +12,9 @@ import RegisterContainer from './src/containers/RegisterContainer';
 
 console.disableYellowBox = true; 
 
-XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
-GLOBAL.originalXMLHttpRequest :
-GLOBAL.XMLHttpRequest;
+// XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
+// GLOBAL.originalXMLHttpRequest :
+// GLOBAL.XMLHttpRequest;
 
 global._fetch = fetch;
 global.fetch = function(uri, options, ...args) {

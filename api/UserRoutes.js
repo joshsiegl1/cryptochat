@@ -40,17 +40,33 @@ router.post('/:name', (req, res) => {
 
     const user = mongoose.model('User', userSchema); 
 
+    try { 
+
     user.find({userID: name}, function (err, users) { 
 
         if (err) res.send(err); 
 
-        if (bcrypt.compareSync(newPassword, users[0].password)) { 
-            res.send(users); 
+        console.log(users); 
+        console.log(users.length)
+
+        if (users.length <= 0) {
+            res.send({"error": "Incorrect username/password"})
         }
         else { 
-            res.send("Incorrect username/password"); 
+
+            if (bcrypt.compareSync(newPassword, users[0].password)) { 
+                res.send(users); 
+            }
+            else { 
+                res.send({"error": "Incorrect username/password"}); 
+            }
         }
     })
+    }
+    catch (error) { 
+        console.log(error); 
+        res.send({"error": error}); 
+    }
 })
 
 

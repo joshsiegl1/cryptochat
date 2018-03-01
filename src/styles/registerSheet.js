@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
         width: '100%'
     }, 
     registerText: { 
+        marginBottom: 10, 
         fontSize: 24, 
         fontWeight: 'bold'
     }, 
