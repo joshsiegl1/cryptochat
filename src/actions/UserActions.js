@@ -16,7 +16,7 @@ export const GetUser = (username, password) => async (dispatch) => {
 
     let options = { 
         method: 'post', 
-        header: {
+        headers: {
             'Content-Type': 'application/json'
         }, 
         body: JSON.stringify(reqbody)
@@ -29,6 +29,23 @@ export const GetUser = (username, password) => async (dispatch) => {
     dispatch(getUserSuccess(json)); 
 }
 
-const addUserSuccess = (user) => { 
-    
+export const AddUser = (username, password) => async (dispatch) => { 
+
+    let user = { 
+        'userID': username,
+        'karma': 0,  
+        'password': password
+    }
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type': 'application/json'
+        }, 
+        body: JSON.stringify(user)
+    }
+
+    const { json } = await callApi(ADD_USER_URL, options); 
+
+    console.log(json); 
 }

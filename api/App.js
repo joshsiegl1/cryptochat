@@ -5,6 +5,8 @@ const app = express()
 const MongoClient = require("mongodb").MongoClient
 const mongoose = require("mongoose")
 
+const userRoutes = require('./UserRoutes.js'); 
+
 const url = require("./Config.js").MongoDBConnectionString; 
 
 var chatSchema = require("./models/chat_model.js"); 
@@ -12,60 +14,25 @@ var userSchema = require("./models/user_model.js");
 
 var port = process.env.PORT || 3000
 
-app.use(express.json())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended: true
-  }));
-
-app.post('/user', (req, res) => { 
-    mongoose.connect(url, {useMongoClient: true})
-    const db = mongoose.connection
-
-    const User = mongoose.model('User', userSchema)
-
-    let body = req.body; 
-    bcrypt.hash(body.password, 10, function(err, hash) { 
-        var newUser = new User({
-            karma: body.karma, 
-            userID: body.userID, 
-            password: hash
-        }); 
-
-        newUser.save((error) => { 
-            if (error) console.log(error); 
-        })
-    })
-
-    res.send("Success"); 
+app.use(function(req, res, next) { 
+    console.log(req.body)
+    next(); 
 })
 
-app.post('/user/:name', (req, res) => { 
-    const name = req.params.name
-    let newPassword = req.body.password; 
+app.use(bodyParser.json());
 
-    console.log(newPassword); 
-    console.log(req.body);
-    console.log(req.body.password);  
-    console.log(name); 
-
-    mongoose.connect(url, {useMongoClient: true})
-    const db = mongoose.connection
-
-    const user = mongoose.model('User', userSchema); 
-
-    user.find({userID: name}, function (err, users) { 
-
-        if (err) res.send(err); 
-
-        if (bcrypt.compareSync(newPassword, users[0].password)) { 
-            res.send(users); 
-        }
-        else { 
-            res.send("Incorrect username/password"); 
-        }
-    })
+app.use(function(req, res, next) { 
+    console.log(req.accepts('application/json')); 
+    console.log("Fresh " + req.fresh)
+    console.log(req.route)
+    console.log(req.method)
+    console.log(req.hostname)
+    console.log(req.ip)
+    console.log(req.body)
+    next(); 
 })
+
+app.use('/user', userRoutes); 
 
 app.post('/chat', (req, res) => {
 
