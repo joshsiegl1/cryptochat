@@ -14,6 +14,7 @@ class Register extends Component {
         super(props) 
 
         this.state = { 
+            email: "", 
             username: "", 
             password: "", 
             confirmPassword: ""
@@ -23,6 +24,7 @@ class Register extends Component {
     RegisterPressed = () => { 
         const { AddUser } = this.props; 
 
+        let email = this.state.email; 
         let username = this.state.username; 
         let password = this.state.password; 
         let confirmPassword = this.state.confirmPassword; 

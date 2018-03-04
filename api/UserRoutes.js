@@ -46,9 +46,6 @@ router.post('/:name', (req, res) => {
 
         if (err) res.send(err); 
 
-        console.log(users); 
-        console.log(users.length)
-
         if (users.length <= 0) {
             res.send({"error": "Incorrect username/password"})
         }
@@ -66,6 +63,44 @@ router.post('/:name', (req, res) => {
     catch (error) { 
         console.log(error); 
         res.send({"error": error}); 
+    }
+})
+
+router.post('facebookLogin/', (req, res) => { 
+    let fbid = req.body.fbid; 
+
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
+
+    const user = mongoose.model('User', userSchema); 
+
+    try { 
+
+        user.find({fbid: fbid}, function (err, users) { 
+            if (err) res.send(err); 
+
+            if (users.length <= 0) { 
+                //add user to database with facebook id
+                var newUser = new User({
+                    fbid: fbid, 
+                    karma: 0, 
+                    userID: "", 
+                    password: ""
+                })
+
+                newUser.save((error) => { 
+                    console.log(error); 
+                })
+
+                res.send(newUser); 
+            }
+            else { 
+                res.send(users); 
+            }
+        })
+    }
+    catch (e) { 
+        res.send({"errro" : e}); 
     }
 })
 

@@ -1,4 +1,4 @@
-import { GET_USER_URL, ADD_USER_URL } from '../constants/ApiConstants';
+import { GET_USER_URL, ADD_USER_URL, FACEBOOK_LOGIN_URL } from '../constants/ApiConstants';
 import * as types from '../constants/ActionTypes'; 
 import { callApi } from '../utils/ApiUtils'; 
 
@@ -56,4 +56,24 @@ export const AddUser = (username, password) => async (dispatch) => {
     const { json } = await callApi(ADD_USER_URL, options); 
 
     console.log(json); 
+}
+
+export const FacebookLogin = (fbid) => async (dispatch) => { 
+    let body = { 
+        fbid: fbid
+    }
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type': 'application/json'
+        }, 
+        body: JSON.stringify(body)
+    }
+
+    const { json } = await callApi(FACEBOOK_LOGIN_URL, options); 
+
+    console.log(json); 
+
+    dispatch(getUserSuccess(json)); 
 }
