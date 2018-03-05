@@ -95,7 +95,8 @@ class User extends Component {
                         <Text style={[userStyleSheet.loginButtonText]}>Log In</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                        onPress={this.onRegisterClick} />
+                        style={{backgroundColor: 'transparent'}}
+                        onPress={this.onRegisterClick}>
                         <Text style={{color: 'white'}}>Don't have an account? Sign up</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
