@@ -1,10 +1,13 @@
 import { StyleSheet } from 'react-native'
 
 const userStyleSheet = StyleSheet.create({
+    gradient: { 
+        height: '100%', 
+        flex: 1
+    }, 
     container: { 
         display: 'flex', 
         flexDirection: 'column', 
-        backgroundColor: 'white', 
         height: '100%', 
         alignItems: 'center', 
         paddingTop: 20, 
@@ -22,9 +25,10 @@ const userStyleSheet = StyleSheet.create({
         fontWeight: 'bold'
     }, 
     input: { 
-        borderColor: 'lightgray', 
+        color: 'white', 
+        borderColor: 'white', 
         borderWidth: 1, 
-        borderRadius: 5, 
+        borderRadius: 25, 
         marginTop: 5, 
         marginBottom: 5, 
         padding: 15, 
@@ -34,10 +38,22 @@ const userStyleSheet = StyleSheet.create({
         display: 'flex', 
         justifyContent: 'center',
         alignItems: 'center', 
-        borderColor: 'black', 
+        borderColor: 'white', 
         borderWidth: 1, 
-        borderRadius: 5, 
-        backgroundColor: 'darkgreen', 
+        borderRadius: 25, 
+        backgroundColor: 'rgba(255, 255, 255, 0.5)', 
+        padding: 15, 
+        marginTop: 5, 
+        marginBottom: 5, 
+        width: '100%'
+    }, 
+    FacebookButton: { 
+        display: 'flex', 
+        justifyContent: 'center',
+        alignItems: 'center', 
+        borderColor: 'white', 
+        borderWidth: 1, 
+        backgroundColor: 'rgb(59, 89, 152)', 
         padding: 15, 
         marginTop: 5, 
         marginBottom: 5, 

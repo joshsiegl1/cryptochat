@@ -1,14 +1,17 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 import Expo from 'expo'; 
-import { Facebook } from 'expo'; 
+import { LinearGradient, Facebook } from 'expo'; 
 
 import {View, Text, TextInput, Button, Alert, TouchableOpacity} from 'react-native'; 
 
 import userStyleSheet from '../styles/userstylesheet'; 
 
 const propTypes = { 
-    getUser: PropTypes.func, 
+    User: PropTypes.shape({
+        karma: PropTypes.string, 
+        userID: PropTypes.string
+    }), 
     GetUser: PropTypes.func, 
     FacebookLogin: PropTypes.func
 }
@@ -68,8 +71,13 @@ class User extends Component {
     }
 
     render() { 
-        return (<View style={userStyleSheet.container}>
-                        <Text style={[userStyleSheet.general, userStyleSheet.loginText]}>LOGIN</Text>
+        const { User } = this.props; 
+
+        if (Object.keys(User).length === 0 && User.constructor === Object) { 
+            
+            return (<LinearGradient colors={['#e5af00', '#ad9603']}
+                                    style={userStyleSheet.gradient}>
+                    <View style={userStyleSheet.container}>
                         <TextInput
                          style={[userStyleSheet.input]}
                          value={this.state.userName}
@@ -84,16 +92,34 @@ class User extends Component {
                         <TouchableOpacity 
                         style={[userStyleSheet.LoginButton]}
                         onPress={this.LoginPressed}>
-                        <Text style={[userStyleSheet.loginButtonText]}>GO</Text>
+                        <Text style={[userStyleSheet.loginButtonText]}>Log In</Text>
                         </TouchableOpacity>
-                        <Button
-                        title="Need to register instead?"
+                        <TouchableOpacity
                         onPress={this.onRegisterClick} />
-                        <Button 
-                        title="Facebook Login"
-                        onPress={this.LoginwithFacebook} />
+                        <Text style={{color: 'white'}}>Don't have an account? Sign up</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                        style={[userStyleSheet.FacebookButton]}
+                        onPress={this.LoginWithFacebook}>
+                        <Text style={userStyleSheet.loginButtonText}>Sign in with Facebook</Text>
+                        </TouchableOpacity>
 
-                </View>)
+                    </View>
+                </LinearGradient>)
+        }
+        else { 
+
+            if (User.userID === "") { 
+                return (<View>
+                    <Text>Account</Text>
+                    </View>)
+            }
+            else { 
+                return (<View>
+                    <Text>Account</Text>
+                    </View>)
+            }
+        }
     }
 }
 

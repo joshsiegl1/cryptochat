@@ -7,6 +7,7 @@ import { Icon } from 'react-native-elements';
  
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 
+import AccountContainer from './src/containers/AccountContainer'; 
 import UserContainer from './src/containers/UserContainer'; 
 import RegisterContainer from './src/containers/RegisterContainer'; 
 
