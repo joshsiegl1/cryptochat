@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import Expo from 'expo'; 
 import { LinearGradient, Facebook } from 'expo'; 
 
-import {View, Text, TextInput, Button, Alert, TouchableOpacity} from 'react-native'; 
+import {View, Text, TextInput, Button, Alert, TouchableOpacity, Image} from 'react-native'; 
 
 import userStyleSheet from '../styles/userstylesheet'; 
 
@@ -75,20 +75,38 @@ class User extends Component {
 
         if (Object.keys(User).length === 0 && User.constructor === Object) { 
             
-            return (<LinearGradient colors={['#e5af00', '#ad9603']}
+            return (<LinearGradient colors={['#F9C000', '#DF8600']}
                                     style={userStyleSheet.gradient}>
                     <View style={userStyleSheet.container}>
-                        <TextInput
-                         style={[userStyleSheet.input]}
-                         value={this.state.userName}
-                         textAlign={'center'} 
-                         onChangeText={this.UsernameChanged}/>
+                        <View style={{padding: 10, width: 100, height: 100}}>
+                        <Image source={require('../../assets/cryptochat_logo.png')} 
+                               style={{
+                               flex: 1, 
+                               alignSelf: 'stretch', 
+                               width: undefined, 
+                               height: undefined}} 
+                               resizeMode='contain'/>
+                        </View>
+                        <View style={userStyleSheet.formContainer}>
+                        <View style={userStyleSheet.SectionStyle}>
+                            <Image source={require('../../assets/ic_person.png')}
+                                   style={userStyleSheet.inputImageStyle} />
+                            <TextInput 
+                            style={[{flex:1, color: 'white'}]}
+                            value={this.state.userName}
+                            
+                            onChangeText={this.UsernameChanged}/>
+                         </View>
+                         <View style={userStyleSheet.SectionStyle}>
+                         <Image source={require('../../assets/ic_lock.png')}
+                                   style={userStyleSheet.inputImageStyle} />
                         <TextInput 
-                        style={[userStyleSheet.input]}
+                        style={[{flex:1, color: 'white'}]}
                         value={this.state.password}
-                        textAlign={'center'} 
+                        
                         onChangeText={this.PasswordChanged}
                         secureTextEntry={true}/>
+                        </View>
                         <TouchableOpacity 
                         style={[userStyleSheet.LoginButton]}
                         onPress={this.LoginPressed}>
@@ -99,9 +117,10 @@ class User extends Component {
                         onPress={this.onRegisterClick}>
                         <Text style={{color: 'white'}}>Don't have an account? Sign up</Text>
                         </TouchableOpacity>
+                        </View>
                         <TouchableOpacity
                         style={[userStyleSheet.FacebookButton]}
-                        onPress={this.LoginWithFacebook}>
+                        onPress={this.LoginwithFacebook}>
                         <Text style={userStyleSheet.loginButtonText}>Sign in with Facebook</Text>
                         </TouchableOpacity>
 

@@ -7,12 +7,19 @@ const userStyleSheet = StyleSheet.create({
     }, 
     container: { 
         display: 'flex', 
-        flexDirection: 'column', 
+        flexDirection: 'column',
+        justifyContent: 'space-around',  
         height: '100%', 
         alignItems: 'center', 
         paddingTop: 20, 
-        paddingLeft: 20,
-        paddingRight: 20
+        paddingLeft: 50,
+        paddingRight: 50
+    }, 
+    formContainer: { 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        width: '100%'
     }, 
     general: { 
         padding: 5
@@ -34,17 +41,35 @@ const userStyleSheet = StyleSheet.create({
         padding: 15, 
         width: '100%'
     }, 
+    SectionStyle: { 
+        flexDirection: 'row', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        borderColor: 'white', 
+        borderWidth: 0.5, 
+        borderRadius: 25, 
+        marginTop: 5, 
+        marginBottom: 5, 
+    }, 
+    inputImageStyle: { 
+        padding: 10, 
+        margin: 10, 
+        height: 25, 
+        width: 25, 
+        resizeMode: 'stretch', 
+        alignItems: 'center'
+    }, 
     LoginButton: { 
         display: 'flex', 
         justifyContent: 'center',
         alignItems: 'center', 
-        borderColor: 'white', 
-        borderWidth: 1, 
+        borderColor: 'transparent', 
+        borderWidth: 0.5, 
         borderRadius: 25, 
         backgroundColor: 'rgba(255, 255, 255, 0.5)', 
         padding: 15, 
-        marginTop: 5, 
-        marginBottom: 5, 
+        marginTop: 15, 
+        marginBottom: 15, 
         width: '100%'
     }, 
     FacebookButton: { 
@@ -61,7 +86,7 @@ const userStyleSheet = StyleSheet.create({
     }, 
     loginButtonText: { 
         color: 'white', 
-        fontSize: 22, 
+        fontSize: 18, 
         fontWeight: 'bold'
     }
 })

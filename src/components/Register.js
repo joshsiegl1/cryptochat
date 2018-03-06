@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-native'; 
+import { LinearGradient } from 'expo'; 
+
+import { View, Text, TextInput, Button, Alert, TouchableOpacity, Image } from 'react-native'; 
 
 import registerSheet from '../styles/registerSheet'; 
 
@@ -62,28 +64,50 @@ class Register extends Component {
     }
 
     render() { 
-        return (<View style={registerSheet.container}>
-                    <Text style={[registerSheet.registerText]}>REGISTER</Text>
-                    <Text>Username</Text>
-                    <TextInput style={[registerSheet.input]}
+        return (<LinearGradient colors={['#F9C000', '#DF8600']}
+                                style={registerSheet.gradient}>
+        <View style={registerSheet.container}>
+                    <View style={{padding: 10, width: 100, height: 100}}>
+                    <Image source={require('../../assets/cryptochat_logo.png')} 
+                               style={{
+                               flex: 1, 
+                               alignSelf: 'stretch', 
+                               width: undefined, 
+                               height: undefined}} 
+                               resizeMode='contain'/> 
+                    </View>
+                    <View style={{width: '100%'}}>
+                    <View style={registerSheet.SectionStyle}>
+                    <Image source={require('../../assets/ic_person.png')}
+                                   style={registerSheet.inputImageStyle} />
+                    <TextInput style={[{flex:1, color: 'white'}]}
                                textAlign={'center'}
                                onChangeText={this.UsernameChanged}/>
-                    <Text>Password</Text>
-                    <TextInput style={[registerSheet.input]}
+                    </View>
+                    <View style={registerSheet.SectionStyle}>
+                    <Image source={require('../../assets/ic_lock.png')}
+                                   style={registerSheet.inputImageStyle} />
+                    <TextInput style={[{flex:1, color: 'white'}]}
                                textAlign={'center'} 
                                onChangeText={this.PasswordChanged}
                                secureTextEntry={true}/>
-                    <Text>Confirm Password</Text>
-                    <TextInput style={[registerSheet.input]}
+                    </View>
+                    <View style={registerSheet.SectionStyle}>
+                    <Image source={require('../../assets/ic_lock.png')}
+                                   style={registerSheet.inputImageStyle} />
+                    <TextInput style={[{flex:1, color: 'white'}]}
                                textAlign={'center'} 
                                onChangeText={this.ConfirmPasswordChanged}
                                secureTextEntry={true}/>
+                    </View>
                     <TouchableOpacity 
                         style={[registerSheet.RegisterButton]}
                         onPress={this.RegisterPressed}>
-                        <Text style={[registerSheet.registerButtonText]}>SIGN ME UP!</Text>
+                        <Text style={[registerSheet.registerButtonText]}>Register</Text>
                     </TouchableOpacity>
-            </View>)
+                    </View>
+            </View>
+            </LinearGradient>)
     }
 }
 
