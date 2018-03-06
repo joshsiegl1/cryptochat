@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 
 import { LinearGradient } from 'expo'; 
 
-import { View, Text, TextInput, Button, Alert, TouchableOpacity, Image } from 'react-native'; 
+import { View, Text, TextInput, Button, Alert, TouchableOpacity, Image, 
+    KeyboardAvoidingView } from 'react-native'; 
 
 import registerSheet from '../styles/registerSheet'; 
 
@@ -17,9 +18,9 @@ class Register extends Component {
 
         this.state = { 
             email: "", 
-            username: "", 
-            password: "", 
-            confirmPassword: ""
+            username: "username", 
+            password: "password", 
+            confirmPassword: "password"
         }
     }
 
@@ -31,7 +32,7 @@ class Register extends Component {
         let password = this.state.password; 
         let confirmPassword = this.state.confirmPassword; 
 
-        if (password === confirmPassword) 
+        if (password === confirmPassword && password !== "password") 
         { 
             if (username.length > 3) { 
                 if (password.length > 8) { 
@@ -64,7 +65,8 @@ class Register extends Component {
     }
 
     render() { 
-        return (<LinearGradient colors={['#F9C000', '#DF8600']}
+        return (
+        <LinearGradient colors={['#F9C000', '#DF8600']}
                                 style={registerSheet.gradient}>
         <View style={registerSheet.container}>
                     <View style={{padding: 10, width: 100, height: 100}}>
@@ -76,36 +78,36 @@ class Register extends Component {
                                height: undefined}} 
                                resizeMode='contain'/> 
                     </View>
-                    <View style={{width: '100%'}}>
+                    <KeyboardAvoidingView behavior="position" style={{width: '100%'}}>
                     <View style={registerSheet.SectionStyle}>
                     <Image source={require('../../assets/ic_person.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput style={[{flex:1, color: 'white'}]}
-                               textAlign={'center'}
-                               onChangeText={this.UsernameChanged}/>
+                               onChangeText={this.UsernameChanged}
+                               value={this.state.username}/>
                     </View>
                     <View style={registerSheet.SectionStyle}>
                     <Image source={require('../../assets/ic_lock.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput style={[{flex:1, color: 'white'}]}
-                               textAlign={'center'} 
                                onChangeText={this.PasswordChanged}
-                               secureTextEntry={true}/>
+                               secureTextEntry={true}
+                               value={this.state.password}/>
                     </View>
                     <View style={registerSheet.SectionStyle}>
                     <Image source={require('../../assets/ic_lock.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput style={[{flex:1, color: 'white'}]}
-                               textAlign={'center'} 
                                onChangeText={this.ConfirmPasswordChanged}
-                               secureTextEntry={true}/>
+                               secureTextEntry={true}
+                               value={this.state.confirmPassword}/>
                     </View>
                     <TouchableOpacity 
                         style={[registerSheet.RegisterButton]}
                         onPress={this.RegisterPressed}>
                         <Text style={[registerSheet.registerButtonText]}>Register</Text>
                     </TouchableOpacity>
-                    </View>
+                    </KeyboardAvoidingView>
             </View>
             </LinearGradient>)
     }

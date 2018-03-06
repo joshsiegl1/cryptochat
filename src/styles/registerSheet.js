@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     }, 
     registerButtonText: { 
         color: 'white', 
-        fontSize: 22, 
+        fontSize: 18, 
         fontWeight: 'bold'
     }
 })
