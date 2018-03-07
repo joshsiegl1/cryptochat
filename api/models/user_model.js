@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 module.exports = new Schema({
     id: String, 
     fbid: String, 
+    email: String, 
     userID: String, 
     password: String, 
     karma: Number, 

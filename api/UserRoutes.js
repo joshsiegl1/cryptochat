@@ -24,6 +24,7 @@ router.post('/', (req, res) => {
         else { 
             bcrypt.hash(body.password, 10, function(err, hash) { 
                 var newUser = new User({
+                    email: body.email, 
                     fbid: "", 
                     karma: body.karma, 
                     userID: body.userID, 

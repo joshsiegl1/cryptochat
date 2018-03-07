@@ -1,14 +1,24 @@
 import { GET_USER_URL, ADD_USER_URL, FACEBOOK_LOGIN_URL } from '../constants/ApiConstants';
 import * as types from '../constants/ActionTypes'; 
 import { callApi } from '../utils/ApiUtils'; 
+import { SetUser } from '../utils/Storage'; 
 
 import { Alert } from 'react-native'; 
 
-const getUserSuccess = (user) => { 
+const getUserSuccess = (user) => {
     return { 
         type: types.GET_USER, 
         user
     }
+}
+
+///This is used to dispatch the user to redux if it's found in storage but not in the redux store
+export const DispatchUserfromStorage = (user) => async (dispatch) => { 
+    console.log("dispatching user to redux from storage: " + user); 
+    dispatch( { 
+        type: types.GET_USER, 
+        user
+    } )
 }
 
 export const GetUser = (username, password) => async (dispatch) => { 
@@ -35,6 +45,7 @@ export const GetUser = (username, password) => async (dispatch) => {
     else { 
         if (json.length > 0) { 
             let user = json[0]; 
+            await SetUser(user.userID, user.email, user.karma); 
             dispatch(getUserSuccess(user)); 
         }
         else { 
@@ -43,9 +54,10 @@ export const GetUser = (username, password) => async (dispatch) => {
     }
 }
 
-export const AddUser = (username, password) => async (dispatch) => { 
+export const AddUser = (email, username, password) => async (dispatch) => { 
 
     let user = { 
+        'email' : email, 
         'userID': username,
         'karma': 0,  
         'password': password

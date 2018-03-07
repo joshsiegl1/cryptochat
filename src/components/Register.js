@@ -17,10 +17,9 @@ class Register extends Component {
         super(props) 
 
         this.state = { 
-            email: "", 
+            email: "email", 
             username: "username", 
-            password: "password", 
-            confirmPassword: "password"
+            password: "password"
         }
     }
 
@@ -30,13 +29,12 @@ class Register extends Component {
         let email = this.state.email; 
         let username = this.state.username; 
         let password = this.state.password; 
-        let confirmPassword = this.state.confirmPassword; 
 
-        if (password === confirmPassword && password !== "password") 
+        if (password !== "password") 
         { 
             if (username.length > 3) { 
                 if (password.length > 8) { 
-                    AddUser(username, password)
+                    AddUser(email, username, password)
                 }
                 else { 
                     Alert.alert("Invalid password", "Please make sure password is greater than 8 characters", {text: 'OK'})
@@ -60,8 +58,8 @@ class Register extends Component {
         this.setState({password: text})
     }
 
-    ConfirmPasswordChanged = (text) => { 
-        this.setState({confirmPassword: text})
+    EmailChanged = (text) => { 
+        this.setState({email: text})
     }
 
     onUsernameFocus = () => { 
@@ -74,9 +72,9 @@ class Register extends Component {
             this.setState({password: ""})
     }
 
-    onConfirmPasswordFocus = () => { 
-        if (this.state.confirmPassword === "password")
-            this.setState({confirmPassword: ""})
+    onEmailFocus = () => { 
+        if (this.state.email === "email")
+            this.setState({email: ""})
     }
 
     render() { 
@@ -84,6 +82,7 @@ class Register extends Component {
         <LinearGradient colors={['#F9C000', '#DF8600']}
                                 style={registerSheet.gradient}>
         <View style={registerSheet.container}>
+        
                     <View style={{padding: 10, width: 100, height: 100}}>
                     <Image source={require('../../assets/cryptochat_logo.png')} 
                                style={{
@@ -94,6 +93,15 @@ class Register extends Component {
                                resizeMode='contain'/> 
                     </View>
                     <KeyboardAvoidingView behavior="position" style={{width: '100%'}}>
+                    <View style={registerSheet.SectionStyle}>
+                    <Image source={require('../../assets/ic_mail.png')}
+                                   style={registerSheet.inputImageStyle} />
+                    <TextInput style={[{flex:1, color: 'white'}]}
+                               onChangeText={this.EmailChanged}
+                               onFocus={() => this.onEmailFocus()}
+                               value={this.state.email}
+                               selectionColor={'white'}/>
+                    </View>
                     <View style={registerSheet.SectionStyle}>
                     <Image source={require('../../assets/ic_person.png')}
                                    style={registerSheet.inputImageStyle} />
@@ -111,16 +119,6 @@ class Register extends Component {
                                onFocus={() => this.onPasswordFocus()}
                                secureTextEntry={true}
                                value={this.state.password}
-                               selectionColor={'white'}/>
-                    </View>
-                    <View style={registerSheet.SectionStyle}>
-                    <Image source={require('../../assets/ic_lock.png')}
-                                   style={registerSheet.inputImageStyle} />
-                    <TextInput style={[{flex:1, color: 'white'}]}
-                               onChangeText={this.ConfirmPasswordChanged}
-                               onFocus={() => this.onConfirmPasswordFocus()}
-                               secureTextEntry={true}
-                               value={this.state.confirmPassword}
                                selectionColor={'white'}/>
                     </View>
                     <TouchableOpacity 

@@ -3,13 +3,18 @@ import React, {Component } from 'react';
 
 import {View, FlatList} from 'react-native'; 
 
+import { GetUser, GetItem } from '../utils/Storage'; 
+
 import CoinButton from './CoinButton'; 
 
 const propTypes = { 
     navigate: PropTypes.func, 
     currencies: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string
-    }))
+    })), 
+    User: PropTypes.shape({
+        userID: PropTypes.string
+    })
 }
 
 class CoinList extends Component { 
@@ -17,8 +22,21 @@ class CoinList extends Component {
         super(props)
     }
 
-    componentWillMount() { 
-        const {currencies, fetchTopFiftyCryptoCurrencies} = this.props; 
+    async componentWillMount() { 
+        const {currencies, fetchTopFiftyCryptoCurrencies,
+               User, DispatchUserfromStorage} = this.props; 
+
+        if (Object.keys(User).length === 0 && User.constructor === Object) { 
+            await GetUser(function (user) { 
+                if (user !== undefined && user !== null) { 
+                    DispatchUserfromStorage({
+                        "userID" : user[0][1], 
+                        "email" : user[1][1], 
+                        "karma" : user[2][1]
+                    }); 
+                }
+            }); 
+        }
 
         if (currencies === null) { 
             fetchTopFiftyCryptoCurrencies(); 
