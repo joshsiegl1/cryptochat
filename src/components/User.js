@@ -44,6 +44,16 @@ class User extends Component {
         this.setState({password: text})
     }
 
+    onUsernameFocus = () => { 
+        if (this.state.userName === "username")
+            this.setState({userName: ""})
+    }
+
+    onPasswordFocus = () => { 
+        if (this.state.password === "password") 
+            this.setState({password: ""})
+    }
+
     onRegisterClick = () => { 
         const { navigation } = this.props; 
 
@@ -94,8 +104,9 @@ class User extends Component {
                             <TextInput 
                             style={[{flex:1, color: 'white'}]}
                             value={this.state.userName}
-                            
-                            onChangeText={this.UsernameChanged}/>
+                            onFocus={() => this.onUsernameFocus()}
+                            onChangeText={this.UsernameChanged}
+                            selectionColor={'white'}/>
                          </View>
                          <View style={userStyleSheet.SectionStyle}>
                          <Image source={require('../../assets/ic_lock.png')}
@@ -103,9 +114,10 @@ class User extends Component {
                         <TextInput 
                         style={[{flex:1, color: 'white'}]}
                         value={this.state.password}
-                        
+                        onFocus={() => this.onPasswordFocus()}
                         onChangeText={this.PasswordChanged}
-                        secureTextEntry={true}/>
+                        secureTextEntry={true}
+                        selectionColor={'white'}/>
                         </View>
                         <TouchableOpacity 
                         style={[userStyleSheet.LoginButton]}
@@ -135,9 +147,11 @@ class User extends Component {
                     </View>)
             }
             else { 
-                return (<View>
-                    <Text>Account</Text>
-                    </View>)
+                return (<LinearGradient colors={['#F9C000', '#DF8600']}
+                                        style={userStyleSheet.gradient}>
+                        <Text style={{color: 'white'}}>Username: {User.userID}</Text>
+
+                        </LinearGradient>)
             }
         }
     }

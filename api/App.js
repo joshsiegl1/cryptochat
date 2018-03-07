@@ -59,7 +59,10 @@ app.get('/chat/:crypto', (req, res) => {
 
     var chats = mongoose.model('Chat', chatSchema); 
 
-    chats.find({id: crypto}, function(err, chats) { 
+    chats.find({id: crypto})
+         .sort({date: 'asc'})
+         .exec(function(err, chats) { 
+
         if (err) { 
             res.send(err); 
         }

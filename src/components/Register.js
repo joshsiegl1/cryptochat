@@ -64,6 +64,21 @@ class Register extends Component {
         this.setState({confirmPassword: text})
     }
 
+    onUsernameFocus = () => { 
+        if (this.state.username === "username")
+            this.setState({username: ""})
+    }
+
+    onPasswordFocus = () => {
+        if (this.state.password === "password")
+            this.setState({password: ""})
+    }
+
+    onConfirmPasswordFocus = () => { 
+        if (this.state.confirmPassword === "password")
+            this.setState({confirmPassword: ""})
+    }
+
     render() { 
         return (
         <LinearGradient colors={['#F9C000', '#DF8600']}
@@ -84,23 +99,29 @@ class Register extends Component {
                                    style={registerSheet.inputImageStyle} />
                     <TextInput style={[{flex:1, color: 'white'}]}
                                onChangeText={this.UsernameChanged}
-                               value={this.state.username}/>
+                               onFocus={() => this.onUsernameFocus()}
+                               value={this.state.username}
+                               selectionColor={'white'}/>
                     </View>
                     <View style={registerSheet.SectionStyle}>
                     <Image source={require('../../assets/ic_lock.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput style={[{flex:1, color: 'white'}]}
                                onChangeText={this.PasswordChanged}
+                               onFocus={() => this.onPasswordFocus()}
                                secureTextEntry={true}
-                               value={this.state.password}/>
+                               value={this.state.password}
+                               selectionColor={'white'}/>
                     </View>
                     <View style={registerSheet.SectionStyle}>
                     <Image source={require('../../assets/ic_lock.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput style={[{flex:1, color: 'white'}]}
                                onChangeText={this.ConfirmPasswordChanged}
+                               onFocus={() => this.onConfirmPasswordFocus()}
                                secureTextEntry={true}
-                               value={this.state.confirmPassword}/>
+                               value={this.state.confirmPassword}
+                               selectionColor={'white'}/>
                     </View>
                     <TouchableOpacity 
                         style={[registerSheet.RegisterButton]}

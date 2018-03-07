@@ -16,20 +16,33 @@ router.post('/', (req, res) => {
     const User = mongoose.model('User', userSchema)
 
     let body = req.body; 
-    bcrypt.hash(body.password, 10, function(err, hash) { 
-        var newUser = new User({
-            fbid: "", 
-            karma: body.karma, 
-            userID: body.userID, 
-            password: hash
-        }); 
 
-        newUser.save((error) => { 
-            if (error) console.log(error); 
-        })
+    User.find({userID: body.userID}, function (err, docs) {
+        if (docs.length) { 
+            res.send({"response" : "username already exists"})
+        }
+        else { 
+            bcrypt.hash(body.password, 10, function(err, hash) { 
+                var newUser = new User({
+                    fbid: "", 
+                    karma: body.karma, 
+                    userID: body.userID, 
+                    password: hash
+                }); 
+    
+                newUser.save((error) => { 
+                    if (error) {
+                        res.send(error); 
+                        console.log(error); 
+                    }
+                })
+            })
+
+            res.send({"response": "Success"}); 
+        }
+
     })
 
-    res.send("Success"); 
 })
 
 router.post('/get/:name', (req, res) => { 

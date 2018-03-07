@@ -33,7 +33,13 @@ export const GetUser = (username, password) => async (dispatch) => {
         Alert.alert("Invalid Username/Password", "The username or password combination entered is incorrect", {text: 'OK'})
     }
     else { 
-        dispatch(getUserSuccess(json)); 
+        if (json.length > 0) { 
+            let user = json[0]; 
+            dispatch(getUserSuccess(user)); 
+        }
+        else { 
+            Alert.alert("Something went wrong", "Please let us know if this happens again"); 
+        }
     }
 }
 
@@ -56,6 +62,12 @@ export const AddUser = (username, password) => async (dispatch) => {
     const { json } = await callApi(ADD_USER_URL, options); 
 
     console.log(json); 
+    let response = json.response; 
+
+    if (response === "Success")
+        Alert.alert("Success", 'Successfully registered user: ' + username)
+    else if (response === "username already exists")
+        Alert.alert("Username Already Exists", "The username provided already exists in our database, please try something else"); 
 }
 
 export const FacebookLogin = (fbid) => async (dispatch) => { 
