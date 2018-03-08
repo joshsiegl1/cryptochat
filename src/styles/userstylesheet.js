@@ -88,6 +88,11 @@ const userStyleSheet = StyleSheet.create({
         color: 'white', 
         fontSize: 18, 
         fontWeight: 'bold'
+    }, 
+    userInfoText: { 
+        color: 'white', 
+        backgroundColor: 'transparent', 
+        fontSize: 16
     }
 })
 

@@ -81,6 +81,36 @@ router.post('/get/:name', (req, res) => {
     }
 })
 
+router.post('/updateUsernameFacebook', (req, res) => { 
+    let fbid = req.body.fbid;
+    let userID = req.body.userID;  
+
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
+
+    const User = mongoose.model('User', userSchema); 
+
+    let conditions = {fbid: fbid}, 
+        update = {userID: userID}, 
+        options = {mulit: true};  
+
+    try { 
+        User.update(conditions, update, options, function (err, numAffected) { 
+            if (err) res.send(err); 
+            console.log(numAffected);
+            
+            User.findOne({fbid: fbid}, function (err, users) { 
+                res.send(users); 
+            })
+
+        })
+    }
+    catch (e) { 
+        console.log(e); 
+        res.send({"response" : "something went wrong"})
+    }
+})
+
 router.post('/facebookLogin', (req, res) => { 
     let fbid = req.body.fbid; 
 

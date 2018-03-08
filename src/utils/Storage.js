@@ -51,3 +51,15 @@ export const GetUser = async (fn) => {
     }
 }
 
+export const DeleteUser = async () => { 
+    try { 
+        let keys = ['userID', 'email', 'karma']
+        await AsyncStorage.multiRemove(keys, (err) => { 
+            console.log(err); 
+        })
+    }
+    catch (e) { 
+        console.log(e) 
+    }
+}
+

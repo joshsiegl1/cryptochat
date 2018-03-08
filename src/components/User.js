@@ -5,6 +5,8 @@ import { LinearGradient, Facebook } from 'expo';
 
 import {View, Text, TextInput, Button, Alert, TouchableOpacity, Image} from 'react-native'; 
 
+import { DeleteUser } from '../utils/Storage'
+
 import userStyleSheet from '../styles/userstylesheet'; 
 
 const propTypes = { 
@@ -13,7 +15,8 @@ const propTypes = {
         userID: PropTypes.string
     }), 
     GetUser: PropTypes.func, 
-    FacebookLogin: PropTypes.func
+    FacebookLogin: PropTypes.func, 
+    DispatchUserfromStorage: PropTypes.func
 }
 
 class User extends Component { 
@@ -58,6 +61,13 @@ class User extends Component {
         const { navigation } = this.props; 
 
         navigation.navigate('Register'); 
+    }
+
+    onLogOutPressed = async () => { 
+        const { DispatchUserfromStorage } = this.props; 
+        await DeleteUser(); 
+        let user = {}; 
+        await DispatchUserfromStorage(user); 
     }
 
     LoginwithFacebook = async () => { 
@@ -149,7 +159,28 @@ class User extends Component {
             else { 
                 return (<LinearGradient colors={['#F9C000', '#DF8600']}
                                         style={userStyleSheet.gradient}>
-                        <Text style={{color: 'white'}}>Username: {User.userID}</Text>
+                        <View style={userStyleSheet.container}>
+                        
+                        <View style={{padding: 10, width: 100, height: 100}}>
+                        <Image source={require('../../assets/cryptochat_logo.png')} 
+                               style={{
+                               flex: 1, 
+                               alignSelf: 'stretch', 
+                               width: undefined, 
+                               height: undefined}} 
+                               resizeMode='contain'/>
+                        </View>
+                        <View style={[userStyleSheet.formContainer]}>
+                        <Text style={userStyleSheet.userInfoText}>Username: {User.userID}</Text>
+                        <Text style={userStyleSheet.userInfoText}>Email: {User.email}</Text>
+                        <Text style={userStyleSheet.userInfoText}>Karma: {User.karma}</Text>
+                        <TouchableOpacity
+                        style={[userStyleSheet.LoginButton]}
+                        onPress={() => this.onLogOutPressed()}> 
+                        <Text style={[userStyleSheet.loginButtonText]}>Log Out</Text>
+                        </TouchableOpacity>
+                        </View>
+                        </View>
 
                         </LinearGradient>)
             }

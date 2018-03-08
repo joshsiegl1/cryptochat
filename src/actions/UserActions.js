@@ -1,4 +1,9 @@
-import { GET_USER_URL, ADD_USER_URL, FACEBOOK_LOGIN_URL } from '../constants/ApiConstants';
+import { 
+    GET_USER_URL,
+    ADD_USER_URL, 
+    FACEBOOK_LOGIN_URL, 
+    UPDATE_USERNAME_FACEBOOK_URL } from '../constants/ApiConstants';
+
 import * as types from '../constants/ActionTypes'; 
 import { callApi } from '../utils/ApiUtils'; 
 import { SetUser } from '../utils/Storage'; 
@@ -13,6 +18,7 @@ const getUserSuccess = (user) => {
 }
 
 ///This is used to dispatch the user to redux if it's found in storage but not in the redux store
+///Also used to remove the user from the redux store on log out
 export const DispatchUserfromStorage = (user) => async (dispatch) => { 
     console.log("dispatching user to redux from storage: " + user); 
     dispatch( { 
@@ -80,6 +86,25 @@ export const AddUser = (email, username, password) => async (dispatch) => {
         Alert.alert("Success", 'Successfully registered user: ' + username)
     else if (response === "username already exists")
         Alert.alert("Username Already Exists", "The username provided already exists in our database, please try something else"); 
+}
+
+export const UpdateUsernameFacebook = (fbid, username) => async (dispatch) => { 
+    let body = { 
+        fbid: fbid, 
+        userID: username
+    }
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type' : 'application/json'
+        }, 
+        body: JSON.stringify(body)
+    }
+
+    const { json } = await callApi(UPDATE_USERNAME_FACEBOOK_URL, options); 
+
+    console.log(json); 
 }
 
 export const FacebookLogin = (fbid) => async (dispatch) => { 
