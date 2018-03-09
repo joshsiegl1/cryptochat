@@ -25,14 +25,19 @@ const styles = StyleSheet.create({
     messageBox: { 
         padding: 5, 
         height: 80,
-        flexDirection: 'row', 
         width: '100%', 
         backgroundColor: 'white', 
         borderBottomWidth: 1, 
         borderColor: 'gray', 
     }, 
+    titleBox: { 
+        flex: 1, 
+        flexDirection: 'row', 
+        justifyContent: 'flex-start', 
+        flexWrap: 'wrap'
+    }, 
     messageText: { 
-        paddingLeft: 10
+        paddingLeft: 21
     }
 })
 

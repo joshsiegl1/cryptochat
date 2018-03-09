@@ -5,7 +5,7 @@ import { parseRoute } from '../utils/RouterUtils';
 
 import { GetChat, PostChat } from '../actions/ChatActions'; 
 
-import { getChats } from '../selectors/CommonSelectors'; 
+import { getChats, getUser } from '../selectors/CommonSelectors'; 
 
 import Chat from '../components/Chat'; 
 
@@ -13,7 +13,8 @@ const ChatContainer = props => <Chat {...props} />
 
 const mapStateToProps = (state) => { 
     return {
-        chat: getChats(state)
+        chat: getChats(state), 
+        user: getUser(state)
     }
 }
 

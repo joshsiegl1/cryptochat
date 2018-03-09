@@ -14,7 +14,8 @@ const propTypes = {
     id: PropTypes.string, 
     GetChat: PropTypes.func, 
     PostChat: PropTypes.func, 
-    chat: PropTypes.shape()
+    chat: PropTypes.shape(), 
+    user: PropTypes.shape()
 }
 
 const friendlyGreeting = "Say something to this group"; 
@@ -60,7 +61,7 @@ class Chat extends Component {
 
     onPressPost = () => { 
 
-        const { navigation, PostChat } = this.props; 
+        const { navigation, PostChat, user } = this.props; 
 
         const { crypto } = navigation.state.params; 
 
@@ -69,7 +70,14 @@ class Chat extends Component {
 
         Keyboard.dismiss(); 
 
-        PostChat(crypto, "joshsiegl", text); 
+        let username = "anonymous"; 
+        if (!(Object.keys(user).length === 0 && user.constructor === Object)) { 
+            if (user.userID !== "") { 
+                username = user.userID
+            }
+        }
+
+        PostChat(crypto, username, text); 
 
         this.setState({myText: friendlyGreeting, chatColor: 'darkgrey'})
     }

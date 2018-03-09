@@ -19,10 +19,14 @@ class ChatItem extends PureComponent {
         const { item } = this.props
 
         return (<View style={styles.messageBox}>
+                <View style={styles.titleBox}>
                     <Image style={{width: 16, height: 16}}
                     source={{uri: `http://www.joshsiegl.com/crypto/${this.props.crypto}.png`}} />
-                <Text style={styles.messageText}>{item.body}</Text>
-                </View> )
+                    <Text style={{paddingLeft: 5, width: '90%'}}>{item.userID}</Text>  
+                    <Text style={styles.messageText}>{item.body}</Text>
+                </View>
+                
+                </View>)
     }
 }
 
