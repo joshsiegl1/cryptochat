@@ -51,7 +51,7 @@ export const GetUser = (username, password) => async (dispatch) => {
     else { 
         if (json.length > 0) { 
             let user = json[0]; 
-            await SetUser(user.userID, user.email, user.karma); 
+            await SetUser(user.userID, user.email, user.karma, user.fbid); 
             dispatch(getUserSuccess(user)); 
         }
         else { 
@@ -105,6 +105,12 @@ export const UpdateUsernameFacebook = (fbid, username) => async (dispatch) => {
     const { json } = await callApi(UPDATE_USERNAME_FACEBOOK_URL, options); 
 
     console.log(json); 
+    
+    let user = json; 
+    await SetUser(user.userID, "", user.karma, user.fbid); 
+
+    
+    dispatch(getUserSuccess(user));  
 }
 
 export const FacebookLogin = (fbid) => async (dispatch) => { 
@@ -124,5 +130,8 @@ export const FacebookLogin = (fbid) => async (dispatch) => {
 
     console.log(json); 
 
-    dispatch(getUserSuccess(json)); 
+    let user = json[0]; 
+    await SetUser(user.userID, "", user.karma, user.fbid); 
+
+    dispatch(getUserSuccess(user)); 
 }

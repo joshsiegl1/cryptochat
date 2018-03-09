@@ -32,7 +32,8 @@ class CoinList extends Component {
                     DispatchUserfromStorage({
                         "userID" : user[0][1], 
                         "email" : user[1][1], 
-                        "karma" : user[2][1]
+                        "karma" : user[2][1], 
+                        "fbid" : user[3][1]
                     }); 
                 }
             }); 

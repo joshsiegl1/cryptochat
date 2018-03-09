@@ -18,12 +18,13 @@ export const GetItem = async (key) => {
     }
 }
 
-export const SetUser = async (userID, email, karma) => { 
+export const SetUser = async (userID, email, karma, fbid) => { 
     try { 
         await AsyncStorage.multiSet([
         ['userID', userID], 
         ['email', email], 
-        ['karma', karma.toString()]]); 
+        ['karma', karma.toString()], 
+        ['fbid', fbid]]); 
     }
     catch (e) { 
         console.log(e); 
@@ -35,7 +36,8 @@ export const GetUser = async (fn) => {
         await AsyncStorage.multiGet([
             'userID', 
             'email', 
-            'karma'
+            'karma', 
+            'fbid'
         ], (err, values) => { 
             if (values.length > 0)
             {
@@ -53,7 +55,7 @@ export const GetUser = async (fn) => {
 
 export const DeleteUser = async () => { 
     try { 
-        let keys = ['userID', 'email', 'karma']
+        let keys = ['userID', 'email', 'karma', 'fbid']
         await AsyncStorage.multiRemove(keys, (err) => { 
             console.log(err); 
         })

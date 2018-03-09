@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import Expo from 'expo'; 
 import { LinearGradient, Facebook } from 'expo'; 
 
-import {View, Text, TextInput, Button, Alert, TouchableOpacity, Image} from 'react-native'; 
+import {View, Text, TextInput, Button, Alert, TouchableOpacity, Image, KeyboardAvoidingView} from 'react-native'; 
 
 import { DeleteUser } from '../utils/Storage'
 
@@ -25,7 +25,8 @@ class User extends Component {
 
         this.state = { 
             userName: "username", 
-            password: "password"
+            password: "password", 
+            updateUsername: "username"
         }
     }
 
@@ -90,6 +91,22 @@ class User extends Component {
         }
     }
 
+
+    onUpdateUsername = () => { 
+        const {UpdateUsernameFacebook, User} = this.props; 
+
+        UpdateUsernameFacebook(User.fbid, this.state.updateUsername)
+    }
+
+    onUpdateusernameFocus = () => { 
+        if (this.state.updateUsername === "username")
+            this.setState({updateUsername: ""})
+    }
+
+    onUpdateusernameChanged = (text) => { 
+        this.setState({updateUsername: text})
+    }
+
     render() { 
         const { User } = this.props; 
 
@@ -151,10 +168,48 @@ class User extends Component {
         }
         else { 
 
-            if (User.userID === "") { 
-                return (<View>
-                    <Text>Account</Text>
-                    </View>)
+            if (User.userID === "" || User.userID === undefined) { 
+                return (<LinearGradient colors={['#F9C000', '#DF8600']}
+                                        style={userStyleSheet.gradient}>
+                        <View style={userStyleSheet.container}>
+                        <View style={{padding: 10, width: 100, height: 100}}>
+                        <Image source={require('../../assets/cryptochat_logo.png')} 
+                               style={{
+                               flex: 1, 
+                               alignSelf: 'stretch', 
+                               width: undefined, 
+                               height: undefined}} 
+                               resizeMode='contain'/>
+                        </View>
+                        <KeyboardAvoidingView behavior="position" style={{width: '100%'}}>
+                        
+                        <Text style={userStyleSheet.userInfoText}>Please choose a username.</Text>
+                        <View style={userStyleSheet.SectionStyle}>
+                            <Image source={require('../../assets/ic_person.png')}
+                                   style={userStyleSheet.inputImageStyle} />
+                            <TextInput 
+                            style={[{flex:1, color: 'white'}]}
+                            value={this.state.updateUsername}
+                            onFocus={() => this.onUpdateusernameFocus()}
+                            onChangeText={this.onUpdateusernameChanged}
+                            selectionColor={'white'}
+                            secureTextEntry={false}/>
+                         </View>
+                         <TouchableOpacity
+                        style={[userStyleSheet.LoginButton]}
+                        onPress={() => this.onUpdateUsername()}> 
+                        <Text style={[userStyleSheet.loginButtonText]}>Add Username</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                        style={[userStyleSheet.LoginButton]}
+                        onPress={() => this.onLogOutPressed()}> 
+                        <Text style={[userStyleSheet.loginButtonText]}>Log Out</Text>
+                        </TouchableOpacity>
+                         </KeyboardAvoidingView>
+                        
+                        
+                        </View> 
+                        </LinearGradient>)
             }
             else { 
                 return (<LinearGradient colors={['#F9C000', '#DF8600']}

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import User from '../components/User'; 
 
-import { GetUser, FacebookLogin, DispatchUserfromStorage } from '../actions/UserActions'; 
+import { GetUser, FacebookLogin, DispatchUserfromStorage, UpdateUsernameFacebook } from '../actions/UserActions'; 
 
 import { getUser } from '../selectors/CommonSelectors'; 
 
@@ -18,5 +18,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, { 
     GetUser, 
     FacebookLogin, 
-    DispatchUserfromStorage
+    DispatchUserfromStorage, 
+    UpdateUsernameFacebook
 })(UserContainer)
