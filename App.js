@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppRegistry, View } from 'react-native';
+import { AppRegistry, View, StatusBar } from 'react-native';
 import { Provider } from 'react-redux'; 
 import configureStore from './src/store/configureStore.js'; 
 import { StackNavigator, addNavigationHelpers, TabNavigator } from 'react-navigation'; 
@@ -10,6 +10,7 @@ import ChatContainer from './src/containers/ChatContainer';
 import AccountContainer from './src/containers/AccountContainer'; 
 import UserContainer from './src/containers/UserContainer'; 
 import RegisterContainer from './src/containers/RegisterContainer'; 
+import AppHeader from './src/components/AppHeader'; 
 
 console.disableYellowBox = true; 
 
@@ -25,16 +26,21 @@ global.fetch = function(uri, options, ...args) {
   });
 };
 
+StatusBar.setBarStyle('light-content', true); 
+
 const ModalStack = StackNavigator({
   Home: { 
     screen: CoinListContainer, 
     navigationOptions: ({navigation}) => ({
-      title: 'crypto-chat'
+      header: props => <AppHeader nav={navigation} renderBackButton={false}/>,
     })
   }, 
   Chat: { 
     path: 'chat/:crypto', 
-    screen: ChatContainer
+    screen: ChatContainer, 
+    navigationOptions: ({navigation}) => ({
+      header: props => <AppHeader nav={navigation} renderBackButton={true}/>,
+    })
   }
 })
 
@@ -42,12 +48,15 @@ const UserStack = StackNavigator({
   User: { 
     screen: UserContainer, 
     navigationOptions: ({navigation}) => ({
-      title: 'User'
+      header: props => <AppHeader nav={navigation} renderBackButton={false}/>,
     })
   }, 
   Register: { 
     path: 'register', 
-    screen: RegisterContainer
+    screen: RegisterContainer, 
+    navigationOptions: ({navigation}) => ({
+      header: props => <AppHeader nav={navigation} renderBackButton={true}/>,
+    })
   }
 })
 
