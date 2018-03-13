@@ -66,6 +66,7 @@ const TabNav = TabNavigator({
     navigationOptions: { 
       tabBarLabel: 'Home', 
       tabBarOptions: {activeTintColor: 'blue'}, 
+      tabBarPosition: 'bottom', 
       tabBarIcon: ({tintColor}) => <Icon name="home" size={35} color={tintColor} />
     }
   }, 
@@ -74,9 +75,12 @@ const TabNav = TabNavigator({
     navigationOptions: { 
       tabBarLabel: 'User', 
       tabBarOptions: {activeTintColor: 'blue'}, 
+      tabBarPosition: 'bottom', 
       tabBarIcon: ({tintColor}) => <Icon name="person" size={35} color={tintColor}/>
     }
   }
+}, { 
+  tabBarPosition: 'bottom'
 })
 
 
