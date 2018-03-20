@@ -96,7 +96,9 @@ class Register extends Component {
                     <View style={registerSheet.SectionStyle}>
                     <Image source={require('../../assets/ic_mail.png')}
                                    style={registerSheet.inputImageStyle} />
-                    <TextInput style={[{flex:1, color: 'white'}]}
+                    <TextInput 
+                    underlineColorAndroid='transparent'
+                    style={[{flex:1, color: 'white'}]}
                                onChangeText={this.EmailChanged}
                                onFocus={() => this.onEmailFocus()}
                                value={this.state.email}
@@ -105,7 +107,9 @@ class Register extends Component {
                     <View style={registerSheet.SectionStyle}>
                     <Image source={require('../../assets/ic_person.png')}
                                    style={registerSheet.inputImageStyle} />
-                    <TextInput style={[{flex:1, color: 'white'}]}
+                    <TextInput 
+                    underlineColorAndroid='transparent'
+                    style={[{flex:1, color: 'white'}]}
                                onChangeText={this.UsernameChanged}
                                onFocus={() => this.onUsernameFocus()}
                                value={this.state.username}
@@ -114,7 +118,9 @@ class Register extends Component {
                     <View style={registerSheet.SectionStyle}>
                     <Image source={require('../../assets/ic_lock.png')}
                                    style={registerSheet.inputImageStyle} />
-                    <TextInput style={[{flex:1, color: 'white'}]}
+                    <TextInput 
+                    underlineColorAndroid='transparent'
+                    style={[{flex:1, color: 'white'}]}
                                onChangeText={this.PasswordChanged}
                                onFocus={() => this.onPasswordFocus()}
                                secureTextEntry={true}

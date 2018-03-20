@@ -129,6 +129,7 @@ class User extends Component {
                             <Image source={require('../../assets/ic_person.png')}
                                    style={userStyleSheet.inputImageStyle} />
                             <TextInput 
+                            underlineColorAndroid='transparent'
                             style={[{flex:1, color: 'white'}]}
                             value={this.state.userName}
                             onFocus={() => this.onUsernameFocus()}
@@ -139,6 +140,7 @@ class User extends Component {
                          <Image source={require('../../assets/ic_lock.png')}
                                    style={userStyleSheet.inputImageStyle} />
                         <TextInput 
+                        underlineColorAndroid='transparent'
                         style={[{flex:1, color: 'white'}]}
                         value={this.state.password}
                         onFocus={() => this.onPasswordFocus()}

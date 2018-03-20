@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
+import Expo from 'expo'; 
+
 import {View, Text, Platform, Image, TouchableOpacity} from 'react-native'; 
 
 const propTypes = { 
@@ -25,7 +27,7 @@ class AppHeader extends Component {
             height: 40, 
             backgroundColor: '#FF6600', 
             zIndex: -1, 
-            marginTop: Platform.OS == "ios" ? 20 : 0}}>
+            marginTop: Platform.OS == "ios" ? 0 : Expo.Constants.statusBarHeight}}>
             {this.props.renderBackButton && 
                 (<TouchableOpacity onPress={() => this.onBackPressed()}> 
                     <Image source={require('../../assets/back.png')} />
