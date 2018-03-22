@@ -61,12 +61,13 @@ class Chat extends Component {
 
     onPressPost = () => { 
 
+    
         const { navigation, PostChat, user } = this.props; 
 
         const { crypto } = navigation.state.params; 
 
         let text = this.state.myText; 
-        if (text === '') return; 
+        if (text === '' || text === friendlyGreeting) return; 
 
         Keyboard.dismiss(); 
 
@@ -191,10 +192,8 @@ class Chat extends Component {
                     <TouchableOpacity 
                     style={styles.chatButton}
                     onPress={this.onPressPost}>
-                        <Text style={{
-                            paddingLeft: 15, 
-                            paddingTop: 25}}
-                            >Post</Text>
+                    <Image source={require('../../assets/ic_send.png')}
+                           style={{marginLeft: 25, marginTop: 20, width: 24, height: 24}}></Image>
 
                     </TouchableOpacity>
                 </View>

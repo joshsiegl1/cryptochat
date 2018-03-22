@@ -47,7 +47,9 @@ class CoinList extends Component {
     _renderItem = ({item}) => (
         <CoinButton 
         id={item.id}
-        navigate={this.props.navigation.navigate} />
+        navigate={this.props.navigation.navigate}
+        num={item.rank}
+        name={item.name} />
 
     )
 

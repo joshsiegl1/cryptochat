@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {PureComponent } from 'react'; 
 
-import {View, Image, Text} from 'react-native'; 
+import {View, Image, Text, TouchableOpacity} from 'react-native'; 
 
 import styles from '../styles/stylesheet'; 
 
@@ -15,6 +15,14 @@ class ChatItem extends PureComponent {
         super(props)
     }
 
+    onUpvotePressed = () => { 
+
+    }
+
+    onDownvotePressed = () => { 
+
+    }
+
     render() { 
         const { item } = this.props
 
@@ -25,7 +33,17 @@ class ChatItem extends PureComponent {
                     <Text style={{paddingLeft: 5, width: '90%'}}>{item.userID}</Text>  
                     <Text style={styles.messageText}>{item.body}</Text>
                 </View>
-                
+                <View style={styles.voteBox}>
+                    <View style={styles.voteSection}>
+                        <TouchableOpacity onPress={this.onUpvotePressed}>
+                            <Image source={require('../../assets/up_arrow.png')}></Image>
+                        </TouchableOpacity>
+                        <Text style={{paddingRight: 5, paddingLeft: 5}}>vote</Text>
+                        <TouchableOpacity onPress={this.onDownvotePressed}>
+                            <Image source={require('../../assets/down_arrow.png')}></Image>
+                        </TouchableOpacity>
+                    </View>
+                </View>
                 </View>)
     }
 }

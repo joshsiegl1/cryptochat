@@ -5,14 +5,13 @@ const styles = StyleSheet.create({
         display: 'flex', 
         flexDirection: 'row', 
         justifyContent: 'flex-start', 
-        borderColor: 'black', 
+        borderColor: 'lightgray', 
         borderBottomWidth: 1, 
         backgroundColor: 'white', 
-        padding: 5
+        padding: 10
     }, 
     cryptoButtonText: { 
-        paddingLeft: 10, 
-        paddingTop: 5
+        paddingLeft: 10
     }, 
     touchableOpacity: { 
         width: '100%'
@@ -24,17 +23,25 @@ const styles = StyleSheet.create({
     },
     messageBox: { 
         padding: 5, 
-        height: 80,
         width: '100%', 
         backgroundColor: 'white', 
         borderBottomWidth: 1, 
-        borderColor: 'gray', 
+        borderColor: 'lightgray', 
     }, 
     titleBox: { 
         flex: 1, 
         flexDirection: 'row', 
         justifyContent: 'flex-start', 
         flexWrap: 'wrap'
+    }, 
+    voteBox: { 
+        paddingTop: 10, 
+        paddingBottom: 10, 
+        paddingLeft: 20
+    }, 
+    voteSection: { 
+        display: 'flex', 
+        flexDirection: 'row'
     }, 
     messageText: { 
         paddingLeft: 21

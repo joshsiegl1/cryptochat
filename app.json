@@ -19,9 +19,11 @@
       "buildNumber": "1.1.0", 
       "supportsTablet": false
     }, 
+    //both android and ios versions (versionCode and buildNumber)
+    //need to be updated with each release
     "android": { 
       "package": "com.joshsiegl.cryptochat", 
-      "versionCode": 2
+      "versionCode": 3
     }
   }
 }

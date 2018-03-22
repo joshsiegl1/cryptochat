@@ -25,9 +25,9 @@ class AppHeader extends Component {
             flexDirection: 'row', 
             justifyContent: 'center', 
             height: 40, 
-            backgroundColor: '#FF6600', 
+            backgroundColor: 'white', 
             zIndex: -1, 
-            marginTop: Platform.OS == "ios" ? 0 : Expo.Constants.statusBarHeight}}>
+            marginTop: Platform.OS == "ios" ? 20 : Expo.Constants.statusBarHeight}}>
             {this.props.renderBackButton && 
                 (<TouchableOpacity onPress={() => this.onBackPressed()}> 
                     <Image source={require('../../assets/back.png')} />

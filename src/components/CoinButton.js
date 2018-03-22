@@ -8,7 +8,9 @@ import { CHAT_PATH } from '../constants/RouterConstants';
 
 const propTypes = { 
     navigate: PropTypes.func, 
-    id: PropTypes.string
+    id: PropTypes.string, 
+    num: PropTypes.string, 
+    name: PropTypes.string
 }
 
 class CoinButton extends Component { 
@@ -24,17 +26,18 @@ class CoinButton extends Component {
     }
 
     render(){ 
-        let id = this.props.id; 
+        let { id, num, name } = this.props; 
 
         return (
             <TouchableOpacity
                 style={style.container} 
                 onPress={this.onPress}> 
+            <Text style={{paddingRight: 10, color: 'lightgray'}}>{num}</Text>
             <Image
-                style={{width: 32, height: 32}}
+                style={{width: 16, height: 16}}
                 source={{uri: `http://www.joshsiegl.com/crypto/${id}.png`}}
                 />
-            <Text style={style.cryptoButtonText}>{id}</Text>
+            <Text style={style.cryptoButtonText}>{name}</Text>
         </TouchableOpacity>
         )
     }
