@@ -14,6 +14,7 @@ const propTypes = {
     id: PropTypes.string, 
     GetChat: PropTypes.func, 
     PostChat: PropTypes.func, 
+    Upvote: PropTypes.func, 
     chat: PropTypes.shape(), 
     user: PropTypes.shape()
 }
@@ -93,7 +94,8 @@ class Chat extends Component {
 
     _renderItem = ({item}) => (
         <ChatItem item={item}
-                  crypto={this.props.navigation.state.params.crypto} />
+                  crypto={this.props.navigation.state.params.crypto}
+                  upvote={this.props.Upvote} />
     )
 
     _keyExtractor = (item, index) => item.id

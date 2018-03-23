@@ -5,9 +5,11 @@ var express = require('express'),
     const mongoose = require("mongoose")
 
     const bcrypt = require("bcrypt"); 
+    const uuid = require('uuid/v4'); 
 
     const url = require("./Config.js").MongoDBConnectionString; 
     var userSchema = require("./models/user_model.js"); 
+    var chatSchema = require("./models/chat_model.js"); 
 
 router.post('/', (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
@@ -108,6 +110,57 @@ router.post('/updateUsernameFacebook', (req, res) => {
     catch (e) { 
         console.log(e); 
         res.send({"response" : "something went wrong"})
+    }
+})
+
+router.post('/upvote', (req, res) => { 
+  let userID = req.body.userID;
+  let postID = req.body.postID;  
+  
+  mongoose.connect(url, {useMongoClient: true})
+  const db = mongoose.connection
+
+  const user = mongoose.model('User', userSchema); 
+  const chat = mongoose.model('Chat', chatSchema); 
+
+  let conditions = {userID: userID}, 
+      postConditions = {postID: postID}, 
+      options = {mulit: true}
+
+  try { 
+        if (userID !== "anonymous") { 
+                user.update(conditions, {$inc: { karma: 1}}, options, function (err, numAffected) { 
+                if (numAffected.n > 0) { 
+                    chat.update(postConditions, {$inc: { karma: 1}}, options, function (err, numaffected) { 
+                        if (numaffected.n > 0) { 
+                            res.send({"response" : "success"})
+                        }
+                        else { 
+                            res.send({"response": "failure"})
+                        }
+                    })
+                }
+                else { 
+                    res.send({"response" : "failure"})
+                }
+            })
+        }
+        else { 
+            chat.update(postConditions, {$inc: { karma: 1}}, options, function (err, numaffected) { 
+                if (numaffected.n > 0) { 
+                    res.send({"response" : "success"})
+                }
+                else { 
+                    console.log(numaffected); 
+                    console.log(err); 
+                    res.send({"response": err})
+                }
+            })
+        }
+  }
+  catch (e) { 
+    console.log(e); 
+    res.send({"error" : e}); 
     }
 })
 

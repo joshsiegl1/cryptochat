@@ -7,7 +7,8 @@ import styles from '../styles/stylesheet';
 
 const propTypes = { 
     item: PropTypes.shape,
-    crypto: PropTypes.string.isRequired
+    crypto: PropTypes.string.isRequired, 
+    upvote: PropTypes.func
 }
 
 class ChatItem extends PureComponent { 
@@ -16,11 +17,13 @@ class ChatItem extends PureComponent {
     }
 
     onUpvotePressed = () => { 
+        const { postID, userID } = this.props.item; 
 
+        this.props.upvote(postID, userID)
     }
 
     onDownvotePressed = () => { 
-
+        const { postID } = this.props.item; 
     }
 
     render() { 

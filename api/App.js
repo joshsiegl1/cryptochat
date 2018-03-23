@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const app = express()
 const MongoClient = require("mongodb").MongoClient
 const mongoose = require("mongoose")
+const uuid = require("uuid/v4"); 
 
 const userRoutes = require('./UserRoutes.js'); 
 
@@ -41,7 +42,16 @@ app.post('/chat', (req, res) => {
 
     const Chat = mongoose.model('Chat', chatSchema)
 
-    var newChat = new Chat(req.body); 
+    let c = { 
+        postID: uuid(), 
+        karma: '0', 
+        body: req.body.body, 
+        userID: req.body.userID, 
+        inReplyTo: '', 
+        id: req.body.id
+    }
+
+    var newChat = new Chat(c); 
 
     newChat.save((err) => { 
         if (err) console.log(err); 
