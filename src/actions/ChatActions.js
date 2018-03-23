@@ -1,5 +1,5 @@
 
-import { POST_CHAT_URL, GET_CHAT_URL, UPVOTE_URL } from '../constants/ApiConstants'; 
+import { POST_CHAT_URL, GET_CHAT_URL, UPVOTE_URL, DOWNVOTE_URL } from '../constants/ApiConstants'; 
 import * as types from '../constants/ActionTypes'; 
 import {callApi} from '../utils/ApiUtils'; 
 
@@ -18,6 +18,23 @@ export const Upvote = (postID, userID) => async (dispatch) => {
     }
 
     const { json } = await callApi(UPVOTE_URL, options); 
+}
+
+export const Downvote = (postID, userID) => async (dispatch) => { 
+    let downvote = { 
+        postID, 
+        userID
+    }
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type' : 'application/json'
+        }, 
+        body: JSON.stringify(downvote)
+    }
+
+    const { json } = await callApi(DOWNVOTE_URL, options); 
 }
 
 export const PostChat = (id, userID, message) => async (dispatch) => { 

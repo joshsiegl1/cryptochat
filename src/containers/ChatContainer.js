@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { parseRoute } from '../utils/RouterUtils'; 
 
-import { GetChat, PostChat, Upvote } from '../actions/ChatActions'; 
+import { GetChat, PostChat, Upvote, Downvote } from '../actions/ChatActions'; 
 
 import { getChats, getUser } from '../selectors/CommonSelectors'; 
 
@@ -21,5 +21,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, { 
     GetChat, 
     PostChat,
-    Upvote
+    Upvote, 
+    Downvote
 })(ChatContainer)
