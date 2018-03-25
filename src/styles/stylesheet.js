@@ -43,6 +43,11 @@ const styles = StyleSheet.create({
         display: 'flex', 
         flexDirection: 'row'
     }, 
+    commentSection: { 
+        paddingLeft: 20, 
+        display: 'flex', 
+        flexDirection: 'row'
+    }, 
     messageText: { 
         paddingLeft: 21
     }

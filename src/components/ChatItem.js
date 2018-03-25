@@ -15,6 +15,10 @@ const propTypes = {
 class ChatItem extends PureComponent { 
     constructor(props) { 
         super(props)
+
+        this.state = { 
+
+        }
     }
 
     onUpvotePressed = () => { 
@@ -40,6 +44,7 @@ class ChatItem extends PureComponent {
                     <Text style={styles.messageText}>{item.body}</Text>
                 </View>
                 <View style={styles.voteBox}>
+                    <View style={{display: 'flex', flexDirection: 'row'}}>
                     <View style={styles.voteSection}>
                         <TouchableOpacity onPress={this.onUpvotePressed}>
                             <Image source={require('../../assets/up_arrow.png')}></Image>
@@ -48,6 +53,13 @@ class ChatItem extends PureComponent {
                         <TouchableOpacity onPress={this.onDownvotePressed}>
                             <Image source={require('../../assets/down_arrow.png')}></Image>
                         </TouchableOpacity>
+                    </View>
+                    <View style={styles.commentSection}>
+                            <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}}>
+                                <Image source={require('../../assets/reply.png')} />
+                                <Text style={{paddingLeft: 5}}>comments</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
                 </View>)
