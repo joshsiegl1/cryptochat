@@ -9,7 +9,8 @@ const propTypes = {
     item: PropTypes.shape,
     crypto: PropTypes.string.isRequired, 
     upvote: PropTypes.func, 
-    downvote: PropTypes.func
+    downvote: PropTypes.func, 
+    navigate: PropTypes.func
 }
 
 class ChatItem extends PureComponent { 
@@ -31,6 +32,14 @@ class ChatItem extends PureComponent {
         const { postID, userID } = this.props.item; 
 
         this.props.downvote(postID, userID)
+    }
+
+    onCommentsPressed = () => { 
+        const { postID } = this.props.item; 
+
+        const { navigate } = this.props; 
+
+        navigate('Comment', {postID: postID}); 
     }
 
     render() { 
@@ -55,9 +64,9 @@ class ChatItem extends PureComponent {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.commentSection}>
-                            <TouchableOpacity style={{display: 'flex', flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={this.onCommentsPressed} style={{display: 'flex', flexDirection: 'row'}}>
                                 <Image source={require('../../assets/reply.png')} />
-                                <Text style={{paddingLeft: 5}}>comments</Text>
+                                <Text style={{paddingLeft: 5}} >comments</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

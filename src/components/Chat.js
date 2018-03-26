@@ -97,7 +97,8 @@ class Chat extends Component {
         <ChatItem item={item}
                   crypto={this.props.navigation.state.params.crypto}
                   upvote={this.props.Upvote}
-                  downvote={this.props.Downvote} />
+                  downvote={this.props.Downvote}
+                  navigate={this.props.navigation.navigate} />
     )
 
     _keyExtractor = (item, index) => item.id

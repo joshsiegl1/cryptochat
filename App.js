@@ -10,6 +10,7 @@ import ChatContainer from './src/containers/ChatContainer';
 import AccountContainer from './src/containers/AccountContainer'; 
 import UserContainer from './src/containers/UserContainer'; 
 import RegisterContainer from './src/containers/RegisterContainer'; 
+import CommentContainer from './src/containers/CommentContainer'; 
 import AppHeader from './src/components/AppHeader'; 
 
 console.disableYellowBox = true; 
@@ -40,6 +41,13 @@ const ModalStack = StackNavigator({
     screen: ChatContainer, 
     navigationOptions: ({navigation}) => ({
       header: props => <AppHeader nav={navigation} renderBackButton={true}/>,
+    })
+  }, 
+  Comment: { 
+    path: 'comment/:postID', 
+    screen: CommentContainer, 
+    navigationOptions: ({navigation}) => ({
+      header: props => <AppHeader nav={navigation} renderBackButton={true} />, 
     })
   }
 })

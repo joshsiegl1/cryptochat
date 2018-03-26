@@ -71,3 +71,15 @@ export const GetChat = (id) => async (dispatch) => {
 
     dispatch(getChatSuccess(id, json))
 }
+
+const getPostSuccess = (postID, content) => { 
+    return { 
+
+    }
+}
+
+export const GetPost = (postID) => async (dispatch) => { 
+    const { json } = await callApi()
+
+    dispatch(getPostSuccess(postID, json)); 
+}
