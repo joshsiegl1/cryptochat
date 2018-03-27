@@ -60,6 +60,37 @@ app.post('/chat', (req, res) => {
     res.send("Success");  
 })
 
+app.get('/post/:postID', (req, res) => { 
+    var postID = req.params.postID; 
+    
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
+
+    var post = mongoose.model('Chat', chatSchema); 
+
+    post.find({postID: postID})
+        .exec(function(err, thePost) { 
+            if (err) { 
+                res.send(err); 
+            }
+            else { 
+                var replies = mongoose.model('Chat', chatSchema); 
+                replies.find({inReplyTo: postID})
+                        .exec(function(err, theReplies) { 
+                            if (err) { 
+                                res.send(thePost); 
+                            }
+                            else { 
+                                res.send({
+                                    comment: thePost, 
+                                    replies: theReplies
+                                })
+                            }
+                        })
+            }
+        })
+})
+
 app.get('/chat/:crypto', (req, res) => { 
 
     var crypto = req.params.crypto; 
