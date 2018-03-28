@@ -60,6 +60,31 @@ app.post('/chat', (req, res) => {
     res.send("Success");  
 })
 
+app.post('/reply', (req, res) => { 
+
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
+
+    const Chat = mongoose.model('Chat', chatSchema)
+
+    let c = {
+        postID: uuid(), 
+        karma: '0', 
+        body: req.body.body, 
+        userID: req.body.userID, 
+        inReplyTo: req.body.inReplyTo, 
+        id: req.body.id + ' reply'
+    }
+
+    var newReply = new Chat(c); 
+
+    newReply.save((err) => { 
+        if (err) console.log(err); 
+    })
+
+    res.send("Success"); 
+})
+
 app.get('/post/:postID', (req, res) => { 
     var postID = req.params.postID; 
     
