@@ -26,4 +26,5 @@ export const DOWNVOTE_URL = `${GET_CRYPTO_HOSTNAME()}/user/downvote/`;
 export const ADD_USER_URL = `${GET_CRYPTO_HOSTNAME()}/user/`; 
 export const GET_USER_URL = `${GET_CRYPTO_HOSTNAME()}/user/get/:name`; 
 export const FACEBOOK_LOGIN_URL = `${GET_CRYPTO_HOSTNAME()}/user/facebookLogin`; 
-export const UPDATE_USERNAME_FACEBOOK_URL = `${GET_CRYPTO_HOSTNAME()}/user/updateUsernameFacebook`; 
+export const UPDATE_USERNAME_FACEBOOK_URL = `${GET_CRYPTO_HOSTNAME()}/user/updateUsernameFacebook`;
+export const GET_POST_URL = `${GET_CRYPTO_HOSTNAME()}/post/:postID`;  

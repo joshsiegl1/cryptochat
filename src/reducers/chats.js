@@ -1,7 +1,8 @@
 import * as types from '../constants/ActionTypes'; 
 
 const initialState = { 
-    chats: {}
+    chats: {}, 
+    comment: {}
 }
 
 const chats = (state = initialState, action) => { 
@@ -12,6 +13,17 @@ const chats = (state = initialState, action) => {
             chats: { 
                 ...state.chats, 
                 [action.ticker]: action.chats
+            }
+        }
+
+        case types.GET_POST: 
+        return { 
+            ...state, 
+            comment: { 
+                [action.postID]: { 
+                    content: action.comment, 
+                    replies: action.replies
+                }
             }
         }
 

@@ -1,5 +1,5 @@
 
-import { POST_CHAT_URL, GET_CHAT_URL, UPVOTE_URL, DOWNVOTE_URL } from '../constants/ApiConstants'; 
+import { POST_CHAT_URL, GET_CHAT_URL, UPVOTE_URL, DOWNVOTE_URL, GET_POST_URL } from '../constants/ApiConstants'; 
 import * as types from '../constants/ActionTypes'; 
 import {callApi} from '../utils/ApiUtils'; 
 
@@ -72,15 +72,17 @@ export const GetChat = (id) => async (dispatch) => {
     dispatch(getChatSuccess(id, json))
 }
 
-const getPostSuccess = (content) => { 
+const getPostSuccess = (postID, content) => { 
     return { 
-           type: types.GET_POST, 
-           comment: content 
+           type: types.GET_POST,
+           postID: postID,
+           comment: content.comment, 
+           replies: content.replies 
     }
 }
 
 export const GetPost = (postID) => async (dispatch) => { 
-    const { json } = await callApi()
+    const { json } = await callApi(GET_POST_URL.replace(":postID", postID)); 
 
-    dispatch(getPostSuccess(json)); 
+    dispatch(getPostSuccess(postID, json)); 
 }
