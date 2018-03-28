@@ -1,5 +1,9 @@
 
-import { POST_CHAT_URL, GET_CHAT_URL, UPVOTE_URL, DOWNVOTE_URL, GET_POST_URL } from '../constants/ApiConstants'; 
+import { 
+    POST_CHAT_URL, 
+    GET_CHAT_URL, UPVOTE_URL, 
+    DOWNVOTE_URL, GET_POST_URL, 
+    POST_REPLY_URL } from '../constants/ApiConstants'; 
 import * as types from '../constants/ActionTypes'; 
 import {callApi} from '../utils/ApiUtils'; 
 
@@ -56,6 +60,27 @@ export const PostChat = (id, userID, message) => async (dispatch) => {
     const { json } = await callApi(POST_CHAT_URL, options); 
 
     dispatch(GetChat(id)); 
+}
+
+export const PostReply = (id, userID, message, postID) => async (dispatch) => { 
+    let reply = { 
+        id, 
+        userID, 
+        body: message, 
+        inReplyTo: postID
+    }
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type' : 'application/json'
+        }, 
+        body: JSON.stringify(reply)
+    }
+
+    const { json } = await callApi(POST_REPLY_URL, options)
+
+    dispatch(GetPost(postID))
 }
 
 const getChatSuccess = (id, comments) => {

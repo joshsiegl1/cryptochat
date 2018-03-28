@@ -37,9 +37,9 @@ class ChatItem extends PureComponent {
     onCommentsPressed = () => { 
         const { postID } = this.props.item; 
 
-        const { navigate } = this.props; 
+        const { navigate, crypto } = this.props; 
 
-        navigate('Comment', {postID: postID}); 
+        navigate('Comment', {postID: postID, crypto: crypto}); 
     }
 
     render() { 

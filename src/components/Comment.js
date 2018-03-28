@@ -9,7 +9,9 @@ import styles from '../styles/commentSheet';
 
 const propTypes = { 
     comment: PropTypes.shape({}), 
-    GetPost: PropTypes.func
+    GetPost: PropTypes.func, 
+    PostReply: PropTypes.func, 
+    user: PropTypes.shape()
 }
 
 const friendlyGreeting = "Leave a comment"; 
@@ -54,7 +56,25 @@ class Comment extends Component {
     }
 
     onPressPost = () => { 
+        const { navigation, PostReply, user} = this.props; 
 
+        const { crypto, postID } = navigation.state.params; 
+
+        let text = this.state.myText; 
+        if (text === '' || text === friendlyGreeting) return; 
+
+        Keyboard.dismiss(); 
+
+        let username = "anonymous"; 
+        if (!(Object.keys(user).length === 0 && user.constructor === Object)) { 
+            if (user.userID !== "") { 
+                username = user.userID
+            }
+        }
+
+        PostReply(crypto, username, text, postID)
+
+        this.setState({myText: friendlyGreeting, chatColor: 'darkgrey'}); 
     }
 
     onInputFocused = () => { 

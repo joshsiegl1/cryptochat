@@ -44,7 +44,7 @@ const ModalStack = StackNavigator({
     })
   }, 
   Comment: { 
-    path: 'comment/:postID', 
+    path: 'comment/:postID/:crypto', 
     screen: CommentContainer, 
     navigationOptions: ({navigation}) => ({
       header: props => <AppHeader nav={navigation} renderBackButton={true} />, 

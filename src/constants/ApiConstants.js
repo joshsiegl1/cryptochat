@@ -19,6 +19,7 @@ const GET_CRYPTO_HOSTNAME = () => {
 }
 
 export const POST_CHAT_URL = `${GET_CRYPTO_HOSTNAME()}/chat/`;
+export const POST_REPLY_URL = `${GET_CRYPTO_HOSTNAME()}/reply/`; 
 export const GET_CHAT_URL = `${GET_CRYPTO_HOSTNAME()}/chat/:crypto`;  
 
 export const UPVOTE_URL = `${GET_CRYPTO_HOSTNAME()}/user/upvote/`; 
