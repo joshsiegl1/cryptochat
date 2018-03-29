@@ -1,9 +1,13 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react';
 
-import {View, Text, TextInput, Keyboard, TouchableOpacity, Image, KeyboardAvoidingView, FlatList} from 'react-native'; 
+import {View, Text, TextInput, Keyboard, TouchableOpacity, Image, KeyboardAvoidingView, FlatList, Platform} from 'react-native'; 
+
+import { AdMobBanner } from 'expo'; 
 
 import ReplyItem from './ReplyItem'; 
+
+import ChatBar from './ChatBar'; 
 
 import styles from '../styles/commentSheet'; 
 
@@ -15,6 +19,7 @@ const propTypes = {
 }
 
 const friendlyGreeting = "Leave a comment"; 
+const totalChatLength = 200; 
 
 class Comment extends Component { 
     constructor(props) { 
@@ -103,10 +108,29 @@ class Comment extends Component {
 
     _keyExtractor = (item, index) => item.postID
 
+    displayAd = () => { 
+        if (Platform.OS === 'ios') { 
+            return (<AdMobBanner 
+            bannerSize="fullbanner"
+            adUnitID="ca-app-pub-2896471597472603/8703233139"
+            didFailToReceiveAdWithError={this.bannerError}
+            />) 
+        }
+        else { 
+            return (<AdMobBanner 
+            bannerSize="fullbanner"
+            adUnitID="ca-app-pub-2896471597472603/2666295016"
+            didFailToReceiveAdWithError={this.bannerError}
+            />) 
+        }
+    }
+
     render() { 
 
         const { comment, navigation } = this.props; 
         const { postID } = navigation.state.params; 
+
+        let ad = this.displayAd(); 
 
         let comments = []; 
         let replies = []; 
@@ -127,6 +151,7 @@ class Comment extends Component {
                 behavior="position"
                 keyboardVerticleOffset={50}
                 style={{flex: 1}}>
+
             <View style={styles.contentContainer}>
                 <Text>{postContent}</Text>
             </View>
@@ -136,12 +161,28 @@ class Comment extends Component {
                 ref={ref => this.flatList = ref}
                 onContentSizeChange={this.onScrollback}
                 onLayout={this.onScrollback}
+                style={{height: '70%'}}
                 data={replies} 
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
              />
 
-             <View style={{
+             <View
+                    style={{borderColor: 'gray', 
+                            backgroundColor: 'black', 
+                            borderWidth: 1, 
+                            paddingLeft: 25, 
+                            paddingRight: 25}}>
+
+                    {ad}
+                </View> 
+
+                <ChatBar id="none"
+                         postID="none"
+                         navigate={this.props.navigation.navigate}
+                         greeting="Add a comment" />
+
+             {/* <View style={{
                  flexDirection: 'row', 
                  width: '100%', 
                  height: 60}}> 
@@ -157,14 +198,22 @@ class Comment extends Component {
             onChangeText={this.onChangeText}
             value={this.state.myText} 
             onFocus={this.onInputFocused}/>
-            <TouchableOpacity 
+
+                <View style={styles.chatButton}>
+                    <Text style={{
+                        paddingTop: 20, 
+                    }}>{this.state.myText.length} / {totalChatLength}</Text> 
+                 </View>
+
+
+                <TouchableOpacity 
                     style={styles.chatButton}
                     onPress={this.onPressPost}>
                     <Image source={require('../../assets/ic_send.png')}
                            style={{marginLeft: 25, marginTop: 20, width: 24, height: 24}}></Image>
 
-                    </TouchableOpacity>
-            </View>
+                </TouchableOpacity>
+            </View> */}
 
             </KeyboardAvoidingView>)
     }
