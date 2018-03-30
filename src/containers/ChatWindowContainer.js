@@ -3,13 +3,20 @@ import { connect } from 'react-redux';
 
 import ChatWindow from '../components/ChatWindow'; 
 
+import { PostChat, PostReply } from '../actions/ChatActions'; 
+
+import { getUser } from '../selectors/CommonSelectors'; 
+
 const ChatWindowContainer = props => <ChatWindow {...props} />
 
 const mapStateToProps = (state) => { 
-    return state; 
+    return { 
+        user: getUser(state)
+    }; 
 }
 
 export default connect(mapStateToProps, { 
-
+    PostChat, 
+    PostReply
 })(ChatWindowContainer)
 

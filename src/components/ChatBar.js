@@ -8,6 +8,8 @@ import styles from '../styles/chatBarSheet';
 const propTypes = { 
     id: PropTypes.string,
     postID: PropTypes.string,
+    type: PropTypes.string,
+    topic: PropTypes.string,
     navigate: PropTypes.func, 
     greeting: PropTypes.string, 
 }
@@ -18,9 +20,15 @@ class ChatBar extends Component {
     }
 
     onPress = () => { 
-        const { id, postID, navigate } = this.props; 
+        const { id, postID, type, topic, navigate } = this.props; 
 
-        navigate("ChatWindow", {postID: postID, crypto: id}); 
+        navigate("ChatWindow", 
+        {
+            postID: postID, 
+            crypto: id, 
+            type: type, 
+            topic: topic
+        }); 
     }
 
     render() { 

@@ -178,7 +178,9 @@ class Comment extends Component {
                 </View> 
 
                 <ChatBar id="none"
-                         postID="none"
+                         postID={postID}
+                         type="comment"
+                         topic={postContent}
                          navigate={this.props.navigation.navigate}
                          greeting="Add a comment" />
 
