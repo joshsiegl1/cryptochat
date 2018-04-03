@@ -5,7 +5,7 @@ export const SetItem = async (key, item) => {
         await AsyncStorage.setItem(key, item); 
     }
     catch (e) { 
-        console.log(e) 
+        //console.log(e) 
     }
 }
 
@@ -14,7 +14,7 @@ export const GetItem = async (key) => {
         await AsyncStorage.getItem(key); 
     }
     catch (e) { 
-        console.log(e) 
+        //console.log(e) 
     }
 }
 
@@ -27,7 +27,7 @@ export const SetUser = async (userID, email, karma, fbid) => {
         ['fbid', fbid]]); 
     }
     catch (e) { 
-        console.log(e); 
+        //console.log(e); 
     }
 }
 
@@ -49,7 +49,7 @@ export const GetUser = async (fn) => {
         })
     }
     catch (e) { 
-        console.log(e); 
+        //console.log(e); 
     }
 }
 
@@ -57,11 +57,11 @@ export const DeleteUser = async () => {
     try { 
         let keys = ['userID', 'email', 'karma', 'fbid']
         await AsyncStorage.multiRemove(keys, (err) => { 
-            console.log(err); 
+            //console.log(err); 
         })
     }
     catch (e) { 
-        console.log(e) 
+        //console.log(e) 
     }
 }
 

@@ -22,7 +22,7 @@ class CoinList extends Component {
         super(props)
     }
 
-    async componentWillMount() { 
+    async UNSAFE_componentWillMount() { 
         const {currencies, fetchTopFiftyCryptoCurrencies,
                User, DispatchUserfromStorage} = this.props; 
 

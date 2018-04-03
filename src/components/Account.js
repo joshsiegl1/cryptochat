@@ -15,7 +15,7 @@ class Account extends Component {
         super(props)
     }
 
-    componentWillMount() { 
+    UNSAFE_componentWillMount() { 
         //Check to make sure we have a user
 
         const { User, navigation } = this.props; 

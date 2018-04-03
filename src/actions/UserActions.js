@@ -20,7 +20,7 @@ const getUserSuccess = (user) => {
 ///This is used to dispatch the user to redux if it's found in storage but not in the redux store
 ///Also used to remove the user from the redux store on log out
 export const DispatchUserfromStorage = (user) => async (dispatch) => { 
-    console.log("dispatching user to redux from storage: " + user); 
+    //console.log("dispatching user to redux from storage: " + user); 
     dispatch( { 
         type: types.GET_USER, 
         user
@@ -42,7 +42,7 @@ export const GetUser = (username, password) => async (dispatch) => {
 
     const { json } = await callApi(GET_USER_URL.replace(':name', username), options); 
 
-    console.log(json); 
+    //console.log(json); 
     let error = json.error; 
     if (error === "Incorrect username/password")
     { 
@@ -79,7 +79,7 @@ export const AddUser = (email, username, password) => async (dispatch) => {
 
     const { json } = await callApi(ADD_USER_URL, options); 
 
-    console.log(json); 
+    //console.log(json); 
     let response = json.response; 
 
     if (response === "Success")
@@ -104,7 +104,7 @@ export const UpdateUsernameFacebook = (fbid, username) => async (dispatch) => {
 
     const { json } = await callApi(UPDATE_USERNAME_FACEBOOK_URL, options); 
 
-    console.log(json); 
+    //console.log(json); 
     
     let user = json; 
     await SetUser(user.userID, "", user.karma, user.fbid); 
@@ -128,7 +128,7 @@ export const FacebookLogin = (fbid) => async (dispatch) => {
 
     const { json } = await callApi(FACEBOOK_LOGIN_URL, options); 
 
-    console.log(json); 
+    //console.log(json); 
 
     let user = json[0]; 
     await SetUser(user.userID, "", user.karma, user.fbid); 

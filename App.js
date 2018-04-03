@@ -16,17 +16,19 @@ import AppHeader from './src/components/AppHeader';
 
 console.disableYellowBox = true; 
 
+//console.log("Hello from expo"); 
+
 // XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
 // GLOBAL.originalXMLHttpRequest :
 // GLOBAL.XMLHttpRequest;
 
-global._fetch = fetch;
-global.fetch = function(uri, options, ...args) {
-  return global._fetch(uri, options, ...args).then((response) => {
-    console.log('Fetch', { request: { uri, options, ...args }, response });
-    return response;
-  });
-};
+// global._fetch = fetch;
+// global.fetch = function(uri, options, ...args) {
+//   return global._fetch(uri, options, ...args).then((response) => {
+//     console.log('Fetch', { request: { uri, options, ...args }, response });
+//     return response;
+//   });
+// };
 
 StatusBar.setBarStyle('light-content', true); 
 

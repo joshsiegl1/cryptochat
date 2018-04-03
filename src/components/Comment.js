@@ -52,7 +52,7 @@ class Comment extends Component {
                 GetPost(postID); 
             }
             else { 
-                console.log(thisComment)
+                //console.log(thisComment)
             }
         }
         else { 

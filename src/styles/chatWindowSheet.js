@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderColor: 'lightgray', 
         borderBottomWidth: 1, 
-        paddingBottom: 20, 
-        textAlign: 'center'
+        paddingBottom: 20
     }, 
     topicText: { 
         fontSize: 18,

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import { View, TextInput, Text, TouchableOpacity, Image } from 'react-native'; 
+import { View, TextInput, Text, TouchableOpacity, Image, Keyboard } from 'react-native'; 
 
 import styles from '../styles/chatWindowSheet'; 
 
@@ -29,15 +29,27 @@ class ChatWindow extends Component {
     }
 
     onPost = () => { 
-        const { type } = this.props.navigation.state.params; 
+        const { type, crypto, postID } = this.props.navigation.state.params; 
         const { user, PostChat, PostReply } = this.props; 
 
-        if (type === "comment") { 
+        let text = this.state.myText; 
+        if (text === '' || text === greeting) return; 
 
+        let username = "anonymous"; 
+        if (!(Object.keys(user).length === 0 && user.constructor === Object)) { 
+            if (user.userID !== "") { 
+                username = user.userID
+            }
+        }
+
+        if (type === "comment") { 
+            PostReply(crypto, username, text, postID); 
         }
         else { 
-
+            PostChat(crypto, username, text); 
         }
+
+        Keyboard.dismiss(); 
     }
 
     onChange = (text) => { 
