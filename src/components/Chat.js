@@ -8,6 +8,8 @@ import styles from '../styles/stylesheet';
 
 import ChatItem from './ChatItem'; 
 
+import ChatBar from './ChatBar'; 
+
 import { AdMobBanner } from 'expo'; 
 
 const propTypes = { 
@@ -119,14 +121,14 @@ class Chat extends Component {
     displayAd = () => { 
         if (Platform.OS === 'ios') { 
             return (<AdMobBanner 
-            bannerSize="fullbanner"
+            bannerSize="fullBanner"
             adUnitID="ca-app-pub-2896471597472603/8703233139"
             didFailToReceiveAdWithError={this.bannerError}
             />) 
         }
         else { 
             return (<AdMobBanner 
-            bannerSize="fullbanner"
+            bannerSize="fullBanner"
             adUnitID="ca-app-pub-2896471597472603/2666295016"
             didFailToReceiveAdWithError={this.bannerError}
             />) 
@@ -136,7 +138,7 @@ class Chat extends Component {
     render() { 
 
         const { chat, navigation } = this.props;
-        const { crypto } = navigation.state.params; 
+        const { crypto, postID } = navigation.state.params; 
 
         let ad = this.displayAd(); 
 
@@ -170,7 +172,15 @@ class Chat extends Component {
 
                     {ad}
                 </View> 
-                <View style={{
+
+                <ChatBar id={crypto}
+                         postID={postID}
+                         type="chat"
+                         topic={crypto}
+                         navigate={this.props.navigation.navigate}
+                         greeting="Add a comment" />
+
+                {/* <View style={{
                     flexDirection: 'row', 
                     width: '100%', 
                     height: 60}}>
@@ -201,7 +211,7 @@ class Chat extends Component {
                            style={{marginLeft: 25, marginTop: 20, width: 24, height: 24}}></Image>
 
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </KeyboardAvoidingView>
         )
     }

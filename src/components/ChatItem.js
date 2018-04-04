@@ -3,6 +3,8 @@ import React, {PureComponent } from 'react';
 
 import {View, Image, Text, TouchableOpacity} from 'react-native'; 
 
+import { Asset } from 'expo'; 
+
 import styles from '../styles/stylesheet'; 
 
 const propTypes = { 
@@ -53,20 +55,20 @@ class ChatItem extends PureComponent {
                     <Text style={styles.messageText}>{item.body}</Text>
                 </View>
                 <View style={styles.voteBox}>
-                    <View style={{display: 'flex', flexDirection: 'row'}}>
+                    <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <View style={styles.voteSection}>
                         <TouchableOpacity onPress={this.onUpvotePressed}>
                             <Image source={require('../../assets/up_arrow.png')}></Image>
                         </TouchableOpacity>
-                        <Text style={{paddingRight: 5, paddingLeft: 5}}>vote</Text>
+                        <Text style={{lineHeight: 18, fontSize:18, color: '#373F51', paddingRight: 5, paddingLeft: 5}}>vote</Text>
                         <TouchableOpacity onPress={this.onDownvotePressed}>
                             <Image source={require('../../assets/down_arrow.png')}></Image>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.commentSection}>
-                            <TouchableOpacity onPress={this.onCommentsPressed} style={{display: 'flex', flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={this.onCommentsPressed} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                                 <Image source={require('../../assets/reply.png')} />
-                                <Text style={{paddingLeft: 5}} >comments</Text>
+                                <Text style={{lineHeight: 18, fontSize:18, color: '#373F51', paddingLeft: 5}} >comments</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

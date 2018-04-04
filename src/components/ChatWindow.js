@@ -66,7 +66,7 @@ class ChatWindow extends Component {
                     <Text style={styles.sendText}>SEND</Text>
                     <Image 
                     style={styles.sendImage}
-                    source={require("../../assets/ic_send.png")} />
+                    source={{uri: `http://www.joshsiegl.com/crypto/assets/ic_send.png`}} />
                 </TouchableOpacity>
             </View>
             <View style={styles.topic}>

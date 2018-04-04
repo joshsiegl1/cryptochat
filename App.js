@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import configureStore from './src/store/configureStore.js'; 
 import { StackNavigator, addNavigationHelpers, TabNavigator } from 'react-navigation'; 
 import { Icon } from 'react-native-elements'; 
+import { AppLoading, Asset } from 'expo'; 
  
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 
@@ -15,8 +16,6 @@ import ChatWindowContainer from './src/containers/ChatWindowContainer';
 import AppHeader from './src/components/AppHeader'; 
 
 console.disableYellowBox = true; 
-
-//console.log("Hello from expo"); 
 
 // XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
 // GLOBAL.originalXMLHttpRequest :
@@ -106,13 +105,50 @@ export default class App extends React.Component {
   constructor(props) { 
     super(props); 
 
+    this.state = { 
+      isLoadingComplete: false,
+    }
+
+  }
+
+  _loadResourcesAsync = async () => { 
+    return Promise.all([
+      Asset.loadAsync([
+        require('./assets/up_arrow.png'), 
+        require('./assets/down_arrow.png'), 
+        require('./assets/reply.png'), 
+        require('./assets/back.png')
+      ])
+    ]); 
+  }
+
+  _handleLoadingError = error => {
+    // In this case, you might want to report the error to your error
+    // reporting service, for example Sentry
+    console.warn(error);
+  };
+
+  _handleFinishLoading = () => { 
+    this.setState({isLoadingComplete: true}); 
   }
 
   render() {
-    return (
-      <Provider store={configureStore()}>
-        <TabNav />
-      </Provider>
-    );
+
+    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) { 
+      return (
+        <AppLoading
+          startAsync={this._loadResourcesAsync}
+          onError={this._handleLoadingError}
+          onFinish={this._handleFinishLoading}
+        />
+      );
+    }
+    else { 
+      return (
+        <Provider store={configureStore()}>
+          <TabNav />
+        </Provider>
+      );
+    }
   }
 }

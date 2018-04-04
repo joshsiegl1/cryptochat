@@ -111,14 +111,14 @@ class Comment extends Component {
     displayAd = () => { 
         if (Platform.OS === 'ios') { 
             return (<AdMobBanner 
-            bannerSize="fullbanner"
+            bannerSize="fullBanner"
             adUnitID="ca-app-pub-2896471597472603/8703233139"
             didFailToReceiveAdWithError={this.bannerError}
             />) 
         }
         else { 
             return (<AdMobBanner 
-            bannerSize="fullbanner"
+            bannerSize="fullBanner"
             adUnitID="ca-app-pub-2896471597472603/2666295016"
             didFailToReceiveAdWithError={this.bannerError}
             />) 
@@ -128,7 +128,7 @@ class Comment extends Component {
     render() { 
 
         const { comment, navigation } = this.props; 
-        const { postID } = navigation.state.params; 
+        const { postID, crypto } = navigation.state.params; 
 
         let ad = this.displayAd(); 
 
@@ -177,7 +177,7 @@ class Comment extends Component {
                     {ad}
                 </View> 
 
-                <ChatBar id="none"
+                <ChatBar id={crypto}
                          postID={postID}
                          type="comment"
                          topic={postContent}

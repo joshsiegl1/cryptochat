@@ -5,10 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
+            "name": "Debug in Exponent",
+            "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+            "type": "reactnative",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/api/App.js"
+            "platform": "exponent",
+            "sourceMaps": true,
+            "outDir": "${workspaceRoot}/.vscode/.react"
         }
     ]
 }
