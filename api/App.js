@@ -67,6 +67,8 @@ app.post('/reply', (req, res) => {
 
     const Chat = mongoose.model('Chat', chatSchema)
 
+    console.log(req); 
+
     let c = {
         postID: uuid(), 
         karma: '0', 

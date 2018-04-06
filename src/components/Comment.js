@@ -111,14 +111,14 @@ class Comment extends Component {
     displayAd = () => { 
         if (Platform.OS === 'ios') { 
             return (<AdMobBanner 
-            bannerSize="fullBanner"
+            bannerSize="fullbanner"
             adUnitID="ca-app-pub-2896471597472603/8703233139"
             didFailToReceiveAdWithError={this.bannerError}
             />) 
         }
         else { 
             return (<AdMobBanner 
-            bannerSize="fullBanner"
+            bannerSize="fullbanner"
             adUnitID="ca-app-pub-2896471597472603/2666295016"
             didFailToReceiveAdWithError={this.bannerError}
             />) 
@@ -184,38 +184,6 @@ class Comment extends Component {
                          navigate={this.props.navigation.navigate}
                          greeting="Add a comment" />
 
-             {/* <View style={{
-                 flexDirection: 'row', 
-                 width: '100%', 
-                 height: 60}}> 
-            <TextInput 
-            style={{
-                width: '60%', 
-                height: '100%', 
-                backgroundColor: 'white', 
-                color: this.state.chatColor, 
-                padding: 5
-            }}
-            multiline={false}
-            onChangeText={this.onChangeText}
-            value={this.state.myText} 
-            onFocus={this.onInputFocused}/>
-
-                <View style={styles.chatButton}>
-                    <Text style={{
-                        paddingTop: 20, 
-                    }}>{this.state.myText.length} / {totalChatLength}</Text> 
-                 </View>
-
-
-                <TouchableOpacity 
-                    style={styles.chatButton}
-                    onPress={this.onPressPost}>
-                    <Image source={require('../../assets/ic_send.png')}
-                           style={{marginLeft: 25, marginTop: 20, width: 24, height: 24}}></Image>
-
-                </TouchableOpacity>
-            </View> */}
 
             </KeyboardAvoidingView>)
     }

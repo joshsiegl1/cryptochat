@@ -43,9 +43,11 @@ class ChatWindow extends Component {
         }
 
         if (type === "comment") { 
+            console.log(PostReply); 
             PostReply(crypto, username, text, postID); 
         }
         else { 
+            console.log(PostChat); 
             PostChat(crypto, username, text); 
         }
 
@@ -79,7 +81,7 @@ class ChatWindow extends Component {
             placeholderTextColor='lightgray'
             style={styles.textInput}
             multiline={true}
-            onChange={this.onChange}
+            onChangeText={this.onChange}
             value={this.state.myText} />
         </View>)
     }

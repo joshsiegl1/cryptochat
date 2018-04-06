@@ -117,7 +117,8 @@ export default class App extends React.Component {
         require('./assets/up_arrow.png'), 
         require('./assets/down_arrow.png'), 
         require('./assets/reply.png'), 
-        require('./assets/back.png')
+        require('./assets/back.png'), 
+        require('./assets/ic_send.png')
       ])
     ]); 
   }
