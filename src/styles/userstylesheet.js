@@ -6,6 +6,7 @@ const userStyleSheet = StyleSheet.create({
         flex: 1
     }, 
     container: { 
+        backgroundColor: '#373F51',
         display: 'flex', 
         flexDirection: 'column',
         justifyContent: 'space-around',  

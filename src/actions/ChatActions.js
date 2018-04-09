@@ -24,7 +24,7 @@ export const Upvote = (postID, userID) => async (dispatch) => {
 
     const { json } = await callApi(UPVOTE_URL, options); 
 
-    await SetLikedPosts([postID], []); 
+    await SetLikedPosts(postID, [postID], []); 
 
     await GetLikedPosts(function (likedPosts, dislikedPosts){ 
         dispatch({
@@ -51,7 +51,7 @@ export const Downvote = (postID, userID) => async (dispatch) => {
 
     const { json } = await callApi(DOWNVOTE_URL, options); 
 
-    await SetLikedPosts([], [postID]); 
+    await SetLikedPosts(postID, [], [postID]); 
     
     await GetLikedPosts(function (likedPosts, dislikedPosts){ 
             dispatch({

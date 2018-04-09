@@ -17,9 +17,9 @@ class Register extends Component {
         super(props) 
 
         this.state = { 
-            email: "email", 
-            username: "username", 
-            password: "password"
+            email: "", 
+            username: "", 
+            password: ""
         }
     }
 
@@ -79,8 +79,6 @@ class Register extends Component {
 
     render() { 
         return (
-        <LinearGradient colors={['#F9C000', '#DF8600']}
-                                style={registerSheet.gradient}>
         <View style={registerSheet.container}>
         
                     <View style={{padding: 10, width: 100, height: 100}}>
@@ -97,6 +95,8 @@ class Register extends Component {
                     <Image source={require('../../assets/ic_mail.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput 
+                    placeholder="Email"
+                    placeholderTextColor='white'
                     underlineColorAndroid='transparent'
                     style={[{flex:1, color: 'white'}]}
                                onChangeText={this.EmailChanged}
@@ -108,6 +108,8 @@ class Register extends Component {
                     <Image source={require('../../assets/ic_person.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput 
+                    placeholder="Username"
+                    placeholderTextColor='white'
                     underlineColorAndroid='transparent'
                     style={[{flex:1, color: 'white'}]}
                                onChangeText={this.UsernameChanged}
@@ -119,6 +121,8 @@ class Register extends Component {
                     <Image source={require('../../assets/ic_lock.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput 
+                    placeholder="Password"
+                    placeholderTextColor='white'
                     underlineColorAndroid='transparent'
                     style={[{flex:1, color: 'white'}]}
                                onChangeText={this.PasswordChanged}
@@ -133,8 +137,7 @@ class Register extends Component {
                         <Text style={[registerSheet.registerButtonText]}>Register</Text>
                     </TouchableOpacity>
                     </KeyboardAvoidingView>
-            </View>
-            </LinearGradient>)
+            </View>)
     }
 }
 

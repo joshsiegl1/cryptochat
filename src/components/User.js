@@ -24,8 +24,8 @@ class User extends Component {
         super(props)
 
         this.state = { 
-            userName: "username", 
-            password: "password", 
+            userName: "", 
+            password: "", 
             updateUsername: "username"
         }
     }
@@ -112,8 +112,7 @@ class User extends Component {
 
         if (Object.keys(User).length === 0 && User.constructor === Object) { 
             
-            return (<LinearGradient colors={['#F9C000', '#DF8600']}
-                                    style={userStyleSheet.gradient}>
+            return (
                     <View style={userStyleSheet.container}>
                         <View style={{padding: 10, width: 100, height: 100}}>
                         <Image source={require('../../assets/cryptochat_logo.png')} 
@@ -129,6 +128,8 @@ class User extends Component {
                             <Image source={require('../../assets/ic_person.png')}
                                    style={userStyleSheet.inputImageStyle} />
                             <TextInput 
+                            placeholder='Username'
+                            placeholderTextColor='white'
                             underlineColorAndroid='transparent'
                             style={[{flex:1, color: 'white'}]}
                             value={this.state.userName}
@@ -140,6 +141,8 @@ class User extends Component {
                          <Image source={require('../../assets/ic_lock.png')}
                                    style={userStyleSheet.inputImageStyle} />
                         <TextInput 
+                        placeholder='Password'
+                        placeholderTextColor='white'
                         underlineColorAndroid='transparent'
                         style={[{flex:1, color: 'white'}]}
                         value={this.state.password}
@@ -165,8 +168,7 @@ class User extends Component {
                         <Text style={userStyleSheet.loginButtonText}>Sign in with Facebook</Text>
                         </TouchableOpacity>
 
-                    </View>
-                </LinearGradient>)
+                    </View>)
         }
         else { 
 

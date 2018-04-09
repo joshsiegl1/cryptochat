@@ -32,7 +32,7 @@ export const SetUser = async (userID, email, karma, fbid) => {
 }
 
 //arrays of postID's
-export const SetLikedPosts = async (likedPosts, dislikedPosts) => { 
+export const SetLikedPosts = async (postID, likedPosts, dislikedPosts) => { 
     try { 
         await AsyncStorage.multiGet([
             'likedPosts', 
@@ -48,6 +48,24 @@ export const SetLikedPosts = async (likedPosts, dislikedPosts) => {
                 if (values[1][1] !== null) { 
                     let posts = JSON.parse(values[1][1]); 
                     disliked = [...posts, ...dislikedPosts]; 
+                }
+
+                //if we're liking a post
+                if (likedPosts.length > 0) { 
+                    //and it's containd inside of the previously disliked posts
+                    if (disliked.indexOf(postID) >= 0) { 
+                        //remove it from the disliked posts, because now we're liking it
+                        let index = disliked.indexOf(postID); 
+                        disliked.splice(index, 1); 
+                    }
+                }
+
+                //same as previous logic, just vice versa
+                if (dislikedPosts.length > 0) { 
+                    if (like.indexOf(postID) >= 0) { 
+                        let index = like.indexOf(postID); 
+                        like.splice(index, 1); 
+                    }
                 }
 
                 if (like.length <= 0) { 

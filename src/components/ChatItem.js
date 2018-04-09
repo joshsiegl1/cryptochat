@@ -21,21 +21,29 @@ class ChatItem extends PureComponent {
     constructor(props) { 
         super(props)
 
+        //pressedState 
+        //0 = nothing pressed
+        //1 = upvote pressed
+        //-1 = downvote pressed
         this.state = { 
-
+            pressedState: 0
         }
     }
 
     onUpvotePressed = () => { 
         const { postID, userID } = this.props.item; 
-
+        
         this.props.upvote(postID, userID)
+
+        this.setState({pressedState: 1})
     }
 
     onDownvotePressed = () => { 
         const { postID, userID } = this.props.item; 
 
         this.props.downvote(postID, userID)
+
+        this.setState({pressedState: -1})
     }
 
     onCommentsPressed = () => { 
@@ -46,37 +54,36 @@ class ChatItem extends PureComponent {
         navigate('Comment', {postID: postID, crypto: crypto}); 
     }
 
-    getUpArrowGraphic(likedPosts, postID) { 
-        
-        if (likedPosts !== undefined) { 
-            if (likedPosts.indexOf(postID) >= 0) { 
-             return <Image source={require('../../assets/up_arrow_pressed.png')}></Image>
-            }
-            else { 
-                return <Image source={require('../../assets/up_arrow.png')}></Image>
+    updatePressedStatefromStore(likedPosts, dislikedPosts, postID) { 
+        if (dislikedPosts !== undefined) { 
+            if (dislikedPosts.indexOf(postID) >= 0) { 
+                this.setState({pressedState: -1})
             }
         }
-        else { 
-            return <Image source={require('../../assets/up_arrow.png')}></Image>
+
+        if (likedPosts !== undefined) { 
+            if (likedPosts.indexOf(postID) >= 0) { 
+                this.setState({pressedState: 1})
+            }
         }
     }
 
     getDownArrowGraphic(dislikedPosts, postID) { 
-        if (dislikedPosts !== undefined) { 
-            if (dislikedPosts.indexOf(postID) >= 0) { 
-                return <Image source={require('../../assets/down_arrow_pressed.png')}></Image>
-            }
-            else { 
-                return <Image source={require('../../assets/down_arrow.png')}></Image>
-            }
-        }
-        else { 
-            return <Image source={require('../../assets/down_arrow.png')}></Image>
-        }
+
+        if (this.state.pressedState === -1) return <Image source={require('../../assets/down_arrow_pressed.png')}></Image>
+        else return <Image source={require('../../assets/down_arrow.png')}></Image>
+    }
+
+    getUpArrowGraphic(likedPosts, postID) { 
+        
+        if (this.state.pressedState === 1) return <Image source={require('../../assets/up_arrow_pressed.png')}></Image>
+        else return <Image source={require('../../assets/up_arrow.png')}></Image>
     }
 
     render() { 
         const { item, likedPosts, dislikedPosts } = this.props
+
+        this.updatePressedStatefromStore(likedPosts, dislikedPosts, item.postID)
 
         let upArrow = this.getUpArrowGraphic(likedPosts, item.postID); 
         let downArrow = this.getDownArrowGraphic(dislikedPosts, item.postID); 
