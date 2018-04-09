@@ -3,7 +3,7 @@ import React, {Component } from 'react';
 
 import {View, FlatList} from 'react-native'; 
 
-import { GetUser, GetItem } from '../utils/Storage'; 
+import { GetUser, GetItem, GetLikedPosts } from '../utils/Storage'; 
 
 import CoinButton from './CoinButton'; 
 
@@ -23,8 +23,8 @@ class CoinList extends Component {
     }
 
     async UNSAFE_componentWillMount() { 
-        const {currencies, fetchTopFiftyCryptoCurrencies,
-               User, DispatchUserfromStorage} = this.props; 
+        const {currencies, fetchTopFiftyCryptoCurrencies, LikedPosts, DislikedPosts,
+               User, DispatchUserfromStorage, DispatchLikedPostsfromStorage} = this.props; 
 
         if (Object.keys(User).length === 0 && User.constructor === Object) { 
             await GetUser(function (user) { 
@@ -37,6 +37,15 @@ class CoinList extends Component {
                     }); 
                 }
             }); 
+        }
+
+        if (Object.keys(LikedPosts).length === 0) { 
+            await GetLikedPosts (function (liked, disliked) { 
+                DispatchLikedPostsfromStorage({
+                    "likedPosts" : liked, 
+                    "dislikedPosts" : disliked
+                })
+            })
         }
 
         if (currencies === null) { 

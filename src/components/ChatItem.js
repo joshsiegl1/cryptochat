@@ -12,7 +12,9 @@ const propTypes = {
     crypto: PropTypes.string.isRequired, 
     upvote: PropTypes.func, 
     downvote: PropTypes.func, 
-    navigate: PropTypes.func
+    navigate: PropTypes.func, 
+    likedPosts: PropTypes.arrayOf(PropTypes.string), 
+    dislikedPosts: PropTypes.arrayOf(PropTypes.string)
 }
 
 class ChatItem extends PureComponent { 
@@ -44,8 +46,40 @@ class ChatItem extends PureComponent {
         navigate('Comment', {postID: postID, crypto: crypto}); 
     }
 
+    getUpArrowGraphic(likedPosts, postID) { 
+        
+        if (likedPosts !== undefined) { 
+            if (likedPosts.indexOf(postID) >= 0) { 
+             return <Image source={require('../../assets/up_arrow_pressed.png')}></Image>
+            }
+            else { 
+                return <Image source={require('../../assets/up_arrow.png')}></Image>
+            }
+        }
+        else { 
+            return <Image source={require('../../assets/up_arrow.png')}></Image>
+        }
+    }
+
+    getDownArrowGraphic(dislikedPosts, postID) { 
+        if (dislikedPosts !== undefined) { 
+            if (dislikedPosts.indexOf(postID) >= 0) { 
+                return <Image source={require('../../assets/down_arrow_pressed.png')}></Image>
+            }
+            else { 
+                return <Image source={require('../../assets/down_arrow.png')}></Image>
+            }
+        }
+        else { 
+            return <Image source={require('../../assets/down_arrow.png')}></Image>
+        }
+    }
+
     render() { 
-        const { item } = this.props
+        const { item, likedPosts, dislikedPosts } = this.props
+
+        let upArrow = this.getUpArrowGraphic(likedPosts, item.postID); 
+        let downArrow = this.getDownArrowGraphic(dislikedPosts, item.postID); 
 
         return (<View style={styles.messageBox}>
                 <View style={styles.titleBox}>
@@ -58,11 +92,11 @@ class ChatItem extends PureComponent {
                     <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <View style={styles.voteSection}>
                         <TouchableOpacity onPress={this.onUpvotePressed}>
-                            <Image source={require('../../assets/up_arrow.png')}></Image>
+                            {upArrow}
                         </TouchableOpacity>
                         <Text style={{lineHeight: 18, fontSize:18, color: '#373F51', paddingRight: 5, paddingLeft: 5}}>vote</Text>
                         <TouchableOpacity onPress={this.onDownvotePressed}>
-                            <Image source={require('../../assets/down_arrow.png')}></Image>
+                            {downArrow}
                         </TouchableOpacity>
                     </View>
                     <View style={styles.commentSection}>

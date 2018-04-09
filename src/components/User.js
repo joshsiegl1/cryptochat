@@ -116,7 +116,7 @@ class User extends Component {
                                     style={userStyleSheet.gradient}>
                     <View style={userStyleSheet.container}>
                         <View style={{padding: 10, width: 100, height: 100}}>
-                        <Image source={{uri: `http://www.joshsiegl.com/crypto/assets/cryptochat_logo.png`}} 
+                        <Image source={require('../../assets/cryptochat_logo.png')} 
                                style={{
                                flex: 1, 
                                alignSelf: 'stretch', 
@@ -126,7 +126,7 @@ class User extends Component {
                         </View>
                         <View style={userStyleSheet.formContainer}>
                         <View style={userStyleSheet.SectionStyle}>
-                            <Image source={{uri: `http://www.joshsiegl.com/crypto/assets/ic_person.png`}}
+                            <Image source={require('../../assets/ic_person.png')}
                                    style={userStyleSheet.inputImageStyle} />
                             <TextInput 
                             underlineColorAndroid='transparent'
@@ -137,7 +137,7 @@ class User extends Component {
                             selectionColor={'white'}/>
                          </View>
                          <View style={userStyleSheet.SectionStyle}>
-                         <Image source={{uri: `http://www.joshsiegl.com/crypto/assets/ic_lock.png`}}
+                         <Image source={require('../../assets/ic_lock.png')}
                                    style={userStyleSheet.inputImageStyle} />
                         <TextInput 
                         underlineColorAndroid='transparent'
@@ -175,7 +175,7 @@ class User extends Component {
                                         style={userStyleSheet.gradient}>
                         <View style={userStyleSheet.container}>
                         <View style={{padding: 10, width: 100, height: 100}}>
-                        <Image source={{uri: `http://www.joshsiegl.com/crypto/assets/cryptochat_logo.png`}}
+                        <Image source={require('../../assets/cryptochat_logo.png')}
                                style={{
                                flex: 1, 
                                alignSelf: 'stretch', 
@@ -187,7 +187,7 @@ class User extends Component {
                         
                         <Text style={userStyleSheet.userInfoText}>Please choose a username.</Text>
                         <View style={userStyleSheet.SectionStyle}>
-                            <Image source={{uri: `http://www.joshsiegl.com/crypto/assets/ic_person.png`}}
+                            <Image source={require('../../assets/ic_person.png')}
                                    style={userStyleSheet.inputImageStyle} />
                             <TextInput 
                             style={[{flex:1, color: 'white'}]}
@@ -219,7 +219,7 @@ class User extends Component {
                         <View style={userStyleSheet.container}>
                         
                         <View style={{padding: 10, width: 100, height: 100}}>
-                        <Image source={{uri: `http://www.joshsiegl.com/crypto/assets/cryptochat_logo.png`}} 
+                        <Image source={require('../../assets/cryptochat_logo.png')} 
                                style={{
                                flex: 1, 
                                alignSelf: 'stretch', 

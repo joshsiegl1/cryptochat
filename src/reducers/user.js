@@ -1,7 +1,9 @@
 import * as types from '../constants/ActionTypes'; 
 
 const initialState = { 
-    user: {}
+    user: {}, 
+    likedPosts: [], 
+    dislikedPosts: []
 }
 
 const user = (state = initialState, action) => { 
@@ -10,6 +12,13 @@ const user = (state = initialState, action) => {
             return { 
                 ...state, 
                 user: action.user
+            }
+        
+        case types.LIKED_POSTS: 
+            return { 
+                ...state, 
+                likedPosts: action.likedPosts, 
+                dislikedPosts: action.dislikedPosts
             }
 
             default: 

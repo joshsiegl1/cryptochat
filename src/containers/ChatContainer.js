@@ -5,7 +5,7 @@ import { parseRoute } from '../utils/RouterUtils';
 
 import { GetChat, PostChat, Upvote, Downvote } from '../actions/ChatActions'; 
 
-import { getChats, getUser } from '../selectors/CommonSelectors'; 
+import { getChats, getUser, getLikedPosts, getDislikedPosts } from '../selectors/CommonSelectors'; 
 
 import Chat from '../components/Chat'; 
 
@@ -14,7 +14,9 @@ const ChatContainer = props => <Chat {...props} />
 const mapStateToProps = (state) => { 
     return {
         chat: getChats(state), 
-        user: getUser(state)
+        user: getUser(state), 
+        likedPosts: getLikedPosts(state), 
+        dislikedPosts: getDislikedPosts(state)
     }
 }
 

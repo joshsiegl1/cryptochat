@@ -43,15 +43,15 @@ class ChatWindow extends Component {
         }
 
         if (type === "comment") { 
-            console.log(PostReply); 
             PostReply(crypto, username, text, postID); 
         }
-        else { 
-            console.log(PostChat); 
+        else {  
             PostChat(crypto, username, text); 
         }
 
         Keyboard.dismiss(); 
+
+        this.props.navigation.goBack();
     }
 
     onChange = (text) => { 
@@ -68,7 +68,7 @@ class ChatWindow extends Component {
                     <Text style={styles.sendText}>SEND</Text>
                     <Image 
                     style={styles.sendImage}
-                    source={{uri: `http://www.joshsiegl.com/crypto/assets/ic_send.png`}} />
+                    source={require('../../assets/ic_send.png')} />
                 </TouchableOpacity>
             </View>
             <View style={styles.topic}>

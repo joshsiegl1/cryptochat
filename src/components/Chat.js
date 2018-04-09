@@ -19,7 +19,9 @@ const propTypes = {
     Upvote: PropTypes.func, 
     Downvote: PropTypes.func, 
     chat: PropTypes.shape(), 
-    user: PropTypes.shape()
+    user: PropTypes.shape(), 
+    likedPosts: PropTypes.arrayOf(PropTypes.string), 
+    dislikedPosts: PropTypes.arrayOf(PropTypes.string)
 }
 
 const friendlyGreeting = "Say something to this group"; 
@@ -100,7 +102,9 @@ class Chat extends Component {
                   crypto={this.props.navigation.state.params.crypto}
                   upvote={this.props.Upvote}
                   downvote={this.props.Downvote}
-                  navigate={this.props.navigation.navigate} />
+                  navigate={this.props.navigation.navigate}
+                  likedPosts={this.props.likedPosts}
+                  dislikedPosts={this.props.dislikedPosts} />
     )
 
     _keyExtractor = (item, index) => item.id

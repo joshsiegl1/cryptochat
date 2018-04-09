@@ -8,3 +8,5 @@ export const GET_POST = 'GET_POST';
 
 export const GET_USER = "GET_USER"; 
 export const ADD_USER = "ADD_USER"; 
+
+export const LIKED_POSTS = "LIKED_POSTS"; 

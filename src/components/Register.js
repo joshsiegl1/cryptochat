@@ -84,7 +84,7 @@ class Register extends Component {
         <View style={registerSheet.container}>
         
                     <View style={{padding: 10, width: 100, height: 100}}>
-                    <Image source={{uri: `http://www.joshsiegl.com/crypto/assets/cryptochat_logo.png`}}
+                    <Image source={require('../../assets/cryptochat_logo.png')}
                                style={{
                                flex: 1, 
                                alignSelf: 'stretch', 
@@ -94,7 +94,7 @@ class Register extends Component {
                     </View>
                     <KeyboardAvoidingView behavior="position" style={{width: '100%'}}>
                     <View style={registerSheet.SectionStyle}>
-                    <Image source={{uri: `http://www.joshsiegl.com/crypto/assets/ic_mail.png`}}
+                    <Image source={require('../../assets/ic_mail.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput 
                     underlineColorAndroid='transparent'
@@ -105,7 +105,7 @@ class Register extends Component {
                                selectionColor={'white'}/>
                     </View>
                     <View style={registerSheet.SectionStyle}>
-                    <Image source={{uri: `http://www.joshsiegl.com/crypto/assets/ic_person.png`}}
+                    <Image source={require('../../assets/ic_person.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput 
                     underlineColorAndroid='transparent'
@@ -116,7 +116,7 @@ class Register extends Component {
                                selectionColor={'white'}/>
                     </View>
                     <View style={registerSheet.SectionStyle}>
-                    <Image source={{uri: `http://www.joshsiegl.com/crypto/assets/ic_lock.png`}}
+                    <Image source={require('../../assets/ic_lock.png')}
                                    style={registerSheet.inputImageStyle} />
                     <TextInput 
                     underlineColorAndroid='transparent'

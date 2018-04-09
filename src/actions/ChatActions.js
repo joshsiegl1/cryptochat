@@ -6,6 +6,7 @@ import {
     POST_REPLY_URL } from '../constants/ApiConstants'; 
 import * as types from '../constants/ActionTypes'; 
 import {callApi} from '../utils/ApiUtils'; 
+import { SetLikedPosts, GetLikedPosts } from '../utils/Storage'; 
 
 export const Upvote = (postID, userID) => async (dispatch) => { 
     let upvote = { 
@@ -22,6 +23,16 @@ export const Upvote = (postID, userID) => async (dispatch) => {
     }
 
     const { json } = await callApi(UPVOTE_URL, options); 
+
+    await SetLikedPosts([postID], []); 
+
+    await GetLikedPosts(function (likedPosts, dislikedPosts){ 
+        dispatch({
+            type: types.LIKED_POSTS, 
+            likedPosts, 
+            dislikedPosts
+        })
+    })
 }
 
 export const Downvote = (postID, userID) => async (dispatch) => { 
@@ -39,6 +50,16 @@ export const Downvote = (postID, userID) => async (dispatch) => {
     }
 
     const { json } = await callApi(DOWNVOTE_URL, options); 
+
+    await SetLikedPosts([], [postID]); 
+    
+    await GetLikedPosts(function (likedPosts, dislikedPosts){ 
+            dispatch({
+                type: types.LIKED_POSTS, 
+                likedPosts, 
+                dislikedPosts
+            })
+        })
 }
 
 export const PostChat = (id, userID, message) => async (dispatch) => { 
