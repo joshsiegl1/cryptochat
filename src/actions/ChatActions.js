@@ -3,15 +3,17 @@ import {
     POST_CHAT_URL, 
     GET_CHAT_URL, UPVOTE_URL, 
     DOWNVOTE_URL, GET_POST_URL, 
-    POST_REPLY_URL } from '../constants/ApiConstants'; 
+    POST_REPLY_URL, VOTE_URL } from '../constants/ApiConstants'; 
 import * as types from '../constants/ActionTypes'; 
 import {callApi} from '../utils/ApiUtils'; 
 import { SetLikedPosts, GetLikedPosts } from '../utils/Storage'; 
 
-export const Upvote = (postID, userID) => async (dispatch) => { 
-    let upvote = { 
+
+export const Vote = (postID, userID, karma) => { 
+    let vote = { 
         postID, 
-        userID
+        userID, 
+        karma
     }
 
     let options = { 
@@ -19,10 +21,16 @@ export const Upvote = (postID, userID) => async (dispatch) => {
         headers: { 
             'Content-Type' : 'application/json'
         }, 
-        body: JSON.stringify(upvote)
+        body: JSON.stringify(vote)
     }
 
-    const { json } = await callApi(UPVOTE_URL, options); 
+    const { json } = callApi(VOTE_URL, options); 
+}
+
+
+export const Upvote = (postID, userID, karma) => async (dispatch) => { 
+
+    Vote(postID, userID, karma); 
 
     await SetLikedPosts(postID, [postID], []); 
 
@@ -35,21 +43,9 @@ export const Upvote = (postID, userID) => async (dispatch) => {
     })
 }
 
-export const Downvote = (postID, userID) => async (dispatch) => { 
-    let downvote = { 
-        postID, 
-        userID
-    }
+export const Downvote = (postID, userID, karma) => async (dispatch) => {  
 
-    let options = { 
-        method: 'post', 
-        headers: { 
-            'Content-Type' : 'application/json'
-        }, 
-        body: JSON.stringify(downvote)
-    }
-
-    const { json } = await callApi(DOWNVOTE_URL, options); 
+    Vote(postID, userID, karma); 
 
     await SetLikedPosts(postID, [], [postID]); 
     
@@ -61,6 +57,7 @@ export const Downvote = (postID, userID) => async (dispatch) => {
             })
         })
 }
+
 
 export const PostChat = (id, userID, message) => async (dispatch) => { 
 

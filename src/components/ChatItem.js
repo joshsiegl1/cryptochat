@@ -31,19 +31,39 @@ class ChatItem extends PureComponent {
     }
 
     onUpvotePressed = () => { 
-        const { postID, userID } = this.props.item; 
-        
-        this.props.upvote(postID, userID)
+        if (this.state.pressedState !== 1) { 
+            const { postID, userID } = this.props.item; 
+            const { dislikedPosts } = this.props; 
 
-        this.setState({pressedState: 1})
+            let karma = 1; 
+            if (dislikedPosts !== undefined) { 
+                if (dislikedPosts.indexOf(postID) >= 0) { 
+                    karma++; 
+                }
+            }
+        
+            this.props.upvote(postID, userID, karma)
+
+            this.setState({pressedState: 1})
+        }
     }
 
     onDownvotePressed = () => { 
-        const { postID, userID } = this.props.item; 
+        if (this.state.pressedState !== -1) { 
+            const { postID, userID } = this.props.item; 
+            const { likedPosts } = this.props; 
 
-        this.props.downvote(postID, userID)
+            let karma = -1; 
+            if (likedPosts !== undefined) { 
+                if (likedPosts.indexOf(postID) >= 0) { 
+                    karma--; 
+                }
+            }
 
-        this.setState({pressedState: -1})
+            this.props.downvote(postID, userID, karma)
+
+            this.setState({pressedState: -1})
+        }
     }
 
     onCommentsPressed = () => { 

@@ -113,6 +113,56 @@ router.post('/updateUsernameFacebook', (req, res) => {
     }
 })
 
+router.post('/vote', (req, res) => { 
+    let userID = req.body.userID; 
+    let postID = req.body.postID; 
+    let karma = req.body.karma; 
+
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    const user = mongoose.model('User', userSchema); 
+    const chat = mongoose.model('Chat', chatSchema); 
+
+    let conditions = {userID: userID}, 
+        postConditions = {postID: postID}, 
+        options = {mulit: true}
+
+        try { 
+            if (userID !== "anonymous") { 
+                    user.update(conditions, {$inc: { karma: karma}}, options, function (err, numAffected) { 
+                    if (numAffected.n > 0) { 
+                        chat.update(postConditions, {$inc: { karma: karma}}, options, function (err, numaffected) { 
+                            if (numaffected.n > 0) { 
+                                res.send({"response" : "success"})
+                            }
+                            else { 
+                                res.send({"response": "failure"})
+                            }
+                        })
+                    }
+                    else { 
+                        res.send({"response" : "failure"})
+                    }
+                })
+            }
+            else { 
+                chat.update(postConditions, {$inc: { karma: karma}}, options, function (err, numaffected) { 
+                    if (numaffected.n > 0) { 
+                        res.send({"response" : "success"})
+                    }
+                    else { 
+                        res.send({"response": err})
+                    }
+                })
+            }
+      }
+      catch (e) { 
+        console.log(e); 
+        res.send({"error" : e}); 
+        }
+})
+
 router.post('/downvote', (req, res) => { 
     let userID = req.body.userID;
     let postID = req.body.postID;  
