@@ -103,11 +103,12 @@ export const PostReply = (id, userID, message, postID) => async (dispatch) => {
     dispatch(GetPost(postID))
 }
 
-const getChatSuccess = (id, comments) => {
+const getChatSuccess = (id, content) => {
     return { 
         type: types.GET_CHAT,
         ticker: id,  
-        chats: comments
+        chats: content.chats, 
+        time: content.time
     }
 }
 
@@ -122,7 +123,8 @@ const getPostSuccess = (postID, content) => {
            type: types.GET_POST,
            postID: postID,
            comment: content.comment, 
-           replies: content.replies 
+           replies: content.replies, 
+           time: content.time 
     }
 }
 

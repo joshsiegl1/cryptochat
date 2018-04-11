@@ -110,7 +110,8 @@ app.get('/post/:postID', (req, res) => {
                             else { 
                                 res.send({
                                     comment: thePost, 
-                                    replies: theReplies
+                                    replies: theReplies, 
+                                    time: new Date()
                                 })
                             }
                         })
@@ -135,7 +136,11 @@ app.get('/chat/:crypto', (req, res) => {
             res.send(err); 
         }
         else { 
-            res.send(chats); 
+            res.send(
+                {
+                    chats, 
+                    time: new Date()
+                }); 
         }
     }); 
 })

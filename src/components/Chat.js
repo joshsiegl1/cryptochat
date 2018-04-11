@@ -21,7 +21,8 @@ const propTypes = {
     chat: PropTypes.shape(), 
     user: PropTypes.shape(), 
     likedPosts: PropTypes.arrayOf(PropTypes.string), 
-    dislikedPosts: PropTypes.arrayOf(PropTypes.string)
+    dislikedPosts: PropTypes.arrayOf(PropTypes.string), 
+    currentTime: PropTypes.date
 }
 
 const friendlyGreeting = "Say something to this group"; 
@@ -104,7 +105,8 @@ class Chat extends Component {
                   downvote={this.props.Downvote}
                   navigate={this.props.navigation.navigate}
                   likedPosts={this.props.likedPosts}
-                  dislikedPosts={this.props.dislikedPosts} />
+                  dislikedPosts={this.props.dislikedPosts}
+                  currentTime={this.props.currentTime} />
     )
 
     _keyExtractor = (item, index) => item.id

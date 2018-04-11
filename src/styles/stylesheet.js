@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start', 
         flexWrap: 'wrap'
     }, 
+    bodyBox: { 
+        paddingTop: 10
+    }, 
     voteBox: { 
         paddingTop: 10, 
         paddingBottom: 10, 
@@ -43,8 +46,11 @@ const styles = StyleSheet.create({
         display: 'flex', 
         flexDirection: 'row'
     }, 
+    timeSection: { 
+        display: 'flex', 
+        flexDirection: 'row'
+    },
     commentSection: { 
-        paddingLeft: 20, 
         display: 'flex', 
         flexDirection: 'row'
     }, 
