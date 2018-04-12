@@ -129,7 +129,7 @@ app.get('/chat/:crypto', (req, res) => {
     var chats = mongoose.model('Chat', chatSchema); 
 
     chats.find({id: crypto})
-         .sort({date: 'asc'})
+         .sort({date: 'desc'})
          .exec(function(err, chats) { 
 
         if (err) { 

@@ -113,7 +113,7 @@ class Chat extends Component {
 
     onScrollback = () => { 
         try { 
-             this.flatList.scrollToEnd({animated: true}); 
+             this.flatList.scrollToOffset({x:0, y:0, animated: true})
         }
         catch(error) {  }
     }
@@ -174,7 +174,8 @@ class Chat extends Component {
                             backgroundColor: 'black', 
                             borderWidth: 1, 
                             paddingLeft: 25, 
-                            paddingRight: 25}}>
+                            paddingRight: 25, 
+                            height: '10%'}}>
 
                     {ad}
                 </View> 

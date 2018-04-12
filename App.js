@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import configureStore from './src/store/configureStore.js'; 
 import { StackNavigator, addNavigationHelpers, TabNavigator } from 'react-navigation'; 
 import { Icon } from 'react-native-elements'; 
-import { AppLoading, Asset } from 'expo'; 
+import { AppLoading, Asset, Font } from 'expo'; 
  
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 
@@ -120,8 +120,12 @@ export default class App extends React.Component {
         require('./assets/back.png'), 
         require('./assets/ic_send.png'), 
         require('./assets/up_arrow_pressed.png'), 
-        require('./assets/down_arrow_pressed.png')
-      ])
+        require('./assets/down_arrow_pressed.png'), 
+        require('./assets/time.png')
+      ]), 
+      Font.loadAsync({
+        'arial' : require('./assets/arial.ttf')
+      })
     ]); 
   }
 

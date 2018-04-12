@@ -8,10 +8,12 @@ const styles = StyleSheet.create({
         borderColor: 'lightgray', 
         borderBottomWidth: 1, 
         backgroundColor: 'white', 
-        padding: 10
+        padding: 10, 
+        fontFamily: 'arial'
     }, 
     cryptoButtonText: { 
-        paddingLeft: 10
+        paddingLeft: 10, 
+        fontFamily: 'arial'
     }, 
     touchableOpacity: { 
         width: '100%'
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
         paddingTop: 10
     }, 
     voteBox: { 
-        paddingTop: 10, 
+        paddingTop: 20, 
         paddingBottom: 10, 
         paddingLeft: 20
     }, 
@@ -55,7 +57,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     }, 
     messageText: { 
-        paddingLeft: 21
+        paddingLeft: 21, 
+        fontFamily: 'arial'
     }
 })
 

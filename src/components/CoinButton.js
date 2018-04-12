@@ -32,7 +32,7 @@ class CoinButton extends Component {
             <TouchableOpacity
                 style={style.container} 
                 onPress={this.onPress}> 
-            <Text style={{paddingRight: 10, color: 'lightgray'}}>{num}</Text>
+            <Text style={{paddingRight: 10, color: 'lightgray', fontFamily: 'arial'}}>{num}</Text>
             <Image
                 style={{width: 16, height: 16}}
                 source={{uri: `http://www.joshsiegl.com/crypto/${id}.png`}}

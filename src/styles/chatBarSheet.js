@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
         borderColor: 'lightgray', 
         borderTopWidth: 1, 
         width: '100%', 
-        padding: 10
+        padding: 10, 
+        height: '10%'
     }, 
     chatBar: { 
         backgroundColor: '#F2F2F2', 

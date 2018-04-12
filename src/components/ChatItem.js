@@ -123,14 +123,19 @@ class ChatItem extends PureComponent {
 
         let date = new Date(this.props.item.date); 
         let currentDate = new Date(this.props.currentTime); 
-        let friendlyDate = date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear(); 
+        let friendlyDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+        
+        let userColor = '#373F51'; 
+        if (item.userID === "anonymous")
+            userColor = 'lightgray'
+
 
         return (
                 <View style={styles.messageBox}>
                 <View style={styles.titleBox}>
                     <Image style={{width: 16, height: 16}}
                     source={{uri: `http://www.joshsiegl.com/crypto/${this.props.crypto}.png`}} />
-                    <Text style={{paddingLeft: 5, width: '90%'}}>{item.userID}</Text>  
+                    <Text style={{paddingLeft: 5, width: '90%', color: userColor, fontFamily: 'arial'}}>{item.userID}</Text>  
                 </View>
                 <View style={styles.bodyBox}>
                     <Text style={styles.messageText}>{item.body}</Text>
@@ -141,8 +146,8 @@ class ChatItem extends PureComponent {
                         <TouchableOpacity onPress={this.onUpvotePressed}>
                             {upArrow}
                         </TouchableOpacity>
-                        <View style={{width: 50, justifyContent: "center"}}>
-                            <Text style={{lineHeight: 18, fontSize:18, color: '#373F51', textAlign: "center"}}>{karma}</Text>
+                        <View style={{width: 35, justifyContent: "center"}}>
+                            <Text style={{lineHeight: 12, fontSize: 12, color: '#373F51', textAlign: "center", fontFamily: 'arial'}}>{karma}</Text>
                         </View>
                         <TouchableOpacity onPress={this.onDownvotePressed}>
                             {downArrow}
@@ -151,12 +156,13 @@ class ChatItem extends PureComponent {
                     <View style={styles.commentSection}>
                             <TouchableOpacity onPress={this.onCommentsPressed} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                                 <Image source={require('../../assets/reply.png')} />
-                                <Text style={{lineHeight: 18, fontSize:18, color: '#373F51', paddingLeft: 5}} >comments</Text>
+                                <Text style={{lineHeight: 12, fontSize:12, color: '#373F51', paddingLeft: 5, fontFamily: 'arial'}} >comments</Text>
                             </TouchableOpacity>
                     </View>
                     <View style={styles.timeSection}>
                         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', paddingRight: 15}}>
-                            <Text style={{lineHeight: 18, fontSize:18, color: '#373F51'}}>{friendlyDate}</Text>
+                            <Image source={require('../../assets/time.png')} />
+                            <Text style={{lineHeight: 12, fontSize: 12, color: '#373F51', paddingLeft: 5, fontFamily: 'arial'}}>{friendlyDate}</Text>
                         </View>
                     </View>
                     </View>
