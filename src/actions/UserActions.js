@@ -10,6 +10,8 @@ import { SetUser } from '../utils/Storage';
 
 import { Alert } from 'react-native'; 
 
+import { registerForPushNotifications } from '../utils/PushNotification'; 
+
 const getUserSuccess = (user) => {
     return { 
         type: types.GET_USER, 
@@ -61,6 +63,7 @@ export const GetUser = (username, password) => async (dispatch) => {
         if (json.length > 0) { 
             let user = json[0]; 
             await SetUser(user.userID, user.email, user.karma, user.fbid); 
+            registerForPushNotifications(user.userID); 
             dispatch(getUserSuccess(user)); 
         }
         else { 
@@ -91,8 +94,10 @@ export const AddUser = (email, username, password) => async (dispatch) => {
     //console.log(json); 
     let response = json.response; 
 
-    if (response === "Success")
+    if (response === "Success") { 
         Alert.alert("Success", 'Successfully registered user: ' + username)
+        registerForPushNotifications(username); 
+    }
     else if (response === "username already exists")
         Alert.alert("Username Already Exists", "The username provided already exists in our database, please try something else"); 
 }

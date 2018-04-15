@@ -5,6 +5,8 @@ import {View, FlatList} from 'react-native';
 
 import { GetUser, GetItem, GetLikedPosts } from '../utils/Storage'; 
 
+import { registerForPushNotifications } from '../utils/PushNotification'; 
+
 import CoinButton from './CoinButton'; 
 
 const propTypes = { 
@@ -29,6 +31,7 @@ class CoinList extends Component {
         if (Object.keys(User).length === 0 && User.constructor === Object) { 
             await GetUser(function (user) { 
                 if (user !== undefined && user !== null) { 
+                    registerForPushNotifications(user[0][1]); 
                     DispatchUserfromStorage({
                         "userID" : user[0][1], 
                         "email" : user[1][1], 

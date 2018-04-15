@@ -30,7 +30,8 @@ router.post('/', (req, res) => {
                     fbid: "", 
                     karma: body.karma, 
                     userID: body.userID, 
-                    password: hash
+                    password: hash, 
+                    pushNotification: ""
                 }); 
     
                 newUser.save((error) => { 
@@ -80,6 +81,33 @@ router.post('/get/:name', (req, res) => {
     catch (error) { 
         console.log(error); 
         res.send({"error": error}); 
+    }
+})
+
+router.post('/push-token', (req, res) => { 
+    let username = req.body.username; 
+    let token = req.body.token; 
+
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
+
+    const User = mongoose.model('User', userSchema); 
+
+    let conditions = {userID: username}, 
+        update = {pushNotification: token}, 
+        options = {multi: true}; 
+
+    try { 
+        User.update(conditions, update, options, function (err, numAffected) { 
+            if (err) res.send(err); 
+            console.log(numAffected); 
+
+            res.send({"response" : "success"}); 
+        })
+    }
+    catch(e) { 
+        console.log(e); 
+        res.send({"response" : "something went wrong"})
     }
 })
 

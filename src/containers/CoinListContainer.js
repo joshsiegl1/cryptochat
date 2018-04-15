@@ -7,7 +7,7 @@ import { getCurrencies, getUser,
          getLikedPosts, getDislikedPosts } from '../selectors/CommonSelectors'; 
 
 import { DispatchUserfromStorage, DispatchLikedPostsfromStorage } from '../actions/UserActions'; 
-import { fetchTopFiftyCryptoCurrencies } from '../actions/CoinMarketCapActions'; 
+import { fetchTopFiftyCryptoCurrencies } from '../actions/CoinMarketCapActions';
 
 const CoinListContainer = props => <CoinList {...props} />
 

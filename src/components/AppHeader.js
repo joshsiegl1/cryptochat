@@ -20,10 +20,16 @@ class AppHeader extends Component {
         nav.goBack(); 
     }
 
+    onMenuPressed = () => { 
+        const { nav } = this.props; 
+
+        nav.navigate('DrawerToggle'); 
+    }
+
     render() { 
         return (<View style={{
             flexDirection: 'row', 
-            justifyContent: 'center', 
+            justifyContent: 'space-between', 
             height: 40, 
             backgroundColor: 'white', 
             zIndex: -1, 
@@ -32,8 +38,13 @@ class AppHeader extends Component {
                 (<TouchableOpacity onPress={() => this.onBackPressed()}> 
                     <Image source={require('../../assets/back.png')} />
                 </TouchableOpacity>)}
+            {!this.props.renderBackButton &&
+                (<View style={{width: 40}}></View>)}
             
             <Image source={require('../../assets/header_logo.png')} />
+            <TouchableOpacity onPress={() => this.onMenuPressed()}> 
+                <Image source={require('../../assets/menu_btn.png')} />
+            </TouchableOpacity>
         </View>)
     }
 }

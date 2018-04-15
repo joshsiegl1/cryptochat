@@ -7,6 +7,7 @@ module.exports = new Schema({
     email: String, 
     userID: String, 
     password: String, 
+    pushNotification: String, 
     karma: Number, 
     dateCreated: {type: Date, default: Date.now}, 
 
