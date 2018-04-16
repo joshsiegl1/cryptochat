@@ -138,7 +138,7 @@ class ChatItem extends PureComponent {
                     <Text style={{paddingLeft: 5, width: '90%', color: userColor, fontFamily: 'arial'}}>{item.userID}</Text>  
                 </View>
                 <View style={styles.bodyBox}>
-                    <Text style={styles.messageText}>{item.body}</Text>
+                    <Text style={{paddingLeft: 21, fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{item.body}</Text>
                 </View>
                 <View style={styles.voteBox}>
                     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -156,7 +156,7 @@ class ChatItem extends PureComponent {
                     <View style={styles.commentSection}>
                             <TouchableOpacity onPress={this.onCommentsPressed} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                                 <Image source={require('../../assets/reply.png')} />
-                                <Text style={{lineHeight: 12, fontSize:12, color: '#373F51', paddingLeft: 5, fontFamily: 'arial'}} >comments</Text>
+                                <Text style={{lineHeight: 12, fontSize:12, color: '#373F51', paddingLeft: 5, fontFamily: 'arial'}} >Comments</Text>
                             </TouchableOpacity>
                     </View>
                     <View style={styles.timeSection}>

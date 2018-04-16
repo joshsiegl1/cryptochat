@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
         padding: 5, 
         width: '100%', 
         backgroundColor: 'white', 
-        borderBottomWidth: 1, 
-        borderColor: 'lightgray', 
+        borderBottomWidth: 10, 
+        borderColor: '#EFEFED', 
     }, 
     titleBox: { 
         flex: 1, 
