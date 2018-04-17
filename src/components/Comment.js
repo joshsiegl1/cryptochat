@@ -82,14 +82,6 @@ class Comment extends Component {
         this.setState({myText: friendlyGreeting, chatColor: 'darkgrey'}); 
     }
 
-    onInputFocused = () => { 
-        if (this.state.myText === friendlyGreeting) { 
-            this.setState({myText: ''}); 
-        }
-
-        this.setState({chatColor: 'black'}); 
-    }
-
     onChangeText = (text) => { 
         this.setState({myText: text}); 
     }
@@ -103,7 +95,13 @@ class Comment extends Component {
 
     _renderItem =({item}) => (
         <ReplyItem item={item}
-                   navigate={this.props.navigation.navigate}/>
+                   crypto={this.props.navigation.state.params.crpyto}
+                   upvote={this.props.Upvote}
+                   downvote={this.props.Downvote}
+                   navigate={this.props.navigation.navigate}
+                   likedPosts={this.props.likedPosts}
+                   dislikedPosts={this.props.dislikedPosts}
+                   currentTime={this.props.currentTime}/>
     )
 
     _keyExtractor = (item, index) => item.postID
@@ -172,7 +170,8 @@ class Comment extends Component {
                             backgroundColor: 'black', 
                             borderWidth: 1, 
                             paddingLeft: 25, 
-                            paddingRight: 25}}>
+                            paddingRight: 25, 
+                            height: '10%'}}>
 
                     {ad}
                 </View> 

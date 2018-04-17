@@ -99,14 +99,14 @@ class ChatItem extends PureComponent {
 
     getDownArrowGraphic(dislikedPosts, postID) { 
 
-        if (this.state.pressedState === -1) return <Image source={require('../../assets/down_arrow_pressed.png')}></Image>
-        else return <Image source={require('../../assets/down_arrow.png')}></Image>
+        if (this.state.pressedState === -1) return <Image source={require('../../assets/down_arrow_pressed.png')} style={{width: 10, height: 10}}></Image>
+        else return <Image source={require('../../assets/down_arrow.png')} style={{width: 10, height: 10}}></Image>
     }
 
     getUpArrowGraphic(likedPosts, postID) { 
         
-        if (this.state.pressedState === 1) return <Image source={require('../../assets/up_arrow_pressed.png')}></Image>
-        else return <Image source={require('../../assets/up_arrow.png')}></Image>
+        if (this.state.pressedState === 1) return <Image source={require('../../assets/up_arrow_pressed.png')} style={{width: 10, height: 10}}></Image>
+        else return <Image source={require('../../assets/up_arrow.png')} style={{width: 10, height: 10}}></Image>
     }
 
     render() { 
@@ -155,13 +155,13 @@ class ChatItem extends PureComponent {
                     </View>
                     <View style={styles.commentSection}>
                             <TouchableOpacity onPress={this.onCommentsPressed} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                                <Image source={require('../../assets/reply.png')} />
+                                <Image source={require('../../assets/comment.png')} style={{width: 10, height: 10}}/>
                                 <Text style={{lineHeight: 12, fontSize:12, color: '#373F51', paddingLeft: 5, fontFamily: 'arial'}} >Comments</Text>
                             </TouchableOpacity>
                     </View>
                     <View style={styles.timeSection}>
                         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', paddingRight: 15}}>
-                            <Image source={require('../../assets/time.png')} />
+                            <Image source={require('../../assets/time.png')} style={{width: 10, height: 10}} />
                             <Text style={{lineHeight: 12, fontSize: 12, color: '#373F51', paddingLeft: 5, fontFamily: 'arial'}}>{friendlyDate}</Text>
                         </View>
                     </View>
