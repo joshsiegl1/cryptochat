@@ -51,9 +51,6 @@ class Comment extends Component {
             if (thisComment === undefined) { 
                 GetPost(postID); 
             }
-            else { 
-                //console.log(thisComment)
-            }
         }
         else { 
             GetPost(postID); 

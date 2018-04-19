@@ -1,3 +1,5 @@
+//import { replace } from '../../../AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/tar';
+
 const express = require('express')
 const bodyParser = require("body-parser"); 
 const bcrypt = require("bcrypt"); 
@@ -48,7 +50,8 @@ app.post('/chat', (req, res) => {
         body: req.body.body, 
         userID: req.body.userID, 
         inReplyTo: '', 
-        id: req.body.id
+        id: req.body.id, 
+        replies: []
     }
 
     var newChat = new Chat(c); 
@@ -67,21 +70,29 @@ app.post('/reply', (req, res) => {
 
     const Chat = mongoose.model('Chat', chatSchema)
 
-    console.log(req); 
-
     let c = {
         postID: uuid(), 
         karma: '0', 
         body: req.body.body, 
         userID: req.body.userID, 
         inReplyTo: req.body.inReplyTo, 
-        id: req.body.id + ' reply'
+        id: req.body.id + ' reply', 
+        replies: []
     }
 
     var newReply = new Chat(c); 
 
-    newReply.save((err) => { 
+    newReply.save((err, reply) => { 
         if (err) console.log(err); 
+        var id = reply._id.toString(); 
+
+        Chat.findOne({postID: req.body.inReplyTo})
+            .exec((err, result) => { 
+                result.replies = [...result.replies, id.toString()]; 
+                result.save(function (err) { 
+                    if (err) console.log(err); 
+                })
+            })
     })
 
     res.send("Success"); 
@@ -116,6 +127,23 @@ app.get('/post/:postID', (req, res) => {
                             }
                         })
             }
+        })
+})
+
+app.get('/replies/:postID', (req, res) => { 
+    var postID = req.params.postID; 
+
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
+
+    var post = mongoose.model('Chat', chatSchema); 
+
+    post.findOne({postID: postID})
+        .populate({
+            path: 'replies'
+        })
+        .exec(function(err, results) { 
+            res.send(results); 
         })
 })
 

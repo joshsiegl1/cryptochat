@@ -96,8 +96,6 @@ export const PostReply = (id, userID, message, postID) => async (dispatch) => {
         body: JSON.stringify(reply)
     }
 
-    console.log("hit"); 
-
     const { json } = await callApi(POST_REPLY_URL, options)
 
     dispatch(GetPost(postID))

@@ -66,12 +66,18 @@ class ReplyItem extends PureComponent {
         }
     }
 
-    onCommentsPressed = () => { 
-        const { postID } = this.props.item; 
+    onReplyPressed = () => { 
+        const { postID, id } = this.props.item; 
 
-        const { navigate, crypto } = this.props; 
+        const { navigate } = this.props; 
 
-        //navigate('Comment', {postID: postID, crypto: crypto}); 
+        navigate('ChatWindow', 
+        {
+            postID: postID, 
+            crypto: id, 
+            type: "comment", 
+            topic: "Post Reply"
+        }); 
     }
 
     updatePressedStatefromStore(likedPosts, dislikedPosts, postID) { 
@@ -131,29 +137,24 @@ class ReplyItem extends PureComponent {
                     <Text style={{paddingLeft: 21, fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{item.body}</Text>
                 </View>
                 <View style={styles.voteBox}>
-                    <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
                     <View style={styles.voteSection}>
-                        <TouchableOpacity onPress={this.onUpvotePressed}>
-                            {upArrow}
-                        </TouchableOpacity>
-                        <View style={{width: 35, justifyContent: "center"}}>
-                            <Text style={{lineHeight: 12, fontSize: 12, color: '#373F51', textAlign: "center", fontFamily: 'arial'}}>{karma}</Text>
-                        </View>
-                        <TouchableOpacity onPress={this.onDownvotePressed}>
-                            {downArrow}
-                        </TouchableOpacity>
+                    <TouchableOpacity onPress={this.onUpvotePressed}>
+                        {upArrow}
+                    </TouchableOpacity>
+                    <View style={{width: 35, justifyContent: "center"}}>
+                        <Text style={{lineHeight: 12, fontSize: 12, color: '#373F51', textAlign: "center", fontFamily: 'arial'}}>{karma}</Text>
                     </View>
-                    <View style={styles.commentSection}>
-                            <TouchableOpacity onPress={this.onCommentsPressed} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                    <TouchableOpacity onPress={this.onDownvotePressed}>
+                        {downArrow}
+                    </TouchableOpacity>
+                    </View>
+
+                    <View style={{display: 'flex', flexDirection: 'row', paddingRight: 15, paddingLeft: 30}}>
+                            <TouchableOpacity onPress={this.onReplyPressed} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                                 <Image source={require('../../assets/reply.png')} style={{width: 10, height: 10}} />
-                                <Text style={{lineHeight: 12, fontSize:12, color: '#373F51', paddingLeft: 5, fontFamily: 'arial'}} >Comments</Text>
+                                <Text style={{lineHeight: 12, fontSize:12, color: '#373F51', paddingLeft: 5, fontFamily: 'arial'}} >Reply</Text>
                             </TouchableOpacity>
-                    </View>
-                    <View style={styles.timeSection}>
-                        <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', paddingRight: 15}}>
-                            <Image source={require('../../assets/time.png')} style={{width: 10, height: 10}}/>
-                            <Text style={{lineHeight: 12, fontSize: 12, color: '#373F51', paddingLeft: 5, fontFamily: 'arial'}}>{friendlyDate}</Text>
-                        </View>
                     </View>
                     </View>
 

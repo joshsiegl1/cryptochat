@@ -15,8 +15,7 @@
     "mongoose": "^4.13.9", 
     "body-parser": "^1.18.2", 
     "bcrypt": "1.0.3", 
-    "uuid": "^3.2.1", 
-    "expo-server-sdk": "^2.3.3"
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "express": "^4.16.2",
@@ -24,7 +23,6 @@
     "mongoose": "^4.13.9", 
     "body-parser": "^1.18.2", 
     "bcrypt": "1.0.3", 
-    "uuid": "^3.2.1", 
-    "expo-server-sdk": "^2.3.3"
+    "uuid": "^3.2.1"
   }
 }
