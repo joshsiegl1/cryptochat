@@ -9,6 +9,7 @@ import styles from '../styles/stylesheet';
 
 const propTypes = { 
     item: PropTypes.shape, 
+    index: PropTypes.number, 
     navigate: PropTypes.func, 
     upvote: PropTypes.func, 
     downvote: PropTypes.func, 

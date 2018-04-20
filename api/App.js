@@ -140,10 +140,19 @@ app.get('/replies/:postID', (req, res) => {
 
     post.findOne({postID: postID})
         .populate({
-            path: 'replies'
+            path: 'replies', 
+            populate: {
+                path: 'replies', 
+                populate: { 
+                    path: 'replies'
+                }
+            }
         })
         .exec(function(err, results) { 
-            res.send(results); 
+            res.send({
+                results: results, 
+                time: new Date() 
+            }); 
         })
 })
 

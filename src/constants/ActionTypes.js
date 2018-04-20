@@ -5,6 +5,7 @@ export const POST_CHAT = 'POST_CHAT';
 export const GET_CHAT = 'GET_CHAT'; 
 
 export const GET_POST = 'GET_POST'; 
+export const GET_REPLIES = 'GET_REPLIES'; 
 
 export const GET_USER = "GET_USER"; 
 export const ADD_USER = "ADD_USER"; 

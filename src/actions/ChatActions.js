@@ -3,10 +3,12 @@ import {
     POST_CHAT_URL, 
     GET_CHAT_URL, UPVOTE_URL, 
     DOWNVOTE_URL, GET_POST_URL, 
-    POST_REPLY_URL, VOTE_URL } from '../constants/ApiConstants'; 
+    POST_REPLY_URL, VOTE_URL, 
+    GET_REPLY_URL } from '../constants/ApiConstants'; 
 import * as types from '../constants/ActionTypes'; 
 import {callApi} from '../utils/ApiUtils'; 
 import { SetLikedPosts, GetLikedPosts } from '../utils/Storage'; 
+import { disconnect } from 'mongoose';
 
 
 export const Vote = (postID, userID, karma) => { 
@@ -130,4 +132,19 @@ export const GetPost = (postID) => async (dispatch) => {
     const { json } = await callApi(GET_POST_URL.replace(":postID", postID)); 
 
     dispatch(getPostSuccess(postID, json)); 
+}
+
+const getReplySuccess = (postID, results) => { 
+    return { 
+        type: types.GET_REPLIES, 
+        postID: postID, 
+        results: results, 
+        time: results.time
+    }
+}
+
+export const GetReplies = (postID) => async (dispatch) => { 
+    const { json } = await callApi(GET_REPLY_URL.replace(":postID", postID)); 
+
+    dispatch(getReplySuccess(postID, json)); 
 }

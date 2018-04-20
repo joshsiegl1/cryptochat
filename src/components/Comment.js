@@ -10,24 +10,21 @@ import ReplyItem from './ReplyItem';
 import ChatBar from './ChatBar'; 
 
 import styles from '../styles/commentSheet'; 
+import { GetReplies } from '../actions/ChatActions';
 
 const propTypes = { 
     comment: PropTypes.shape({}), 
     GetPost: PropTypes.func, 
+    GetReplies: PropTypes.func, 
     PostReply: PropTypes.func, 
     user: PropTypes.shape()
 }
-
-const friendlyGreeting = "Leave a comment"; 
-const totalChatLength = 200; 
 
 class Comment extends Component { 
     constructor(props) { 
         super(props)
 
         this.state = { 
-            myText: friendlyGreeting, 
-            chatColor: 'darkgray'
         }
     }
 
@@ -37,7 +34,7 @@ class Comment extends Component {
         
         const { postID } = navigation.state.params; 
         
-        GetPost(postID); 
+        GetReplies(postID); 
     }
 
     componentDidUpdate() { 
@@ -49,38 +46,12 @@ class Comment extends Component {
         if (Object.keys(comment).length > 0) { 
             const thisComment = comment[postID]; 
             if (thisComment === undefined) { 
-                GetPost(postID); 
+                GetReplies(postID); 
             }
         }
         else { 
-            GetPost(postID); 
+            GetReplies(postID); 
         }
-    }
-
-    onPressPost = () => { 
-        const { navigation, PostReply, user} = this.props; 
-
-        const { crypto, postID } = navigation.state.params; 
-
-        let text = this.state.myText; 
-        if (text === '' || text === friendlyGreeting) return; 
-
-        Keyboard.dismiss(); 
-
-        let username = "anonymous"; 
-        if (!(Object.keys(user).length === 0 && user.constructor === Object)) { 
-            if (user.userID !== "") { 
-                username = user.userID
-            }
-        }
-
-        PostReply(crypto, username, text, postID)
-
-        this.setState({myText: friendlyGreeting, chatColor: 'darkgrey'}); 
-    }
-
-    onChangeText = (text) => { 
-        this.setState({myText: text}); 
     }
 
     onScrollback = () => { 
@@ -122,23 +93,34 @@ class Comment extends Component {
 
     render() { 
 
-        const { comment, navigation } = this.props; 
+        const { replies, comment, navigation } = this.props; 
         const { postID, crypto } = navigation.state.params; 
 
         let ad = this.displayAd(); 
 
-        let comments = []; 
-        let replies = []; 
+        // let comments = []; 
+        // let replies = []; 
+        // let postContent = ""; 
+
+        // if (Object.keys(comment).length > 0) { 
+        //     comments = comment[postID]; 
+        //     if (comments !== undefined) 
+        //     {
+        //         postContent = comments.content[0].body; 
+        //         replies = comments.replies; 
+        //     }
+
+        // }
+
+        let replySet = []; 
+        let subReplies = []; 
         let postContent = ""; 
-
-        if (Object.keys(comment).length > 0) { 
-            comments = comment[postID]; 
-            if (comments !== undefined) 
-            {
-                postContent = comments.content[0].body; 
-                replies = comments.replies; 
+        if (Object.keys(replies).length > 0) { 
+            replySet = replies[postID]; 
+            if (replySet !== undefined) { 
+                postContent = replySet.body; 
+                subReplies = replySet.replies; 
             }
-
         }
 
 
@@ -157,7 +139,7 @@ class Comment extends Component {
                 onContentSizeChange={this.onScrollback}
                 onLayout={this.onScrollback}
                 style={{height: '70%'}}
-                data={replies} 
+                data={subReplies} 
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
              />

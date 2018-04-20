@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 
 import Comment from '../components/Comment.js'; 
 
-import { GetPost, PostReply, Upvote, Downvote } from '../actions/ChatActions.js';
+import { GetPost, PostReply, Upvote, Downvote, GetReplies } from '../actions/ChatActions.js';
 
 import { 
     getUser, 
     getComment,
+    getReplies, 
     getLikedPosts, 
     getDislikedPosts, 
     getCurrentTime
@@ -17,6 +18,7 @@ const CommentsContainer = props => <Comment {...props} />
 
 const mapStateToProps = (state) => { 
     return { 
+        replies: getReplies(state), 
         comment: getComment(state), 
         user: getUser(state), 
         likedPosts: getLikedPosts(state), 
@@ -27,6 +29,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, { 
     GetPost, 
+    GetReplies, 
     PostReply, 
     Upvote, 
     Downvote
