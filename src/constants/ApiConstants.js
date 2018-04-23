@@ -5,9 +5,9 @@ export const TICKER_URL = `${COINMARKETCAP_API_HOSTNAME}/ticker/`;
 export const TICKER_LIMIT_URL = `${COINMARKETCAP_API_HOSTNAME}/ticker/?limit=:limit`; 
 
 const CRYPTOCHAT_API_HOSTNAME = 'https://obscure-coast-72434.herokuapp.com'; 
-const DEBUG_API_HOSTNAME = 'localhost:3000'; 
+const DEBUG_API_HOSTNAME = 'https://cryptochat-test.herokuapp.com'; 
 
-const DEBUG = false; 
+const DEBUG = true; 
 
 const GET_CRYPTO_HOSTNAME = () => {
     if (DEBUG) { 

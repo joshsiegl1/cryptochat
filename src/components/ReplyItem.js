@@ -108,7 +108,7 @@ class ReplyItem extends PureComponent {
     }
 
     render() { 
-        const { item, likedPosts, dislikedPosts } = this.props; 
+        const { item, index, likedPosts, dislikedPosts } = this.props; 
 
         this.updatePressedStatefromStore(likedPosts, dislikedPosts, item.postID)
         
@@ -127,9 +127,23 @@ class ReplyItem extends PureComponent {
         if (item.userID === "anonymous")
             userColor = 'lightgray'
 
+        let leftMargin = (index * 10); 
+
             return (
-                <View style={styles.messageBox}>
-                <View style={styles.titleBox}>
+                <View style={{
+                            padding: 5,
+                            marginLeft: leftMargin, 
+                            width: '100%', 
+                            backgroundColor: 'white', 
+                            borderBottomWidth: 2, 
+                            borderColor: '#EFEFED'
+                            }}>
+                <View style={{
+                    flex: 1, 
+                    flexDirection: 'row', 
+                    justifyContent: 'flex-start', 
+                    flexWrap: 'wrap'
+                }}>
                     <Image style={{width: 16, height: 16}}
                     source={{uri: `http://www.joshsiegl.com/crypto/${this.props.crypto}.png`}} />
                     <Text style={{paddingLeft: 5, width: '90%', color: userColor, fontFamily: 'arial'}}>{item.userID}</Text>  

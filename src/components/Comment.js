@@ -5,7 +5,7 @@ import {View, Text, TextInput, Keyboard, TouchableOpacity, Image, KeyboardAvoidi
 
 import { AdMobBanner } from 'expo'; 
 
-import ReplyItem from './ReplyItem'; 
+import ReplyThread from './ReplyThread'; 
 
 import ChatBar from './ChatBar'; 
 
@@ -14,6 +14,7 @@ import { GetReplies } from '../actions/ChatActions';
 
 const propTypes = { 
     comment: PropTypes.shape({}), 
+    replies: PropTypes.shape({}), 
     GetPost: PropTypes.func, 
     GetReplies: PropTypes.func, 
     PostReply: PropTypes.func, 
@@ -30,7 +31,7 @@ class Comment extends Component {
 
     componentDidMount() { 
         
-        const { navigation, GetPost} = this.props; 
+        const { navigation, GetReplies} = this.props; 
         
         const { postID } = navigation.state.params; 
         
@@ -39,13 +40,13 @@ class Comment extends Component {
 
     componentDidUpdate() { 
 
-        const { navigation, comment } = this.props; 
+        const { navigation, replies } = this.props; 
 
         const { postID } = navigation.state.params; 
 
-        if (Object.keys(comment).length > 0) { 
-            const thisComment = comment[postID]; 
-            if (thisComment === undefined) { 
+        if (Object.keys(replies).length > 0) { 
+            const thisReply = replies[postID]; 
+            if (thisReply === undefined) { 
                 GetReplies(postID); 
             }
         }
@@ -62,7 +63,7 @@ class Comment extends Component {
     }
 
     _renderItem =({item}) => (
-        <ReplyItem item={item}
+        <ReplyThread item={item}
                    crypto={this.props.navigation.state.params.crpyto}
                    upvote={this.props.Upvote}
                    downvote={this.props.Downvote}
@@ -118,8 +119,8 @@ class Comment extends Component {
         if (Object.keys(replies).length > 0) { 
             replySet = replies[postID]; 
             if (replySet !== undefined) { 
-                postContent = replySet.body; 
-                subReplies = replySet.replies; 
+                postContent = replySet.results.results.body; 
+                subReplies = replySet.results.results.replies; 
             }
         }
 

@@ -8,8 +8,6 @@ import {
 import * as types from '../constants/ActionTypes'; 
 import {callApi} from '../utils/ApiUtils'; 
 import { SetLikedPosts, GetLikedPosts } from '../utils/Storage'; 
-import { disconnect } from 'mongoose';
-
 
 export const Vote = (postID, userID, karma) => { 
     let vote = { 
