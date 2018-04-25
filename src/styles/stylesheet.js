@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         width: '100%', 
         backgroundColor: 'white', 
         borderBottomWidth: 10, 
-        borderColor: '#EFEFED', 
+        borderColor: '#F0EFF5', 
     }, 
     titleBox: { 
         flex: 1, 

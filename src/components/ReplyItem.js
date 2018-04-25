@@ -16,7 +16,8 @@ const propTypes = {
     crypto: PropTypes.string.isRequired, 
     likedPosts: PropTypes.arrayOf(PropTypes.string), 
     dislikedPosts: PropTypes.arrayOf(PropTypes.string), 
-    currentTime: PropTypes.date
+    currentTime: PropTypes.date, 
+    onNavigateBack: PropTypes.func
 }
 
 class ReplyItem extends PureComponent { 
@@ -70,14 +71,15 @@ class ReplyItem extends PureComponent {
     onReplyPressed = () => { 
         const { postID, id } = this.props.item; 
 
-        const { navigate } = this.props; 
+        const { navigate, onNavigateBack } = this.props; 
 
         navigate('ChatWindow', 
         {
             postID: postID, 
             crypto: id, 
             type: "comment", 
-            topic: "Post Reply"
+            topic: "Post Reply", 
+            onNavigateBack: onNavigateBack
         }); 
     }
 
@@ -128,15 +130,17 @@ class ReplyItem extends PureComponent {
             userColor = 'lightgray'
 
         let leftMargin = (index * 10); 
+        let paddingRight = (index * 10) + 5; 
 
             return (
                 <View style={{
                             padding: 5,
+                            paddingRight: paddingRight, 
                             marginLeft: leftMargin, 
                             width: '100%', 
                             backgroundColor: 'white', 
                             borderBottomWidth: 2, 
-                            borderColor: '#EFEFED'
+                            borderColor: '#F0EFF5'
                             }}>
                 <View style={{
                     flex: 1, 

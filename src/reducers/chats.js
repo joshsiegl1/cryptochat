@@ -32,12 +32,14 @@ const chats = (state = initialState, action) => {
         }
 
         case types.GET_REPLIES: 
+
         return { 
             ...state, 
-            replies: { 
-                [action.postID]: { 
-                    results: action.results
-                }
+            replies: {
+                ...state.replies,  
+                //Try removing the "results" object on the api, 
+                //might not be catching that it's a new object
+                [action.postID]: action.results
             }, 
             time: action.time
         }

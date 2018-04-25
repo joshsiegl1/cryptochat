@@ -162,8 +162,8 @@ class Chat extends Component {
             <FlatList 
                 removeClippedSubviews
                 ref={ref => this.flatList = ref}
-                onContentSizeChange={this.onScrollback}
-                onLayout={this.onScrollback}
+                //onContentSizeChange={this.onScrollback}
+                //onLayout={this.onScrollback}
                 style={{height: '80%'}}
                 data={chats}
                 keyExtractor={this._keyExtractor}

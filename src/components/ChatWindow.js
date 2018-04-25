@@ -51,6 +51,10 @@ class ChatWindow extends Component {
 
         Keyboard.dismiss(); 
 
+        if (this.props.navigation.state.params.onNavigateBack !== undefined) { 
+            this.props.navigation.state.params.onNavigateBack(); 
+        }
+
         this.props.navigation.goBack();
     }
 

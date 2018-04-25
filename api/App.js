@@ -7,6 +7,8 @@ const app = express()
 const MongoClient = require("mongodb").MongoClient
 const mongoose = require("mongoose")
 const uuid = require("uuid/v4"); 
+const https = require("https"); 
+const request = require("request"); 
 
 const userRoutes = require('./UserRoutes.js'); 
 
@@ -34,6 +36,29 @@ app.use(function(req, res, next) {
     console.log(req.body)
     next(); 
 })
+
+const pushNotification = (expToken) => { 
+
+    let body = {
+        'to' : expToken, 
+        'sound' : 'default', 
+        'body' : 'Someone has replied to your post'
+    }
+
+    request({
+        url: 'https://exp.host/--/api/v2/push/send', 
+        method: 'POST', 
+        headers: { 
+            'accept' : 'application/json',           
+            'accept-encoding' : 'gzip, deflate', 
+            'content-type': 'application/json', 
+        }, 
+        json: true, 
+        body: body
+    }, function (error, response, body) { 
+        console.log(response); 
+    })
+}
 
 app.use('/user', userRoutes); 
 
@@ -69,6 +94,7 @@ app.post('/reply', (req, res) => {
     const db = mongoose.connection
 
     const Chat = mongoose.model('Chat', chatSchema)
+    const User = mongoose.model('User', userSchema)
 
     let c = {
         postID: uuid(), 
@@ -88,6 +114,16 @@ app.post('/reply', (req, res) => {
 
         Chat.findOne({postID: req.body.inReplyTo})
             .exec((err, result) => { 
+
+                if (result.userID !== undefined && result.userID !== "anonymous") { 
+                    User.findOne({userID: result.userID})
+                        .exec((err, theUser) => { 
+                            if (theUser.pushNotification !== "") { 
+                                pushNotification(theUser.pushNotification); 
+                            }
+                        })
+                }
+
                 result.replies = [...result.replies, id.toString()]; 
                 result.save(function (err) { 
                     if (err) console.log(err); 
@@ -144,7 +180,10 @@ app.get('/replies/:postID', (req, res) => {
             populate: {
                 path: 'replies', 
                 populate: { 
-                    path: 'replies'
+                    path: 'replies', 
+                    populate: { 
+                        path: 'replies'
+                    }
                 }
             }
         })

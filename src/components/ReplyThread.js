@@ -26,7 +26,8 @@ class ReplyThread extends PureComponent {
             crypto, 
             likedPosts, 
             dislikedPosts, 
-            currentTime
+            currentTime, 
+            onNavigateBack
         } = this.props; 
 
         return (<ReplyItem 
@@ -39,6 +40,7 @@ class ReplyThread extends PureComponent {
                 likedPosts={likedPosts}
                 dislikedPosts={dislikedPosts} 
                 currentTime={currentTime}
+                onNavigateBack={onNavigateBack}
                 />)
 
     }
@@ -62,7 +64,7 @@ class ReplyThread extends PureComponent {
             }
         }
         
-        return (<View style={{borderColor: '#EFEFED', borderBottomWidth: 10}}>
+        return (<View style={{borderColor: '#F0EFF5', borderBottomWidth: 10}}>
                 {replies}
                 </View>)
     }

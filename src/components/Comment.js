@@ -55,6 +55,15 @@ class Comment extends Component {
         }
     }
 
+    onNavigateBack = () => { 
+
+        const { navigation } = this.props; 
+
+        const { postID } = navigation.state.params; 
+        
+        GetReplies(postID);  
+    }
+
     onScrollback = () => { 
         try { 
              this.flatList.scrollToEnd({animated: true}); 
@@ -70,7 +79,8 @@ class Comment extends Component {
                    navigate={this.props.navigation.navigate}
                    likedPosts={this.props.likedPosts}
                    dislikedPosts={this.props.dislikedPosts}
-                   currentTime={this.props.currentTime}/>
+                   currentTime={this.props.currentTime}
+                   onNavigateBack={this.onNavigateBack}/>
     )
 
     _keyExtractor = (item, index) => item.postID
@@ -99,30 +109,22 @@ class Comment extends Component {
 
         let ad = this.displayAd(); 
 
-        // let comments = []; 
-        // let replies = []; 
-        // let postContent = ""; 
-
-        // if (Object.keys(comment).length > 0) { 
-        //     comments = comment[postID]; 
-        //     if (comments !== undefined) 
-        //     {
-        //         postContent = comments.content[0].body; 
-        //         replies = comments.replies; 
-        //     }
-
-        // }
-
         let replySet = []; 
         let subReplies = []; 
         let postContent = ""; 
+        let user = ""; 
         if (Object.keys(replies).length > 0) { 
             replySet = replies[postID]; 
             if (replySet !== undefined) { 
-                postContent = replySet.results.results.body; 
-                subReplies = replySet.results.results.replies; 
+                postContent = replySet.results.body; 
+                user = replySet.results.userID; 
+                subReplies = replySet.results.replies; 
             }
         }
+
+        let userColor = '#373F51'; 
+        if (user === "anonymous")
+            userColor = 'lightgray'
 
 
         return(<KeyboardAvoidingView
@@ -131,7 +133,7 @@ class Comment extends Component {
                 style={{flex: 1}}>
 
             <View style={styles.contentContainer}>
-                <Text>{postContent}</Text>
+                <Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{postContent}</Text>
             </View>
 
             <FlatList
@@ -139,7 +141,7 @@ class Comment extends Component {
                 ref={ref => this.flatList = ref}
                 onContentSizeChange={this.onScrollback}
                 onLayout={this.onScrollback}
-                style={{height: '70%'}}
+                style={{height: '60%'}}
                 data={subReplies} 
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}

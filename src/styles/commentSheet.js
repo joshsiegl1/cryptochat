@@ -3,16 +3,17 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     contentContainer: { 
         backgroundColor: 'white', 
-        borderColor: 'lightgray', 
-        borderBottomWidth: 2, 
+        borderColor: '#F0EFF5', 
+        borderBottomWidth: 10, 
+        height: '20%', 
         padding: 20
     }, 
     replyBox: { 
         padding: 5, 
         width: '100%', 
         backgroundColor: 'white', 
-        borderBottomWidth: 1, 
-        borderColor: 'lightgray'
+        borderBottomWidth: 10, 
+        borderColor: '#F0EFF5'
     }, 
     replyTitleBox: { 
         flex: 1, 

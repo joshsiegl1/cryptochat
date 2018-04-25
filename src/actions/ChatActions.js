@@ -98,7 +98,7 @@ export const PostReply = (id, userID, message, postID) => async (dispatch) => {
 
     const { json } = await callApi(POST_REPLY_URL, options)
 
-    dispatch(GetPost(postID))
+    dispatch(GetReplies(postID))
 }
 
 const getChatSuccess = (id, content) => {
