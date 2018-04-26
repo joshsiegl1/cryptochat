@@ -6,8 +6,9 @@ export const TICKER_LIMIT_URL = `${COINMARKETCAP_API_HOSTNAME}/ticker/?limit=:li
 
 const CRYPTOCHAT_API_HOSTNAME = 'https://obscure-coast-72434.herokuapp.com'; 
 const DEBUG_API_HOSTNAME = 'https://cryptochat-test.herokuapp.com'; 
+//heroku git:remote -a cryptochat-test
 
-const DEBUG = false; 
+const DEBUG = true; 
 
 const GET_CRYPTO_HOSTNAME = () => {
     if (DEBUG) { 

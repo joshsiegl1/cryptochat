@@ -10,7 +10,6 @@ import ReplyThread from './ReplyThread';
 import ChatBar from './ChatBar'; 
 
 import styles from '../styles/commentSheet'; 
-import { GetReplies } from '../actions/ChatActions';
 
 const propTypes = { 
     comment: PropTypes.shape({}), 
@@ -32,36 +31,24 @@ class Comment extends Component {
     componentDidMount() { 
         
         const { navigation, GetReplies} = this.props; 
-        
+            
         const { postID } = navigation.state.params; 
-        
+            
         GetReplies(postID); 
-    }
-
-    componentDidUpdate() { 
-
-        const { navigation, replies } = this.props; 
-
-        const { postID } = navigation.state.params; 
-
-        if (Object.keys(replies).length > 0) { 
-            const thisReply = replies[postID]; 
-            if (thisReply === undefined) { 
-                GetReplies(postID); 
-            }
-        }
-        else { 
-            GetReplies(postID); 
-        }
     }
 
     onNavigateBack = () => { 
 
-        const { navigation } = this.props; 
+        setTimeout(function() { 
 
-        const { postID } = navigation.state.params; 
-        
-        GetReplies(postID);  
+            const { navigation, GetReplies } = this.props; 
+            
+            const { postID } = navigation.state.params; 
+                    
+            GetReplies(postID);  
+
+        }.bind(this), 1500); 
+
     }
 
     onScrollback = () => { 
@@ -140,7 +127,7 @@ class Comment extends Component {
                 removeClippedSubviews
                 ref={ref => this.flatList = ref}
                 onContentSizeChange={this.onScrollback}
-                onLayout={this.onScrollback}
+                //onLayout={this.onScrollback}
                 style={{height: '60%'}}
                 data={subReplies} 
                 keyExtractor={this._keyExtractor}

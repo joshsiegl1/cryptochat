@@ -37,8 +37,6 @@ const chats = (state = initialState, action) => {
             ...state, 
             replies: {
                 ...state.replies,  
-                //Try removing the "results" object on the api, 
-                //might not be catching that it's a new object
                 [action.postID]: action.results
             }, 
             time: action.time
