@@ -132,7 +132,9 @@ export default class App extends React.Component {
         require('./assets/down_arrow_pressed.png'), 
         require('./assets/time.png'), 
         require('./assets/menu_btn.png'), 
-        require('./assets/comment.png')
+        require('./assets/comment.png'),
+        require('./assets/ic_link.png'), 
+        require('./assets/ic_close.png')
       ]), 
       Font.loadAsync({
         'arial' : require('./assets/arial.ttf')
