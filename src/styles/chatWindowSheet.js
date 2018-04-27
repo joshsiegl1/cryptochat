@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     },
     sendText: { 
         fontSize: 18, 
-        color: '#373F51'
+        color: '#373F51',
+        fontWeight: 'bold'
     },
     sendImage: { 
         width: 24, 
@@ -26,9 +27,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1, 
         paddingBottom: 20
     }, 
+    
     topicText: { 
-        fontSize: 18,
-        fontWeight: 'bold', 
+        fontSize: 22
     }, 
     textInput: { 
         height: '100%', 

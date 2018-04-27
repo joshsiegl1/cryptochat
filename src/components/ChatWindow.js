@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import { View, TextInput, Text, TouchableOpacity, Image, Keyboard } from 'react-native'; 
+import { View, TextInput, Text, TouchableOpacity, Image, Keyboard, ScrollView } from 'react-native'; 
 
 import styles from '../styles/chatWindowSheet'; 
 
@@ -64,22 +64,32 @@ class ChatWindow extends Component {
 
     render() { 
 
-        const { topic } = this.props.navigation.state.params
+        const { topic, type } = this.props.navigation.state.params
+
+        let postContent = (type === "comment") ? (
+            <View style={styles.topic}>
+                    <Text style={styles.topicText}>{topic}</Text>
+            </View>
+        ) : (
+            <View style={styles.topic}>
+            <Image 
+            style={{width: 32, height: 32}}
+            source={{uri: `http://www.joshsiegl.com/crypto/${topic}.png`}} />
+            </View>
+        )
 
         return (<View>
-            <View style={styles.topBar}>
-                <TouchableOpacity onPress={this.onPost}>
-                    <Text style={styles.sendText}>SEND</Text>
-                    <Image 
-                    style={styles.sendImage}
-                    source={require('../../assets/ic_send.png')} />
+            <View style={{height: '10%', marginBottom: 10}}> 
+            <View style={{backgroundColor: 'white'}}>
+                <TouchableOpacity style={{padding: 20}} onPress={this.onPost}>
+                    <Text style={styles.sendText}>POST</Text>
                 </TouchableOpacity>
             </View>
-            <View style={styles.topic}>
-                <View style={styles.topicInner}>
-                    <Text style={styles.topicText}>{topic}</Text>
-                </View>
             </View>
+            <ScrollView style={{height: '20%', marginBottom: 10}}>
+            {postContent}
+            </ScrollView>
+            <View style={{height: '70%'}}>
             <TextInput 
             placeholder={greeting}
             placeholderTextColor='lightgray'
@@ -87,6 +97,7 @@ class ChatWindow extends Component {
             multiline={true}
             onChangeText={this.onChange}
             value={this.state.myText} />
+            </View>
         </View>)
     }
 }
