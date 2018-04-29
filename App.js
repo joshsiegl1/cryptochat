@@ -13,6 +13,7 @@ import UserContainer from './src/containers/UserContainer';
 import RegisterContainer from './src/containers/RegisterContainer'; 
 import CommentContainer from './src/containers/CommentContainer'; 
 import ChatWindowContainer from './src/containers/ChatWindowContainer'; 
+import WebContainer from './src/containers/WebContainer'; 
 import AppHeader from './src/components/AppHeader'; 
 
 console.disableYellowBox = true; 
@@ -55,6 +56,13 @@ const ModalStack = StackNavigator({
   ChatWindow: { 
     path: 'chatwindow/:postID/:crypto', 
     screen: ChatWindowContainer, 
+    navigationOptions: ({navigation}) => ({
+      header: props => <AppHeader nav={navigation} renderBackButton={true} />
+    })
+  }, 
+  Web: { 
+    path: 'web/:url', 
+    screen: WebContainer, 
     navigationOptions: ({navigation}) => ({
       header: props => <AppHeader nav={navigation} renderBackButton={true} />
     })

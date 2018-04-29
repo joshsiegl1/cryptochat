@@ -11,6 +11,7 @@ const https = require("https");
 const request = require("request"); 
 
 const userRoutes = require('./UserRoutes.js'); 
+const contentRoutes = require('./ContentRoutes.js'); 
 
 const url = require("./Config.js").MongoDBConnectionString; 
 
@@ -19,11 +20,6 @@ var userSchema = require("./models/user_model.js");
 var categorySchema = require("./models/category_model.js"); 
 
 var port = process.env.PORT || 3000
-
-app.use(function(req, res, next) { 
-    console.log(req.body)
-    next(); 
-})
 
 app.use(bodyParser.json());
 
@@ -62,6 +58,7 @@ const pushNotification = (expToken) => {
 }
 
 app.use('/user', userRoutes); 
+app.use('/content', contentRoutes); 
 
 app.post('/chat', (req, res) => {
 
