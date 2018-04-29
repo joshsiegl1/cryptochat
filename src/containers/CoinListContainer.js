@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import CoinList from '../components/CoinList'; 
 
 import { getCurrencies, getUser, 
-         getLikedPosts, getDislikedPosts } from '../selectors/CommonSelectors'; 
+         getLikedPosts, getDislikedPosts, getCoinList } from '../selectors/CommonSelectors'; 
 
 import { DispatchUserfromStorage, DispatchLikedPostsfromStorage } from '../actions/UserActions'; 
-import { fetchTopFiftyCryptoCurrencies } from '../actions/CoinMarketCapActions';
+import { fetchTopFiftyCryptoCurrencies, fetchOthers } from '../actions/CoinMarketCapActions';
 
 const CoinListContainer = props => <CoinList {...props} />
 
 const mapStateToProps = (state) => { 
     return { 
-        currencies: getCurrencies(state), 
+        currencies: getCoinList(state), 
         User: getUser(state), 
         LikedPosts: getLikedPosts(state), 
         DislikedPosts: getDislikedPosts(state)
@@ -22,6 +22,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, { 
     fetchTopFiftyCryptoCurrencies, 
+    fetchOthers,
     DispatchUserfromStorage, 
     DispatchLikedPostsfromStorage
 })(CoinListContainer)

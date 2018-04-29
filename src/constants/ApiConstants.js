@@ -19,6 +19,8 @@ const GET_CRYPTO_HOSTNAME = () => {
     }
 }
 
+export const OTHERS_URL = `${GET_CRYPTO_HOSTNAME()}/others`; 
+
 export const PUSH_ENDPOINT = `${GET_CRYPTO_HOSTNAME()}/user/push-token`; 
 
 export const POST_CHAT_URL = `${GET_CRYPTO_HOSTNAME()}/chat/`;

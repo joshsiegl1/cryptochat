@@ -1,7 +1,8 @@
 import * as types from '../constants/ActionTypes'; 
 
 const initialState = { 
-    currencies: null
+    currencies: null, 
+    others: null
 }
 
 const cryptocurrency = (state = initialState, action) => { 
@@ -10,6 +11,12 @@ const cryptocurrency = (state = initialState, action) => {
         return {
             ...state, 
             currencies: action.currencies
+        }
+
+        case types.GET_OTHERS: 
+        return { 
+            ...state, 
+            others: action.others
         }
 
         default: 

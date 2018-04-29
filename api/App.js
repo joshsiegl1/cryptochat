@@ -16,6 +16,7 @@ const url = require("./Config.js").MongoDBConnectionString;
 
 var chatSchema = require("./models/chat_model.js"); 
 var userSchema = require("./models/user_model.js"); 
+var categorySchema = require("./models/category_model.js"); 
 
 var port = process.env.PORT || 3000
 
@@ -193,6 +194,23 @@ app.get('/replies/:postID', (req, res) => {
                 time: new Date() 
             }); 
         })
+})
+
+app.get('/others', (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    var Category = mongoose.model('Category', categorySchema); 
+
+    Category.find({})
+         .exec(function(err, items) { 
+             if (err) { 
+                 res.send(err); 
+             }
+             else { 
+                 res.send({items})
+             }
+         })
 })
 
 app.get('/chat/:crypto', (req, res) => { 

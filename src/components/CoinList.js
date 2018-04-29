@@ -25,7 +25,7 @@ class CoinList extends Component {
     }
 
     async UNSAFE_componentWillMount() { 
-        const {currencies, fetchTopFiftyCryptoCurrencies, LikedPosts, DislikedPosts,
+        const {currencies, fetchTopFiftyCryptoCurrencies, fetchOthers, LikedPosts, DislikedPosts,
                User, DispatchUserfromStorage, DispatchLikedPostsfromStorage} = this.props; 
 
         if (Object.keys(User).length === 0 && User.constructor === Object) { 
@@ -53,6 +53,7 @@ class CoinList extends Component {
 
         if (currencies === null) { 
             fetchTopFiftyCryptoCurrencies(); 
+            fetchOthers(); 
         }
     }
 
