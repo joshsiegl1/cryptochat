@@ -14,9 +14,9 @@ router.post('/link', (req, res) => {
     var Link = mongoose.model('Link', linkSchema)
 
     var link = new Link({
-        id: req.id, 
-        name: req.name, 
-        url: req.url
+        id: req.body.id, 
+        name: req.body.name, 
+        url: req.body.url
     })
 
     link.save((error) => { 
@@ -28,3 +28,5 @@ router.post('/link', (req, res) => {
 
     res.send({"response" : "Success"}); 
 })
+
+module.exports = router; 

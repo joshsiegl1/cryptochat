@@ -4,6 +4,8 @@ import React, {Component} from 'react';
 import { View, TextInput, Text, TouchableOpacity, Image, Keyboard, ScrollView } from 'react-native'; 
 import Modal from 'react-native-modal'
 
+const uuid = require("uuid/v4")
+
 import styles from '../styles/chatWindowSheet'; 
 
 //this.props.navigation.state.params
@@ -15,7 +17,8 @@ import styles from '../styles/chatWindowSheet';
 const propTypes = { 
     user: PropTypes.shape(), 
     PostChat: PropTypes.func, 
-    PostReply: PropTypes.func
+    PostReply: PropTypes.func, 
+    PostLink: PropTypes.func
 }
 
 const greeting = "My Comment"; 
@@ -64,6 +67,20 @@ class ChatWindow extends Component {
 
     onLink = () => { 
         this.setState({menuVisible: !this.state.menuVisible}); 
+    }
+
+    onSubmitLink = () => { 
+
+        const { PostLink } = this.props; 
+
+        let id = uuid(); 
+        let name = this.state.linkName; 
+        let url = this.state.link; 
+
+        //check to make sure it's a valid url
+
+        PostLink(id, name, url); 
+
     }
 
     onChange = (text) => { 
@@ -115,7 +132,7 @@ class ChatWindow extends Component {
                                    onChangeText={(text) => this.setState({link: text})}/>
                     </View>
                     <View style={{paddingTop: 25}}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={this.onSubmitLink}>
                             <View style={{backgroundColor: '#373F51', width: '100%', height: 50, alignItems: 'center', justifyContent: 'center', padding: 10}}>
                                 <Text style={{color: 'white', fontSize: 18, fontWeight: 'bold', lineHeight: 18}}>Submit Link</Text>
                             </View>
