@@ -31,16 +31,29 @@ class ChatWindow extends Component {
             myText: "", 
             menuVisible: false, 
             linkName: "", 
-            link: ""
+            link: "", 
+            linkArray: []
         }
     }
 
     onPost = () => { 
         const { type, crypto, postID } = this.props.navigation.state.params; 
-        const { user, PostChat, PostReply } = this.props; 
+        const { user, PostChat, PostReply} = this.props; 
+        const { PostLink } = this.props; 
 
         let text = this.state.myText; 
         if (text === '' || text === greeting) return; 
+
+        let links = this.state.linkArray; 
+        if (links.length > 0) { 
+            for (let i = 0; i < links.length; i++) { 
+                text = text.replace("[" + links[i].name + "]", "|LID=" + links[i].id + "|"); 
+            }
+        }
+
+        if (links.length > 0) { 
+            PostLink(links); 
+        }
 
         let username = "anonymous"; 
         if (!(Object.keys(user).length === 0 && user.constructor === Object)) { 
@@ -77,9 +90,29 @@ class ChatWindow extends Component {
         let name = this.state.linkName; 
         let url = this.state.link; 
 
+        if (name === "") { 
+            name = url; 
+        }
+
         //check to make sure it's a valid url
 
-        PostLink(id, name, url); 
+        //let placeHolder = "{[LID]=[" + id + "]}"; 
+        //this.setState({myText: placeHolder, menuVisible: false})
+        links = this.state.linkArray; 
+        links.push({
+            id,
+            name, 
+            url
+        })
+
+        this.setState(
+            {
+                myText: this.state.myText + " " + "[" + name + "]", 
+                linkArray: links, 
+                menuVisible: false
+            }); 
+
+        //PostLink(id, name, url); 
 
     }
 

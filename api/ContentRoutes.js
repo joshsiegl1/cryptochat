@@ -13,20 +13,29 @@ router.post('/link', (req, res) => {
 
     var Link = mongoose.model('Link', linkSchema)
 
-    var link = new Link({
-        id: req.body.id, 
-        name: req.body.name, 
-        url: req.body.url
-    })
+    let links = req.body.links; 
+    for (let i = 0; i < links.length; i++) { 
+        var link = new Link({
+            id: links[i].id, 
+            name: links[i].name, 
+            url: links[i].url
+        })
 
-    link.save((error) => { 
-        if (error) { 
-            res.send(error); 
-            console.log(error); 
-        }
-    })
+        link.save((error) => { 
+            if (error) { 
+                console.log(error); 
+            }
+        })
+    }
 
     res.send({"response" : "Success"}); 
+})
+
+router.get('/link', (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    var Link = mongoose.model('Link', linkSchema)
 })
 
 module.exports = router; 
