@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'; 
-import React, {PureComponent } from 'react'; 
+import React, {PureComponent, Component } from 'react'; 
 
 import {View, Image, Text, TouchableOpacity, Modal} from 'react-native'; 
 
 import { Asset } from 'expo'; 
+
+import { parseLinks } from '../utils/ChatUtils'; 
 
 import styles from '../styles/stylesheet'; 
 
@@ -29,7 +31,8 @@ class ChatItem extends PureComponent {
         this.state = { 
             pressedState: 0, 
             shareVisible: false, 
-            karma: props.item.karma
+            karma: props.item.karma, 
+            links: parseLinks(props.item.body)
         }
     }
 
@@ -109,6 +112,38 @@ class ChatItem extends PureComponent {
         else return <Image source={require('../../assets/up_arrow.png')} style={{width: 10, height: 10}}></Image>
     }
 
+    LinkifyBody = (body) => { 
+        const { links } = this.state; 
+
+        let b = body; 
+
+        let indexes = []; 
+        for (let i = 0; i < links.length; i++) { 
+            let p = `|name=${links[i].name};url=${links[i].url}|`; 
+            indexes.push(b.search(p)); 
+            b = b.replace(p, "")
+        }
+
+        let objectBody = []; 
+        for (let x = 0; x < indexes.length; x++) { 
+            let piece = b.slice(x, indexes[x]); 
+            objectBody.push(<Text>{piece}</Text>)
+            objectBody.push(<Text>{links[x].name}</Text>); 
+
+            if (x === indexes.length - 1) { 
+                let lastPiece = b.slice(indexes[x])
+                objectBody.push(<Text>{lastPiece}</Text>)
+            }
+        }
+
+        if (objectBody.length > 0) { 
+            return (<Text>{objectBody}</Text>)
+        }
+        else { 
+            return (<Text>{b}</Text>)
+        }
+    }
+
     render() { 
         const { item, likedPosts, dislikedPosts } = this.props
 
@@ -129,6 +164,7 @@ class ChatItem extends PureComponent {
         if (item.userID === "anonymous")
             userColor = 'lightgray'
 
+        let body = this.LinkifyBody(item.body); 
 
         return (
                 <View style={styles.messageBox}>
@@ -138,7 +174,7 @@ class ChatItem extends PureComponent {
                     <Text style={{paddingLeft: 5, width: '90%', color: userColor, fontFamily: 'arial'}}>{item.userID}</Text>  
                 </View>
                 <View style={styles.bodyBox}>
-                    <Text style={{paddingLeft: 21, fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{item.body}</Text>
+                    <Text style={{paddingLeft: 21, fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{body}</Text>
                 </View>
                 <View style={styles.voteBox}>
                     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>

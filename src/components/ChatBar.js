@@ -20,14 +20,15 @@ class ChatBar extends Component {
     }
 
     onPress = () => { 
-        const { id, postID, type, topic, navigate } = this.props; 
+        const { id, postID, type, topic, navigate, onNavigateBack } = this.props; 
 
         navigate("ChatWindow", 
         {
             postID: postID, 
             crypto: id, 
             type: type, 
-            topic: topic
+            topic: topic, 
+            onNavigateBack: onNavigateBack
         }); 
     }
 

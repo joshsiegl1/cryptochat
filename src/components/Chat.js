@@ -12,6 +12,7 @@ import ChatBar from './ChatBar';
 
 import { AdMobBanner } from 'expo'; 
 
+
 const propTypes = { 
     id: PropTypes.string, 
     GetChat: PropTypes.func, 
@@ -34,7 +35,8 @@ class Chat extends Component {
 
         this.state = { 
             myText: friendlyGreeting, 
-            chatColor: 'darkgray'
+            chatColor: 'darkgray', 
+            refresh: false
         }; 
     }
 
@@ -141,6 +143,12 @@ class Chat extends Component {
         }
     }
 
+    onNavigateBack = () => { 
+        setTimeout(function () { 
+            this.setState({refresh: !this.state.refresh}); 
+        }.bind(this), 3000)
+    }
+
     render() { 
 
         const { chat, navigation } = this.props;
@@ -166,6 +174,7 @@ class Chat extends Component {
                 //onLayout={this.onScrollback}
                 style={{height: '80%'}}
                 data={chats}
+                extraData={this.state.refresh}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem} />
 
@@ -185,7 +194,8 @@ class Chat extends Component {
                          type="chat"
                          topic={crypto}
                          navigate={this.props.navigation.navigate}
-                         greeting="Add a comment" />
+                         greeting="Add a comment"
+                         onNavigateBack={this.onNavigateBack} />
             </KeyboardAvoidingView>
         )
     }

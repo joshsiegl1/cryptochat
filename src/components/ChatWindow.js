@@ -47,12 +47,9 @@ class ChatWindow extends Component {
         let links = this.state.linkArray; 
         if (links.length > 0) { 
             for (let i = 0; i < links.length; i++) { 
-                text = text.replace("[" + links[i].name + "]", "|LID=" + links[i].id + "|"); 
+                text = text.replace("[" + links[i].name + "]", 
+                "|name=" + links[i].name + ";url=" + links[i].url + "|"); 
             }
-        }
-
-        if (links.length > 0) { 
-            PostLink(links); 
         }
 
         let username = "anonymous"; 
@@ -96,8 +93,6 @@ class ChatWindow extends Component {
 
         //check to make sure it's a valid url
 
-        //let placeHolder = "{[LID]=[" + id + "]}"; 
-        //this.setState({myText: placeHolder, menuVisible: false})
         links = this.state.linkArray; 
         links.push({
             id,
@@ -111,8 +106,6 @@ class ChatWindow extends Component {
                 linkArray: links, 
                 menuVisible: false
             }); 
-
-        //PostLink(id, name, url); 
 
     }
 
