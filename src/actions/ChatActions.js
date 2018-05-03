@@ -77,7 +77,7 @@ export const PostChat = (id, userID, message) => async (dispatch) => {
 
     const { json } = await callApi(POST_CHAT_URL, options); 
 
-    dispatch(GetChat(id)); 
+    //dispatch(GetChat(id)); 
 }
 
 export const PostReply = (id, userID, message, postID) => async (dispatch) => { 
@@ -98,7 +98,7 @@ export const PostReply = (id, userID, message, postID) => async (dispatch) => {
 
     const { json } = await callApi(POST_REPLY_URL, options)
 
-    dispatch(GetReplies(postID))
+    //dispatch(GetReplies(postID))
 }
 
 const getChatSuccess = (id, content) => {

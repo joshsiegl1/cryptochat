@@ -5,6 +5,8 @@ import {View, Image, Text, TouchableOpacity, Modal} from 'react-native';
 
 import { Asset } from 'expo'; 
 
+import Link from './Link'; 
+
 import { parseLinks } from '../utils/ChatUtils'; 
 
 import styles from '../styles/stylesheet'; 
@@ -31,8 +33,7 @@ class ChatItem extends PureComponent {
         this.state = { 
             pressedState: 0, 
             shareVisible: false, 
-            karma: props.item.karma, 
-            links: parseLinks(props.item.body)
+            karma: props.item.karma
         }
     }
 
@@ -113,7 +114,7 @@ class ChatItem extends PureComponent {
     }
 
     LinkifyBody = (body) => { 
-        const { links } = this.state; 
+        const links = parseLinks(body); 
 
         let b = body; 
 
@@ -128,7 +129,10 @@ class ChatItem extends PureComponent {
         for (let x = 0; x < indexes.length; x++) { 
             let piece = b.slice(x, indexes[x]); 
             objectBody.push(<Text>{piece}</Text>)
-            objectBody.push(<Text>{links[x].name}</Text>); 
+            objectBody.push(
+            <Link navigate={this.props.navigate}
+                  name={links[x].name}
+                  url={links[x].url} />); 
 
             if (x === indexes.length - 1) { 
                 let lastPiece = b.slice(indexes[x])

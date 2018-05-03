@@ -144,9 +144,15 @@ class Chat extends Component {
     }
 
     onNavigateBack = () => { 
-        setTimeout(function () { 
-            this.setState({refresh: !this.state.refresh}); 
-        }.bind(this), 3000)
+        setTimeout(function() { 
+            
+                        const { navigation, GetChat } = this.props; 
+                        
+                        const { crypto } = navigation.state.params; 
+                                
+                        GetChat(crypto);  
+            
+                    }.bind(this), 1500); 
     }
 
     render() { 
@@ -174,7 +180,6 @@ class Chat extends Component {
                 //onLayout={this.onScrollback}
                 style={{height: '80%'}}
                 data={chats}
-                extraData={this.state.refresh}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem} />
 
