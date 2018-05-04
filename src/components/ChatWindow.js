@@ -4,6 +4,8 @@ import React, {Component} from 'react';
 import { View, TextInput, Text, TouchableOpacity, Image, Keyboard, ScrollView } from 'react-native'; 
 import Modal from 'react-native-modal'
 
+import { ImagePicker, Permissions } from 'expo'; 
+
 const uuid = require("uuid/v4")
 
 import styles from '../styles/chatWindowSheet'; 
@@ -32,7 +34,8 @@ class ChatWindow extends Component {
             menuVisible: false, 
             linkName: "", 
             link: "", 
-            linkArray: []
+            linkArray: [], 
+            image: ""
         }
     }
 
@@ -77,6 +80,21 @@ class ChatWindow extends Component {
 
     onLink = () => { 
         this.setState({menuVisible: !this.state.menuVisible}); 
+    }
+
+    onImage = async () => { 
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL); 
+        if (status === 'granted') { 
+
+            let result = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true, 
+                aspec: [4, 3]
+            })
+
+            if (!result.cancelled) { 
+                this.setState({ image: result.uri}); 
+            }
+        }
     }
 
     onSubmitLink = () => { 
@@ -173,9 +191,14 @@ class ChatWindow extends Component {
                 <TouchableOpacity style={{padding: 20}} onPress={this.onPost}>
                     <Text style={styles.sendText}>POST</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{padding: 20}} onPress={this.onLink}> 
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 20}}>
+                <TouchableOpacity onPress={this.onLink}> 
                     <Image style={{width: 24, height: 24}} source={require('../../assets/ic_link.png')} />
                 </TouchableOpacity>
+                <TouchableOpacity style={{paddingLeft: 20}} onPress={this.onImage}> 
+                    <Image style={{width: 24, height: 24}} source={require('../../assets/ic_pic.png')} />
+                </TouchableOpacity> 
+                </View>
             </View>
             </View>
             <ScrollView style={{height: '20%', marginBottom: 10}}>
