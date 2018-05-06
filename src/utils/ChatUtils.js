@@ -25,3 +25,12 @@ export const parseLinks = (text) => {
 
     return linkArray; 
 }
+
+export const parseImage = (text) => { 
+
+    let start_pos = text.indexOf('{') + 1; 
+    let end_pos = text.indexOf('}', start_pos); 
+    var link = text.substring(start_pos, end_pos); 
+
+    return link; 
+}

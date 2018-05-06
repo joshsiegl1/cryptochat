@@ -6,6 +6,9 @@ import Modal from 'react-native-modal'
 
 import { ImagePicker, Permissions } from 'expo'; 
 
+import { RNS3 } from 'react-native-aws3'
+import {accessKey, secretKey } from '../aws_config.js'; 
+
 const uuid = require("uuid/v4")
 
 import styles from '../styles/chatWindowSheet'; 
@@ -20,7 +23,7 @@ const propTypes = {
     user: PropTypes.shape(), 
     PostChat: PropTypes.func, 
     PostReply: PropTypes.func, 
-    PostLink: PropTypes.func
+    getSignedRequest: PropTypes.func
 }
 
 const greeting = "My Comment"; 
@@ -35,14 +38,15 @@ class ChatWindow extends Component {
             linkName: "", 
             link: "", 
             linkArray: [], 
-            image: ""
+            image: "", 
+            fileName: ""
         }
     }
 
     onPost = () => { 
         const { type, crypto, postID } = this.props.navigation.state.params; 
         const { user, PostChat, PostReply} = this.props; 
-        const { PostLink } = this.props; 
+        const { getSignedRequest } = this.props; 
 
         let text = this.state.myText; 
         if (text === '' || text === greeting) return; 
@@ -53,6 +57,36 @@ class ChatWindow extends Component {
                 text = text.replace("[" + links[i].name + "]", 
                 "|name=" + links[i].name + ";url=" + links[i].url + "|"); 
             }
+        }
+
+        if (this.state.fileName !== "" &&
+            this.state.image !== "") { 
+            let fileName = this.state.fileName; 
+            let match = /\.(\w+)$/.exec(fileName);
+            let imagetype = match ? `image/${match[1]}` : `image`; 
+            
+            const file = { 
+                uri: this.state.image, 
+                name: fileName, 
+                type: imagetype
+            }; 
+
+            const options = { 
+                bucket: 'cryptochat-app-45', 
+                region: 'us-east-1', 
+                accessKey: accessKey, 
+                secretKey: secretKey, 
+                successActionStatus: 201
+            }
+
+            RNS3.put(file, options).then(response => { 
+                if (response.status !== 201) { 
+
+                }
+                console.log(response.body); 
+            })
+
+            //getSignedRequest(fileName, imagetype, this.state.image); 
         }
 
         let username = "anonymous"; 
@@ -92,14 +126,16 @@ class ChatWindow extends Component {
             })
 
             if (!result.cancelled) { 
-                this.setState({ image: result.uri}); 
+                let fileName = result.uri.split('/').pop(); 
+                this.setState({ 
+                    image: result.uri, 
+                    fileName,
+                    myText: this.state.myText + " " + "{" + fileName + "}"}); 
             }
         }
     }
 
     onSubmitLink = () => { 
-
-        const { PostLink } = this.props; 
 
         let id = uuid(); 
         let name = this.state.linkName; 

@@ -7,7 +7,7 @@ import { Asset } from 'expo';
 
 import Link from './Link'; 
 
-import { parseLinks } from '../utils/ChatUtils'; 
+import { parseLinks, parseImage } from '../utils/ChatUtils'; 
 
 import styles from '../styles/stylesheet'; 
 
@@ -114,37 +114,82 @@ class ChatItem extends PureComponent {
     }
 
     LinkifyBody = (body) => { 
-        const links = parseLinks(body); 
+        try {
+            const links = parseLinks(body); 
 
-        let b = body; 
+            let b = body; 
 
-        let indexes = []; 
-        for (let i = 0; i < links.length; i++) { 
-            let p = `|name=${links[i].name};url=${links[i].url}|`; 
-            indexes.push(b.search(p)); 
-            b = b.replace(p, "")
-        }
+            let indexes = []; 
+            for (let i = 0; i < links.length; i++) { 
+                let p = `|name=${links[i].name};url=${links[i].url}|`; 
+                indexes.push(b.search(p)); 
+                b = b.replace(p, "")
+            }
 
-        let objectBody = []; 
-        for (let x = 0; x < indexes.length; x++) { 
-            let piece = b.slice(x, indexes[x]); 
-            objectBody.push(<Text>{piece}</Text>)
-            objectBody.push(
-            <Link navigate={this.props.navigate}
-                  name={links[x].name}
-                  url={links[x].url} />); 
+            let objectBody = []; 
+            for (let x = 0; x < indexes.length; x++) { 
+                let piece = b.slice(x, indexes[x]); 
+                objectBody.push(<Text>{piece}</Text>)
+                objectBody.push(
+                <Link navigate={this.props.navigate}
+                      name={links[x].name}
+                      url={links[x].url} />); 
 
-            if (x === indexes.length - 1) { 
-                let lastPiece = b.slice(indexes[x])
-                objectBody.push(<Text>{lastPiece}</Text>)
+                if (x === indexes.length - 1) { 
+                    let lastPiece = b.slice(indexes[x])
+                    objectBody.push(<Text>{lastPiece}</Text>)
+                }
+            }
+
+            if (objectBody.length > 0) { 
+                return (<Text>{objectBody}</Text>)
+            }
+            else { 
+                return (<Text>{b}</Text>)
             }
         }
-
-        if (objectBody.length > 0) { 
-            return (<Text>{objectBody}</Text>)
+        catch(e) { 
+            return body; 
         }
-        else { 
-            return (<Text>{b}</Text>)
+    }
+
+    ImagifyBody = (body) => { 
+        try { 
+            let link = parseImage(body); 
+
+            let b = body; 
+
+            let indexes = []; 
+            if (link !== "") {
+                indexes.push(b.search(link));  
+                b = b.replace("{" + link + "}", ""); 
+            }
+
+            let uri = "https://s3.amazonaws.com/cryptochat-app-45/" + link
+
+            let objectBody = []; 
+            for (let x = 0; x < indexes.length; x++) { 
+                let piece = b.slice(x, indexes[x]); 
+                objectBody.push(<Text>{piece}</Text>)
+                objectBody.push(
+                    <Image style={{width: 250, height: 250}} source={{uri: uri}} />
+                )
+
+                if (x === indexes.length - 1) { 
+                    let lastPiece = b.slice(indexes[x])
+                    objectBody.push(<Text>{lastPiece}</Text>)
+                }
+            }
+
+            if (objectBody.length > 0) { 
+                return (<Text>{objectBody}</Text>)
+            }
+            else { 
+                return (<Text>{b}</Text>)
+            }
+            }
+        catch(e) { 
+            return body; 
         }
     }
 
@@ -168,7 +213,10 @@ class ChatItem extends PureComponent {
         if (item.userID === "anonymous")
             userColor = 'lightgray'
 
-        let body = this.LinkifyBody(item.body); 
+        let body = this.ImagifyBody(item.body); 
+        if (body !== "") { 
+            body = this.LinkifyBody(body); 
+        }
 
         return (
                 <View style={styles.messageBox}>

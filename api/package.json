@@ -10,21 +10,22 @@
   "author": "Josh Siegl",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.232.1",
+    "bcrypt": "1.0.3",
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "mongodb": "^3.0.1",
-    "mongoose": "^4.13.9", 
-    "body-parser": "^1.18.2", 
-    "bcrypt": "1.0.3", 
-    "uuid": "^3.2.1", 
-    "request": "^2.85.0", 
-    "aws-sdk": "^2.232.1"
+    "mongoose": "^4.13.9",
+    "request": "^2.85.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
+    "bcrypt": "1.0.3",
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "mongodb": "^3.0.1",
-    "mongoose": "^4.13.9", 
-    "body-parser": "^1.18.2", 
-    "bcrypt": "1.0.3", 
+    "mongoose": "^4.13.9",
     "uuid": "^3.2.1"
   }
 }

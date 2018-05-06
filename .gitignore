@@ -3,3 +3,6 @@ node_modules/**/*
 npm-debug.*
 api/Config.js
 api/node_modules/
+api/.env
+api/aws_config.json
+aws_config.js
