@@ -172,7 +172,7 @@ class ChatItem extends PureComponent {
                 let piece = b.slice(x, indexes[x]); 
                 objectBody.push(<Text>{piece}</Text>)
                 objectBody.push(
-                    <Image style={{width: 250, height: 250}} source={{uri: uri}} />
+                    <Image style={{width: 150, height: 150}} source={{uri: uri}} />
                 )
 
                 if (x === indexes.length - 1) { 
