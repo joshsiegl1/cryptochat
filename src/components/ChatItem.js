@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'; 
+import PropTypes, { object } from 'prop-types'; 
 import React, {PureComponent, Component } from 'react'; 
 
 import {View, Image, Text, TouchableOpacity, Modal} from 'react-native'; 
@@ -113,84 +113,59 @@ class ChatItem extends PureComponent {
         else return <Image source={require('../../assets/up_arrow.png')} style={{width: 10, height: 10}}></Image>
     }
 
-    LinkifyBody = (body) => { 
-        try {
-            const links = parseLinks(body); 
+    Transform = (body) => { 
+        let image = parseImage(body); 
+        let links = parseLinks(body); 
 
-            let b = body; 
+        let uri = "https://s3.amazonaws.com/cryptochat-app-45/" + image; 
 
-            let indexes = []; 
-            for (let i = 0; i < links.length; i++) { 
-                let p = `|name=${links[i].name};url=${links[i].url}|`; 
-                indexes.push(b.search(p)); 
-                b = b.replace(p, "")
+        let b = body; 
+
+        let imageIndex = []; 
+        if (image !== "") { 
+            imageIndex.push(b.search(image)); 
+            b = b.replace("{" + image + "}", ""); 
+        }
+
+        let linkIndexes = []; 
+        for (let i = 0; i < links.length; i++) { 
+            let p = `|name=${links[i].name};url=${links[i].url}|`; 
+            linkIndexes.push(b.search(p)); 
+            b = b.replace(p, ""); 
+        }
+
+        let indexes = [...imageIndex, ...linkIndexes]; 
+        indexes = indexes.sort((a, b) => a - b); 
+
+        let objectBody = []; 
+        for (let x = 0; x < indexes.length; x++) {
+
+            let type = (linkIndexes.indexOf(indexes[x]) !== -1) ? "Link" : "Image"; 
+
+            let start_pos = (x === 0) ? 0 : indexes[x - 1];
+            let piece = b.slice(start_pos, indexes[x]); 
+
+            objectBody.push(<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{piece}</Text>)
+
+            let component = (<Text></Text>); 
+            if (type === "Image") {
+                component = (<Image style={{paddingTop: 20, paddingBottom: 20, width: 150, height: 150}} source={{uri: uri}}/>)
+            }
+            else {  
+                component = (<Link navigate={this.props.navigate}
+                                   name={links[x].name}
+                                   url={links[x].url} />)
             }
 
-            let objectBody = []; 
-            for (let x = 0; x < indexes.length; x++) { 
-                let piece = b.slice(x, indexes[x]); 
-                objectBody.push(<Text>{piece}</Text>)
-                objectBody.push(
-                <Link navigate={this.props.navigate}
-                      name={links[x].name}
-                      url={links[x].url} />); 
+            objectBody.push(component); 
 
-                if (x === indexes.length - 1) { 
-                    let lastPiece = b.slice(indexes[x])
-                    objectBody.push(<Text>{lastPiece}</Text>)
-                }
-            }
-
-            if (objectBody.length > 0) { 
-                return (<Text>{objectBody}</Text>)
-            }
-            else { 
-                return (<Text>{b}</Text>)
+            if (x === indexes.length - 1) { 
+                let lastPiece = b.slice(indexes[x])
+                objectBody.push(<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{lastPiece}</Text>)
             }
         }
-        catch(e) { 
-            return body; 
-        }
-    }
 
-    ImagifyBody = (body) => { 
-        try { 
-            let link = parseImage(body); 
-
-            let b = body; 
-
-            let indexes = []; 
-            if (link !== "") {
-                indexes.push(b.search(link));  
-                b = b.replace("{" + link + "}", ""); 
-            }
-
-            let uri = "https://s3.amazonaws.com/cryptochat-app-45/" + link
-
-            let objectBody = []; 
-            for (let x = 0; x < indexes.length; x++) { 
-                let piece = b.slice(x, indexes[x]); 
-                objectBody.push(<Text>{piece}</Text>)
-                objectBody.push(
-                    <Image style={{width: 150, height: 150}} source={{uri: uri}} />
-                )
-
-                if (x === indexes.length - 1) { 
-                    let lastPiece = b.slice(indexes[x])
-                    objectBody.push(<Text>{lastPiece}</Text>)
-                }
-            }
-
-            if (objectBody.length > 0) { 
-                return (<Text>{objectBody}</Text>)
-            }
-            else { 
-                return (<Text>{b}</Text>)
-            }
-            }
-        catch(e) { 
-            return body; 
-        }
+        return (objectBody.length > 0) ? (<View>{objectBody}</View>) : (<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{b}</Text>)
     }
 
     render() { 
@@ -213,10 +188,7 @@ class ChatItem extends PureComponent {
         if (item.userID === "anonymous")
             userColor = 'lightgray'
 
-        let body = this.ImagifyBody(item.body); 
-        if (body !== "") { 
-            body = this.LinkifyBody(body); 
-        }
+        let body = this.Transform(item.body); 
 
         return (
                 <View style={styles.messageBox}>
@@ -226,7 +198,7 @@ class ChatItem extends PureComponent {
                     <Text style={{paddingLeft: 5, width: '90%', color: userColor, fontFamily: 'arial'}}>{item.userID}</Text>  
                 </View>
                 <View style={styles.bodyBox}>
-                    <Text style={{paddingLeft: 21, fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{body}</Text>
+                    <View style={{paddingLeft: 21, fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{body}</View>
                 </View>
                 <View style={styles.voteBox}>
                     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
