@@ -18,6 +18,7 @@
     "react-native-vector-icons": "^4.5.0", 
     "react-native-modal": "^5.4.0", 
     "uuid": "^3.2.1", 
-    "react-native-aws3": "^0.0.8"
+    "react-native-aws3": "^0.0.8", 
+    "redux-saga": "^0.16.0"
   }
 }

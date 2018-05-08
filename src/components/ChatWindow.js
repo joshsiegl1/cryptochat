@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import { View, TextInput, Text, TouchableOpacity, Image, Keyboard, ScrollView } from 'react-native'; 
+import { View, TextInput, Text, TouchableOpacity, Image, Keyboard, ScrollView, Alert } from 'react-native'; 
 import Modal from 'react-native-modal'
 
 import { ImagePicker, Permissions } from 'expo'; 
@@ -140,6 +140,10 @@ class ChatWindow extends Component {
         let id = uuid(); 
         let name = this.state.linkName; 
         let url = this.state.link; 
+
+        if (url.indexOf("https://") === -1 && url.indexOf("http") === -1) { 
+            url = "https://" + url; 
+        }
 
         if (name === "") { 
             name = url; 

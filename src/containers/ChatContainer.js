@@ -1,8 +1,6 @@
 import React from 'react'; 
 import { connect } from 'react-redux'; 
 
-import { parseRoute } from '../utils/RouterUtils'; 
-
 import { GetChat, PostChat, Upvote, Downvote } from '../actions/ChatActions'; 
 
 import { getChats, 

@@ -4,8 +4,6 @@ import {View, TouchableOpacity, Text, Image} from 'react-native';
 
 import style from '../styles/stylesheet'; 
 
-import { CHAT_PATH } from '../constants/RouterConstants'; 
-
 const propTypes = { 
     navigate: PropTypes.func, 
     id: PropTypes.string, 
