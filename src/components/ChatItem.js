@@ -6,10 +6,13 @@ import {View, Image, Text, TouchableOpacity, Modal} from 'react-native';
 import { Asset } from 'expo'; 
 
 import Link from './Link'; 
+import SmartImage from './SmartImage'; 
 
 import { parseLinks, parseImage } from '../utils/ChatUtils'; 
 
 import styles from '../styles/stylesheet'; 
+
+import md5 from 'md5'; 
 
 const propTypes = { 
     item: PropTypes.shape,
@@ -149,7 +152,12 @@ class ChatItem extends PureComponent {
 
             let component = (<Text></Text>); 
             if (type === "Image") {
-                component = (<Image style={{paddingTop: 20, paddingBottom: 20, width: 150, height: 150}} source={{uri: uri}}/>)
+                let extension = uri.split('.').pop(); 
+                let source = { 
+                    uri: uri, 
+                    filename: md5(uri) + '.' + extension
+                }
+                component = (<SmartImage uri={uri} />)
             }
             else {  
                 component = (<Link navigate={this.props.navigate}
@@ -198,7 +206,7 @@ class ChatItem extends PureComponent {
                     <Text style={{paddingLeft: 5, width: '90%', color: userColor, fontFamily: 'arial'}}>{item.userID}</Text>  
                 </View>
                 <View style={styles.bodyBox}>
-                    <View style={{paddingLeft: 21, fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{body}</View>
+                    <View style={{paddingLeft: 21, fontSize: 18, color: '#373F51'}}>{body}</View>
                 </View>
                 <View style={styles.voteBox}>
                     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>

@@ -111,7 +111,7 @@ class Chat extends Component {
                   currentTime={this.props.currentTime} />
     )
 
-    _keyExtractor = (item, index) => item.id
+    _keyExtractor = (item, index) => item.postID
 
     onScrollback = () => { 
         try { 

@@ -8,8 +8,7 @@ const styles = StyleSheet.create({
         borderColor: 'lightgray', 
         borderBottomWidth: 1, 
         backgroundColor: 'white', 
-        padding: 10, 
-        fontFamily: 'arial'
+        padding: 10
     }, 
     cryptoButtonText: { 
         paddingLeft: 10, 

@@ -7,7 +7,7 @@ import style from '../styles/stylesheet';
 const propTypes = { 
     navigate: PropTypes.func, 
     id: PropTypes.string, 
-    num: PropTypes.string, 
+    num: PropTypes.number, 
     name: PropTypes.string
 }
 
