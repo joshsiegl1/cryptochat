@@ -9,6 +9,11 @@ import ReplyThread from './ReplyThread';
 
 import ChatBar from './ChatBar'; 
 
+import Link from './Link'; 
+import SmartImage from './SmartImage'; 
+
+import { parseLinks, parseImage } from '../utils/ChatUtils'; 
+
 import styles from '../styles/commentSheet'; 
 
 const propTypes = { 
@@ -89,6 +94,61 @@ class Comment extends Component {
         }
     }
 
+    Transform = (body) => { 
+        let image = parseImage(body); 
+        let links = parseLinks(body); 
+
+        let uri = "https://s3.amazonaws.com/cryptochat-app-45/" + image; 
+
+        let b = body; 
+
+        let imageIndex = []; 
+        if (image !== "") { 
+            imageIndex.push(b.search(image)); 
+            b = b.replace("{" + image + "}", ""); 
+        }
+
+        let linkIndexes = []; 
+        for (let i = 0; i < links.length; i++) { 
+            let p = `|name=${links[i].name};url=${links[i].url}|`; 
+            linkIndexes.push(b.search(p)); 
+            b = b.replace(p, ""); 
+        }
+
+        let indexes = [...imageIndex, ...linkIndexes]; 
+        indexes = indexes.sort((a, b) => a - b); 
+
+        let objectBody = []; 
+        for (let x = 0; x < indexes.length; x++) {
+
+            let type = (linkIndexes.indexOf(indexes[x]) !== -1) ? "Link" : "Image"; 
+
+            let start_pos = (x === 0) ? 0 : indexes[x - 1];
+            let piece = b.slice(start_pos, indexes[x]); 
+
+            objectBody.push(<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{piece}</Text>)
+
+            let component = (<Text></Text>); 
+            if (type === "Image") {
+                component = (<SmartImage uri={uri} />)
+            }
+            else {  
+                component = (<Link navigate={this.props.navigation.navigate}
+                                   name={links[x].name}
+                                   url={links[x].url} />)
+            }
+
+            objectBody.push(component); 
+
+            if (x === indexes.length - 1) { 
+                let lastPiece = b.slice(indexes[x])
+                objectBody.push(<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{lastPiece}</Text>)
+            }
+        }
+
+        return (objectBody.length > 0) ? (<View>{objectBody}</View>) : (<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{b}</Text>)
+    }
+
     render() { 
 
         const { replies, comment, navigation } = this.props; 
@@ -103,7 +163,7 @@ class Comment extends Component {
         if (Object.keys(replies).length > 0) { 
             replySet = replies[postID]; 
             if (replySet !== undefined) { 
-                postContent = replySet.results.body; 
+                postContent = this.Transform(replySet.results.body); 
                 user = replySet.results.userID; 
                 subReplies = replySet.results.replies; 
             }
@@ -120,7 +180,7 @@ class Comment extends Component {
                 style={{flex: 1}}>
 
             <View style={styles.contentContainer}>
-                <Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{postContent}</Text>
+                <View style={{fontSize: 18, color: '#373F51'}}>{postContent}</View>
             </View>
 
             <FlatList

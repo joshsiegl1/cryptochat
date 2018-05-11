@@ -12,8 +12,6 @@ import { parseLinks, parseImage } from '../utils/ChatUtils';
 
 import styles from '../styles/stylesheet'; 
 
-import md5 from 'md5'; 
-
 const propTypes = { 
     item: PropTypes.shape,
     crypto: PropTypes.string.isRequired, 
@@ -152,11 +150,6 @@ class ChatItem extends PureComponent {
 
             let component = (<Text></Text>); 
             if (type === "Image") {
-                let extension = uri.split('.').pop(); 
-                let source = { 
-                    uri: uri, 
-                    filename: md5(uri) + '.' + extension
-                }
                 component = (<SmartImage uri={uri} />)
             }
             else {  
