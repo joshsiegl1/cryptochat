@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react'; 
 
 import {View, FlatList, TextInput, Button, Text, Image, 
-    KeyboardAvoidingView, TouchableOpacity, Keyboard, Platform } from 'react-native'; 
+    KeyboardAvoidingView, TouchableOpacity, Keyboard } from 'react-native'; 
 
 import styles from '../styles/stylesheet'; 
 
@@ -10,8 +10,7 @@ import ChatItem from './ChatItem';
 
 import ChatBar from './ChatBar'; 
 
-import { AdMobBanner } from 'expo'; 
-
+import Ad from './Ad'; 
 
 const propTypes = { 
     id: PropTypes.string, 
@@ -26,16 +25,11 @@ const propTypes = {
     currentTime: PropTypes.date
 }
 
-const friendlyGreeting = "Say something to this group"; 
-const totalChatLength = 200; 
-
 class Chat extends Component { 
     constructor(props) { 
         super(props)
 
         this.state = { 
-            myText: friendlyGreeting, 
-            chatColor: 'darkgray', 
             refresh: false
         }; 
     }
@@ -68,38 +62,6 @@ class Chat extends Component {
         
     }
 
-    onPressPost = () => { 
-
-    
-        const { navigation, PostChat, user } = this.props; 
-
-        const { crypto } = navigation.state.params; 
-
-        let text = this.state.myText; 
-        if (text === '' || text === friendlyGreeting) return; 
-
-        Keyboard.dismiss(); 
-
-        let username = "anonymous"; 
-        if (!(Object.keys(user).length === 0 && user.constructor === Object)) { 
-            if (user.userID !== "") { 
-                username = user.userID
-            }
-        }
-
-        PostChat(crypto, username, text); 
-
-        this.setState({myText: friendlyGreeting, chatColor: 'darkgrey'})
-    }
-
-    onInputFocused = () => { 
-        if (this.state.myText === friendlyGreeting) { 
-            this.setState({myText: ''}); 
-        }
-
-        this.setState({chatColor: 'black'}); 
-    }
-
     _renderItem = ({item}) => (
         <ChatItem item={item}
                   crypto={this.props.navigation.state.params.crypto}
@@ -120,29 +82,6 @@ class Chat extends Component {
         catch(error) {  }
     }
 
-    onChangeText = (text) => { 
-        if (this.state.myText.length < totalChatLength) { 
-            this.setState({myText: text}); 
-        }
-    }
-
-    displayAd = () => { 
-        if (Platform.OS === 'ios') { 
-            return (<AdMobBanner 
-            bannerSize="fullbanner"
-            adUnitID="ca-app-pub-2896471597472603/8703233139"
-            didFailToReceiveAdWithError={this.bannerError}
-            />) 
-        }
-        else { 
-            return (<AdMobBanner 
-            bannerSize="fullbanner"
-            adUnitID="ca-app-pub-2896471597472603/2666295016"
-            didFailToReceiveAdWithError={this.bannerError}
-            />) 
-        }
-    }
-
     onNavigateBack = () => { 
         setTimeout(function() { 
             
@@ -160,8 +99,6 @@ class Chat extends Component {
         const { chat, navigation } = this.props;
         const { crypto, postID } = navigation.state.params; 
 
-        let ad = this.displayAd(); 
-
         let chats = []; 
         if (Object.keys(chat).length > 0) {
             chats = chat[crypto]; 
@@ -176,31 +113,22 @@ class Chat extends Component {
             <FlatList 
                 removeClippedSubviews
                 ref={ref => this.flatList = ref}
-                //onContentSizeChange={this.onScrollback}
-                //onLayout={this.onScrollback}
                 style={{height: '80%'}}
                 data={chats}
                 keyExtractor={this._keyExtractor}
-                renderItem={this._renderItem} />
+                renderItem={this._renderItem} /> 
 
-                <View
-                    style={{borderColor: 'gray', 
-                            backgroundColor: 'black', 
-                            borderWidth: 1, 
-                            paddingLeft: 25, 
-                            paddingRight: 25, 
-                            height: '10%'}}>
+            <Ad />
 
-                    {ad}
-                </View> 
+            <ChatBar id={crypto}
+                     postID={postID}
+                     type="chat"
+                     topic={crypto}
+                     navigate={this.props.navigation.navigate}
+                     greeting="Add a comment"
+                     onNavigateBack={this.onNavigateBack} />
 
-                <ChatBar id={crypto}
-                         postID={postID}
-                         type="chat"
-                         topic={crypto}
-                         navigate={this.props.navigation.navigate}
-                         greeting="Add a comment"
-                         onNavigateBack={this.onNavigateBack} />
+
             </KeyboardAvoidingView>
         )
     }

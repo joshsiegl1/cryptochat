@@ -5,12 +5,9 @@ import {View, Image, Text, TouchableOpacity, Modal} from 'react-native';
 
 import { Asset } from 'expo'; 
 
-import Link from './Link'; 
-import SmartImage from './SmartImage'; 
-
-import { parseLinks, parseImage } from '../utils/ChatUtils'; 
-
 import styles from '../styles/stylesheet'; 
+
+import Transform from './Transform'; 
 
 const propTypes = { 
     item: PropTypes.shape,
@@ -81,7 +78,7 @@ class ChatItem extends PureComponent {
 
         const { navigate, crypto } = this.props; 
 
-        navigate('Comment', {postID: postID, crypto: crypto}); 
+        navigate('Comment', {postID: postID, crypto: crypto, karma: this.state.karma}); 
     }
 
     onSharePressed = () => { 
@@ -114,61 +111,6 @@ class ChatItem extends PureComponent {
         else return <Image source={require('../../assets/up_arrow.png')} style={{width: 10, height: 10}}></Image>
     }
 
-    Transform = (body) => { 
-        let image = parseImage(body); 
-        let links = parseLinks(body); 
-
-        let uri = "https://s3.amazonaws.com/cryptochat-app-45/" + image; 
-
-        let b = body; 
-
-        let imageIndex = []; 
-        if (image !== "") { 
-            imageIndex.push(b.search(image)); 
-            b = b.replace("{" + image + "}", ""); 
-        }
-
-        let linkIndexes = []; 
-        for (let i = 0; i < links.length; i++) { 
-            let p = `|name=${links[i].name};url=${links[i].url}|`; 
-            linkIndexes.push(b.search(p)); 
-            b = b.replace(p, ""); 
-        }
-
-        let indexes = [...imageIndex, ...linkIndexes]; 
-        indexes = indexes.sort((a, b) => a - b); 
-
-        let objectBody = []; 
-        for (let x = 0; x < indexes.length; x++) {
-
-            let type = (linkIndexes.indexOf(indexes[x]) !== -1) ? "Link" : "Image"; 
-
-            let start_pos = (x === 0) ? 0 : indexes[x - 1];
-            let piece = b.slice(start_pos, indexes[x]); 
-
-            objectBody.push(<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{piece}</Text>)
-
-            let component = (<Text></Text>); 
-            if (type === "Image") {
-                component = (<SmartImage uri={uri} />)
-            }
-            else {  
-                component = (<Link navigate={this.props.navigate}
-                                   name={links[x].name}
-                                   url={links[x].url} />)
-            }
-
-            objectBody.push(component); 
-
-            if (x === indexes.length - 1) { 
-                let lastPiece = b.slice(indexes[x])
-                objectBody.push(<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{lastPiece}</Text>)
-            }
-        }
-
-        return (objectBody.length > 0) ? (<View>{objectBody}</View>) : (<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{b}</Text>)
-    }
-
     render() { 
         const { item, likedPosts, dislikedPosts } = this.props
 
@@ -189,8 +131,6 @@ class ChatItem extends PureComponent {
         if (item.userID === "anonymous")
             userColor = 'lightgray'
 
-        let body = this.Transform(item.body); 
-
         return (
                 <View style={styles.messageBox}>
                 <View style={styles.titleBox}>
@@ -199,7 +139,7 @@ class ChatItem extends PureComponent {
                     <Text style={{paddingLeft: 5, width: '90%', color: userColor, fontFamily: 'arial'}}>{item.userID}</Text>  
                 </View>
                 <View style={styles.bodyBox}>
-                    <View style={{paddingLeft: 21, fontSize: 18, color: '#373F51'}}>{body}</View>
+                    <View style={{fontSize: 18, color: '#373F51'}}><Transform body={item.body} navigate={this.props.navigate} /></View>
                 </View>
                 <View style={styles.voteBox}>
                     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>

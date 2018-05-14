@@ -6,7 +6,8 @@ import {Text} from 'react-native';
 const propTypes = {
     navigate: PropTypes.func, 
     name: PropTypes.string, 
-    url: PropTypes.string
+    url: PropTypes.string, 
+    style: PropTypes.shape({})
 }
 
 class Link extends Component { 
@@ -22,9 +23,10 @@ class Link extends Component {
 
     render() { 
 
-        const {name} = this.props; 
+        const {name} = this.props;
+        let style = {...{color: 'blue', fontSize: 18}, ...this.props.style};  
         return (
-            <Text onPress={this.onPress} style={{color: 'blue', fontSize: 18}}>{name}</Text>)
+            <Text onPress={this.onPress} style={style}>{name}</Text>)
     }
 }
 

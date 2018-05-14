@@ -16,7 +16,7 @@ class SmartImage extends Component {
         const preview = require('../../assets/image_preview.png'); 
         const uri = this.props.uri; 
 
-        return <Image style={{height: 150, width: 150}} {...{preview, uri}}/>
+        return <Image style={{height: 350, width: '100%'}} {...{preview, uri}}/>
     }
 }
 

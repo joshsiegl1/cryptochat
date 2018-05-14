@@ -11,6 +11,8 @@ import {accessKey, secretKey } from '../aws_config.js';
 
 const uuid = require("uuid/v4")
 
+import Transform from './Transform'; 
+
 import styles from '../styles/chatWindowSheet'; 
 
 //this.props.navigation.state.params
@@ -32,6 +34,7 @@ class ChatWindow extends Component {
     constructor(props) { 
         super(props)
 
+        this.imagePressed = false; 
         this.state = { 
             myText: "", 
             menuVisible: false, 
@@ -85,8 +88,6 @@ class ChatWindow extends Component {
                 }
                 console.log(response.body); 
             })
-
-            //getSignedRequest(fileName, imagetype, this.state.image); 
         }
 
         let username = "anonymous"; 
@@ -117,8 +118,11 @@ class ChatWindow extends Component {
     }
 
     onImage = async () => { 
-        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL); 
-        if (status === 'granted') { 
+        if (!this.imagePressed) { 
+            this.imagePressed = true; 
+
+            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL); 
+            if (status === 'granted') { 
 
             let result = await ImagePicker.launchImageLibraryAsync({
                 allowsEditing: true, 
@@ -127,11 +131,24 @@ class ChatWindow extends Component {
 
             if (!result.cancelled) { 
                 let fileName = result.uri.split('/').pop(); 
+                let oldFile = this.state.fileName; 
+
+                let newText = (oldFile !== "") ? 
+                this.state.myText.replace("{" + oldFile + "}", "{" + fileName + "}") : 
+                this.state.myText + " " + "{" + fileName + "}"
+
+                if (newText.indexOf("{" + fileName + "}") === -1) { 
+                    newText = newText + " {" + fileName + "}"; 
+                }
+
                 this.setState({ 
                     image: result.uri, 
                     fileName,
-                    myText: this.state.myText + " " + "{" + fileName + "}"}); 
+                    myText: newText}); 
+                }
             }
+
+            this.imagePressed = false; 
         }
     }
 
@@ -148,8 +165,6 @@ class ChatWindow extends Component {
         if (name === "") { 
             name = url; 
         }
-
-        //check to make sure it's a valid url
 
         links = this.state.linkArray; 
         links.push({
@@ -177,7 +192,7 @@ class ChatWindow extends Component {
 
         let postContent = (type === "comment") ? (
             <View style={styles.topic}>
-                    <Text style={styles.topicText}>{topic}</Text>
+                    <View style={styles.topicText}><Transform body={topic} navigate={this.props.navigation.navigate} /> </View>
             </View>
         ) : (
             <View style={styles.topic}>
