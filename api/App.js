@@ -18,6 +18,7 @@ const url = require("./Config.js").MongoDBConnectionString;
 var chatSchema = require("./models/chat_model.js"); 
 var userSchema = require("./models/user_model.js"); 
 var categorySchema = require("./models/category_model.js"); 
+var trackingSchema = require("./models/tracking_model.js"); 
 
 var port = process.env.PORT || 3000
 
@@ -218,6 +219,21 @@ app.get('/chat/:crypto', (req, res) => {
     const db = mongoose.connection
 
     var chats = mongoose.model('Chat', chatSchema); 
+    var tracking = mongoose.model('Tracking', trackingSchema); 
+
+    tracking.findOne({id: crypto}, function (err, tracked) { 
+        if (!err) { 
+            if (!tracked) { 
+                tracked = new tracking(); 
+                tracked.id = crypto; 
+                tracked.count = 1; 
+            }
+            tracked.count = tracked.count + 1; 
+            tracked.save(function(err) { 
+                if (err) console.log(err); 
+            }); 
+        }
+    })
 
     chats.find({id: crypto})
          .sort({date: 'desc'})

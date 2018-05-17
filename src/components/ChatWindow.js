@@ -125,8 +125,8 @@ class ChatWindow extends Component {
             if (status === 'granted') { 
 
             let result = await ImagePicker.launchImageLibraryAsync({
-                allowsEditing: true, 
-                aspec: [4, 3]
+                allowsEditing: false, 
+                base64: true
             })
 
             if (!result.cancelled) { 

@@ -8,7 +8,7 @@ const CRYPTOCHAT_API_HOSTNAME = 'https://obscure-coast-72434.herokuapp.com';
 const DEBUG_API_HOSTNAME = 'https://cryptochat-test.herokuapp.com'; 
 //heroku git:remote -a cryptochat-test
 
-const DEBUG = true; 
+const DEBUG = false; 
 
 const GET_CRYPTO_HOSTNAME = () => {
     if (DEBUG) { 
