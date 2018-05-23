@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import Expo from 'expo'; 
 
 import {View, Text, Platform, Image, TouchableOpacity} from 'react-native'; 
+import { SafeAreaView } from 'react-navigation'; 
 
 const propTypes = { 
     renderBackButton: PropTypes.bool
@@ -27,13 +28,15 @@ class AppHeader extends Component {
     }
 
     render() { 
-        return (<View style={{
+        return (
+        <SafeAreaView>
+        <View style={{
             flexDirection: 'row', 
             justifyContent: 'space-between', 
             height: 40, 
             backgroundColor: 'white', 
             zIndex: -1, 
-            marginTop: Platform.OS == "ios" ? 20 : Expo.Constants.statusBarHeight}}>
+            marginTop: Platform.OS == "ios" ? 0 : Expo.Constants.statusBarHeight}}>
             {this.props.renderBackButton && 
                 (<TouchableOpacity onPress={() => this.onBackPressed()}> 
                     <Image source={require('../../assets/back.png')} />
@@ -45,7 +48,7 @@ class AppHeader extends Component {
             <TouchableOpacity onPress={() => this.onMenuPressed()}> 
                 <Image source={require('../../assets/menu_btn.png')} />
             </TouchableOpacity>
-        </View>)
+        </View></SafeAreaView>)
     }
 }
 
