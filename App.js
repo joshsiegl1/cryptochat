@@ -13,7 +13,8 @@ import UserContainer from './src/containers/UserContainer';
 import RegisterContainer from './src/containers/RegisterContainer'; 
 import CommentContainer from './src/containers/CommentContainer'; 
 import ChatWindowContainer from './src/containers/ChatWindowContainer'; 
-import WebContainer from './src/containers/WebContainer'; 
+import WebContainer from './src/containers/WebContainer';
+import IntroContainer from './src/containers/IntroContainer';  
 import AppHeader from './src/components/AppHeader'; 
 
 console.disableYellowBox = true; 
@@ -34,9 +35,13 @@ StatusBar.setBarStyle('light-content', true);
 
 const ModalStack = StackNavigator({
   Home: { 
+    screen: IntroContainer
+  }, 
+  CoinList: { 
+    path: 'coinlist', 
     screen: CoinListContainer, 
     navigationOptions: ({navigation}) => ({
-      header: props => <AppHeader nav={navigation} renderBackButton={false}/>,
+      header: props => <AppHeader nav={navigation} renderBackButton={false}/>
     })
   }, 
   Chat: { 
