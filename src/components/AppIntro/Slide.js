@@ -8,20 +8,18 @@ import {
   Platform,
 } from 'react-native';
 
-export default class FirstSlide extends React.PureComponent {
+export default class Slide extends React.PureComponent {
   render() {
     const style = {
-      backgroundColor: this.props.backgroundColor,
-      paddingTop: this.props.topSpacer,
-      paddingBottom: this.props.bottomSpacer,
+      //backgroundColor: this.props.backgroundColor,
+      //paddingTop: this.props.topSpacer,
+      //paddingBottom: this.props.bottomSpacer,
       width: this.props.width,
       height: this.props.height,
     }
     return (
       <View style={[styles.mainContent, style]}>
-        <Text style={[styles.title, this.props.titleStyle]}>{this.props.title}</Text>
-        <Image source={this.props.image} style={this.props.imageStyle} />
-        <Text style={[styles.text, this.props.textStyle]}>{this.props.text}</Text>
+        {this.props.children}
       </View>
     );
   }
@@ -29,8 +27,8 @@ export default class FirstSlide extends React.PureComponent {
 
 const styles = StyleSheet.create({
   mainContent: {
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    backgroundColor: 'white', 
+    padding: 50
   },
   text: {
     color: 'rgba(255, 255, 255, .7)',

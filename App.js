@@ -5,7 +5,8 @@ import configureStore from './src/store/configureStore.js';
 import { StackNavigator, addNavigationHelpers, TabNavigator, DrawerNavigator } from 'react-navigation'; 
 import { Icon } from 'react-native-elements'; 
 import { AppLoading, Asset, Font, Permissions, Notifications } from 'expo'; 
- 
+import { SafeAreaView } from 'react-navigation';  
+
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 
 import AccountContainer from './src/containers/AccountContainer'; 
@@ -31,11 +32,14 @@ console.disableYellowBox = true;
 //   });
 // };
 
-StatusBar.setBarStyle('light-content', true); 
+StatusBar.setBarStyle('default', true); 
 
 const ModalStack = StackNavigator({
   Home: { 
-    screen: IntroContainer
+    screen: IntroContainer, 
+    navigationOptions: { 
+      header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
+    }
   }, 
   CoinList: { 
     path: 'coinlist', 
@@ -148,7 +152,8 @@ export default class App extends React.Component {
         require('./assets/comment.png'),
         require('./assets/ic_link.png'), 
         require('./assets/ic_close.png'), 
-        require("./assets/ic_pic.png")
+        require("./assets/ic_pic.png"), 
+        require("./assets/slide_one_img.png")
       ]), 
       Font.loadAsync({
         'arial' : require('./assets/arial.ttf')

@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types'; 
 import React, { Component } from 'react'; 
 
-import { Alert } from 'react-native'; 
+import { View, Text, Alert } from 'react-native'; 
 
-import AppIntroSlider from 'react-native-app-intro-slider';
+// import AppIntroSlider from 'react-native-app-intro-slider';
+
+import AppIntro from './AppIntro/AppIntro.js'; 
+import SlideOne from './AppIntro/SlideOne.js'; 
 
 const propTypes = { }
 
@@ -13,22 +16,14 @@ class Intro extends Component {
 
         navigate("CoinList")
     }
+
     render() { 
 
-        const slides = [{
-            key: 'first', 
-            title: 'Page 1', 
-            text: 'Page 1 description', 
-            backgroundColor: '#59b2ab'
-        }, 
-        {
-            key: 'second', 
-            title: 'Page 2', 
-            text: 'Page 2', 
-            backgroundColor: 'yellow'
-        }]
+        const slides = [
+            (<SlideOne />), 
+            (<View><Text>My Second Component</Text></View>)]; 
 
-        return <AppIntroSlider 
+        return <AppIntro
         slides={slides} 
         onDone={this._onDone}/>
     }

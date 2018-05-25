@@ -29,7 +29,7 @@ class AppHeader extends Component {
 
     render() { 
         return (
-        <SafeAreaView>
+        <SafeAreaView style={{backgroundColor: 'white'}}>
         <View style={{
             flexDirection: 'row', 
             justifyContent: 'space-between', 
