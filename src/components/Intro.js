@@ -7,6 +7,8 @@ import { View, Text, Alert } from 'react-native';
 
 import AppIntro from './AppIntro/AppIntro.js'; 
 import SlideOne from './AppIntro/SlideOne.js'; 
+import SlideTwo from './AppIntro/SlideTwo.js'; 
+import SlideThree from './AppIntro/SlideThree.js'; 
 
 const propTypes = { }
 
@@ -21,7 +23,8 @@ class Intro extends Component {
 
         const slides = [
             (<SlideOne />), 
-            (<View><Text>My Second Component</Text></View>)]; 
+            (<SlideTwo />), 
+            (<SlideThree />)]; 
 
         return <AppIntro
         slides={slides} 
