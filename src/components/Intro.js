@@ -13,10 +13,10 @@ import SlideThree from './AppIntro/SlideThree.js';
 const propTypes = { }
 
 class Intro extends Component { 
-    _onDone = () => { 
+    _onChatPressed = () => { 
         const { navigate } = this.props.navigation; 
 
-        navigate("CoinList")
+        navigate("PhoneNumber")
     }
 
     render() { 
@@ -28,7 +28,7 @@ class Intro extends Component {
 
         return <AppIntro
         slides={slides} 
-        onDone={this._onDone}/>
+        onChatPressed={this._onChatPressed}/>
     }
 }
 

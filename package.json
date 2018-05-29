@@ -21,6 +21,7 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "uuid": "^3.2.1",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3", 
+    "react-native-phone-input": "^0.2.1"
   }
 }

@@ -35,18 +35,10 @@ export default class AppIntro extends React.Component {
     activeIndex: 0,
   };
 
-  goToSlide = (pageNum) => {
-    this.setState({ activeIndex: pageNum });
-    this.flatList.scrollToOffset({ offset: pageNum * this.state.width });
-  }
+  _onChatPressed = () => { 
+      const { onChatPressed } = this.props;
 
-  _onNextPress = () => {
-    this.goToSlide(this.state.activeIndex + 1);
-    this.props.onSlideChange && this.props.onSlideChange(this.state.activeIndex + 1, this.state.activeIndex);
-  }
-  _onPrevPress = () => {
-    this.goToSlide(this.state.activeIndex - 1);
-    this.props.onSlideChange && this.props.onSlideChange(this.state.activeIndex - 1, this.state.activeIndex);
+      onChatPressed(); 
   }
 
   _renderItem = (item) => {
@@ -58,50 +50,11 @@ export default class AppIntro extends React.Component {
     return <Slide {...props}>{item.item}</Slide>
   }
 
-  _renderButton = (name, onPress) => {
-    const show = (name === 'Skip' || name === 'Prev') ? this.props[`show${name}Button`] : !this.props[`hide${name}Button`];
-    const content = this.props[`render${name}Button`] ? this.props[`render${name}Button`]() : this._renderDefaultButton(name);
-    return show && this._renderOuterButton(content, name, onPress);
-  }
-
-  _renderDefaultButton = (name) => {
-    let content = <Text style={styles.buttonText}>{this.props[`${name.toLowerCase()}Label`]}</Text>;
-    if (this.props.bottomButton) {
-      content = <View style={[styles.bottomButton, (name === 'Skip' || name === 'Prev') && { backgroundColor: 'transparent' }]}>{content}</View>
-    }
-    return content;
-  }
-
-  _renderOuterButton = (content, name, onPress) => {
-    const style = (name === 'Skip' || name === 'Prev') ? styles.leftButtonContainer : styles.rightButtonContainer;
-    return (
-      <View style={this.props.bottomButton ? styles.bottomButtonContainer : style}>
-        <TouchableOpacity onPress={onPress} style={this.props.bottomButton && styles.flexOne}>
-          {content}
-        </TouchableOpacity>
-      </View>
-    )
-  }
-
-  _renderNextButton = () => this._renderButton('Next', this._onNextPress)
-
-  _renderPrevButton = () => this._renderButton('Prev', this._onPrevPress)
-
-  _renderDoneButton = () => this._renderButton('Done', this.props.onDone && this.props.onDone)
-
-  _renderSkipButton = () => this._renderButton('Skip', this.props.onSkip && this.props.onSkip)
-
   _renderPagination = () => {
-    const isLastSlide = this.state.activeIndex === (this.props.slides.length - 1);
-    const isFirstSlide = this.state.activeIndex === 0;
-
-    const skipBtn = (!isFirstSlide && this._renderPrevButton()) || (!isLastSlide && this._renderSkipButton());
-    const btn = isLastSlide ? this._renderDoneButton() : this._renderNextButton();
 
     return (
-      <View style={styles.paginationContainer}>
+      <View style={[styles.paginationContainer, {bottom: (this.state.height / 3) - 16 + (isIphoneX ? 34 : 0)}]}>
         <View style={styles.paginationDots}>
-          {!this.props.bottomButton && skipBtn}
           {this.props.slides.length > 1 && this.props.slides.map((_, i) => (
             <View
               key={i}
@@ -111,10 +64,14 @@ export default class AppIntro extends React.Component {
               ]}
             />
           ))}
-          {!this.props.bottomButton && btn}
         </View>
-        {this.props.bottomButton && btn}
-        {this.props.bottomButton && skipBtn}
+        
+        <View style={[styles.chatButtonContainer, {bottom: (this.state.height / 3) - 450}]}>
+          <TouchableOpacity style={styles.chatButton} onPress={this._onChatPressed}>
+            <Text style={{color: 'white', fontSize: 18}}>Start Chatting</Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
     )
   }
@@ -174,7 +131,7 @@ const styles = StyleSheet.create({
   },
   paginationContainer: {
     position: 'absolute',
-    bottom: 16 + (isIphoneX ? 34 : 0),
+    //bottom: 16 + (isIphoneX ? 34 : 0),
     left: 0,
     right: 0,
   },
@@ -191,6 +148,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 4,
   },
+  chatButtonContainer: { 
+    position: 'absolute', 
+    left: 0, 
+    right: 0, 
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  chatButton: { 
+    width: 200, 
+    height: 50, 
+    backgroundColor: '#373F51', 
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center', 
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#373F51'
+  },  
   leftButtonContainer: {
     position: 'absolute',
     left: 0,
@@ -208,11 +184,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, .3)',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  buttonText: {
-    backgroundColor: 'transparent',
-    color: 'white',
-    fontSize: 18,
-    padding: 16,
   }
 });

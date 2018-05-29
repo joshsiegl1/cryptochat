@@ -7,6 +7,7 @@ import { Icon } from 'react-native-elements';
 import { AppLoading, Asset, Font, Permissions, Notifications } from 'expo'; 
 import { SafeAreaView } from 'react-navigation';  
 
+import PhoneNumberContainer from './src/containers/PhoneNumberContainer'; 
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 
 import AccountContainer from './src/containers/AccountContainer'; 
@@ -37,6 +38,13 @@ StatusBar.setBarStyle('default', true);
 const ModalStack = StackNavigator({
   Home: { 
     screen: IntroContainer, 
+    navigationOptions: { 
+      header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
+    }
+  }, 
+  PhoneNumber: { 
+    path: 'phonenumber', 
+    screen: PhoneNumberContainer, 
     navigationOptions: { 
       header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
     }
