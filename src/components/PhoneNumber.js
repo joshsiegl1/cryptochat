@@ -4,12 +4,17 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native'; 
 
 import PhoneInput from 'react-native-phone-input'; 
+import CountryPicker from 'react-native-country-picker-modal'; 
 
 const propTypes = { }
 
 class PhoneNumber extends Component { 
     constructor(props) { 
         super(props)
+
+        this.state = { 
+            cca2: 'US'
+        }
     }
 
     _onNumberChanged = () => { 
@@ -17,7 +22,12 @@ class PhoneNumber extends Component {
     }
 
     onPressFlag = () => { 
-        //this.myCountryPicker.open(); 
+        this.countryPicker.openModal();  
+    }
+
+    selectCountry = (country) => { 
+        this.phone.selectCountry(country.cca2.toLowerCase()); 
+        this.setState({ cca2: country.cca2 }); 
     }
 
     render() { 
@@ -31,7 +41,33 @@ class PhoneNumber extends Component {
                         this.phone = ref; 
                     }}
                     onPressFlag={this.onPressFlag}
+                    textStyle={{
+                        backgroundColor: 'lightgray', 
+                        padding: 5, 
+                        fontSize: 20,
+                        height: 30 
+
+                    }}
+                    flagStyle={{
+                        width: 50, 
+                        height: 30
+                    }}
+                    offset={20}
                     />
+
+                <View style={{marginTop: 20}}>
+                <CountryPicker
+                    ref={(ref) => { 
+                        this.countryPicker = ref; 
+                    }}
+                    onChange={value => this.selectCountry(value)}
+                    translation="eng"
+                    cca2={this.state.cca2}
+                >
+                <View />
+                </CountryPicker>
+                </View>
+
             </View>
         </View>); 
     }
@@ -54,7 +90,8 @@ const styles = StyleSheet.create({
     }, 
     subText: { 
         fontSize: 16, 
-        color: 'black'
+        color: 'black', 
+        paddingBottom: 20
     }
 })
 
