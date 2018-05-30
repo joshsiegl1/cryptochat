@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import {View, Text, StyleSheet} from 'react-native'; 
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'; 
 
 import PhoneInput from 'react-native-phone-input'; 
 import CountryPicker from 'react-native-country-picker-modal'; 
@@ -18,6 +18,10 @@ class PhoneNumber extends Component {
     }
 
     _onNumberChanged = () => { 
+
+    }
+
+    onDonePressed = () => { 
 
     }
 
@@ -67,7 +71,12 @@ class PhoneNumber extends Component {
                 <View />
                 </CountryPicker>
                 </View>
-
+            
+            <View style={{paddingTop: 50}}>
+            <TouchableOpacity style={styles.doneButton} onPress={this.onDonePressed}>
+                <Text style={{color: 'white', fontSize: 18}}>Done</Text>
+            </TouchableOpacity>
+            </View>
             </View>
         </View>); 
     }
@@ -91,7 +100,18 @@ const styles = StyleSheet.create({
     subText: { 
         fontSize: 16, 
         color: 'black', 
-        paddingBottom: 20
+        paddingBottom: 40
+    }, 
+    doneButton: { 
+        width: 200, 
+        height: 50, 
+        backgroundColor: '#373F51', 
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center', 
+        borderRadius:10,
+        borderWidth: 1,
+        borderColor: '#373F51'
     }
 })
 
