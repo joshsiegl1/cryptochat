@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'; 
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native'; 
 
 import PhoneInput from 'react-native-phone-input'; 
 import CountryPicker from 'react-native-country-picker-modal'; 
 
-const propTypes = { }
+const propTypes = { 
+    SendCode: PropTypes.func
+}
 
 class PhoneNumber extends Component { 
     constructor(props) { 
@@ -17,12 +19,14 @@ class PhoneNumber extends Component {
         }
     }
 
-    _onNumberChanged = () => { 
-
-    }
-
     onDonePressed = () => { 
-
+        const { SendCode } = this.props; 
+        if (this.phone.isValidNumber()) { 
+            SendCode(this.phone.getValue()); 
+        }
+        else { 
+            Alert.alert("Invalid Number", "The Number provided appears to be invalid, please double check it");
+        }
     }
 
     onPressFlag = () => { 

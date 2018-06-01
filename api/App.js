@@ -12,6 +12,7 @@ const request = require("request");
 
 const userRoutes = require('./UserRoutes.js'); 
 const contentRoutes = require('./ContentRoutes.js'); 
+const twilioRoutes = require("./TwilioRoutes.js"); 
 
 const url = require("./Config.js").MongoDBConnectionString; 
 
@@ -60,6 +61,7 @@ const pushNotification = (expToken) => {
 
 app.use('/user', userRoutes); 
 app.use('/content', contentRoutes); 
+app.use('/phone', twilioRoutes); 
 
 app.post('/chat', (req, res) => {
 

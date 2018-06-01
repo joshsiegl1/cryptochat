@@ -39,3 +39,5 @@ export const GET_REPLY_URL = `${GET_CRYPTO_HOSTNAME()}/replies/:postID`;
 
 export const POST_LINK_URL = `${GET_CRYPTO_HOSTNAME()}/content/link`; 
 export const SIGN_LINK_URL = `${GET_CRYPTO_HOSTNAME()}/content/sign_s3?file-name=:filename&file-type=:filetype`
+
+export const SEND_CODE = `${GET_CRYPTO_HOSTNAME()}/phone`; 
