@@ -21,8 +21,10 @@ class PhoneNumber extends Component {
 
     onDonePressed = () => { 
         const { SendCode } = this.props; 
+        const { navigate } = this.props.navigation;
         if (this.phone.isValidNumber()) { 
             SendCode(this.phone.getValue()); 
+            navigate("PhoneCode"); 
         }
         else { 
             Alert.alert("Invalid Number", "The Number provided appears to be invalid, please double check it");
@@ -41,7 +43,7 @@ class PhoneNumber extends Component {
     render() { 
         return (<View style={styles.main}>
             <View style={styles.textContainer}>
-                <Text style={styles.headerText}>Your Phone Number</Text>
+                <Text style={styles.headerText}>Enter Your Phone Number</Text>
                 <Text style={styles.subText}>Please enter your country code and phone number, we'll send you a text in a moment.</Text>
 
                 <PhoneInput

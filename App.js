@@ -8,6 +8,7 @@ import { AppLoading, Asset, Font, Permissions, Notifications } from 'expo';
 import { SafeAreaView } from 'react-navigation';  
 
 import PhoneNumberContainer from './src/containers/PhoneNumberContainer'; 
+import PhoneCodeContainer from './src/containers/PhoneCodeContainer';
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 
 import AccountContainer from './src/containers/AccountContainer'; 
@@ -35,6 +36,24 @@ console.disableYellowBox = true;
 
 StatusBar.setBarStyle('default', true); 
 
+const PhoneCodeStack = StackNavigator({
+  Home: { 
+    screen: PhoneNumberContainer, 
+    navigationOptions: {
+      title: 'Welcome to Cryptochat' 
+      //header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
+    }
+  }, 
+  PhoneCode: {
+    path: 'phonecode',  
+    screen: PhoneCodeContainer, 
+    navigationOptions: { 
+      title: 'Welcome to Cryptochat'
+      //header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
+    }
+  }
+})
+
 const ModalStack = StackNavigator({
   Home: { 
     screen: IntroContainer, 
@@ -43,8 +62,8 @@ const ModalStack = StackNavigator({
     }
   }, 
   PhoneNumber: { 
-    path: 'phonenumber', 
-    screen: PhoneNumberContainer, 
+    path: 'phonenumber',
+    screen: PhoneCodeStack, 
     navigationOptions: { 
       header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
     }
