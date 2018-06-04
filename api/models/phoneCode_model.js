@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema; 
 
 module.exports = new Schema({
+    phone: String,
     code: Number, 
     expires: Date
-}, {collation: 'phoneCodes'})
+}, {collection: 'phoneCode'})

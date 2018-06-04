@@ -9,6 +9,7 @@ module.exports = new Schema({
     password: String, 
     pushNotification: String, 
     karma: Number, 
+    phone: String, 
     dateCreated: {type: Date, default: Date.now}, 
 
 }, {collection: 'users'})

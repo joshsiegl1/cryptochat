@@ -4,7 +4,8 @@ router = express.Router();
 const MongoClient = require("mongodb").MongoClient
 const mongoose = require("mongoose"); 
 
-var phoneCodeSchema = require("./models/phoneCode_model.js"); 
+var phoneCodeSchema = require("./models/phoneCode_model.js");
+var userSchema = require("./models/user_model.js");  
 
 const url = require("./Config.js").MongoDBConnectionString; 
 
@@ -37,6 +38,7 @@ router.post('/', (req, res) => {
     let date = new Date();
     date.setHours(date.getHours() + 1);  
     var newPhoneCode = new phoneCode({
+        phone: newNumber, 
         code: code, 
         expires: date
     })
@@ -57,6 +59,48 @@ router.post('/', (req, res) => {
     })
 
     res.send({"message": "success"}); 
+})
+
+router.post('/submit', (req, res) => { 
+    let code = req.body.code; 
+
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
+
+    const phoneCode = mongoose.model('phoneCode', phoneCodeSchema); 
+    const User = mongoose.model('User', userSchema); 
+
+    let userphone = ''; 
+
+    phoneCode.findOne({code: code}, function (err, result) { 
+        if (!err) { 
+            if (!result) { 
+                res.send({"error":"invalid code"}); 
+            }
+            else { 
+                User.findOne({phone: result.phone}, function (err, user) { 
+                    if (!err) { 
+                        if (!user) { 
+                            var newUser = new User({
+                                email: '', 
+                                karma: 1, 
+                                phone: result.phone
+                            })
+                            newUser.save(function(err) { 
+                                if (err) console.log(err); 
+                            })
+                        }
+                        console.log(result.phone); 
+                        res.send({phone: result.phone}); 
+                    }
+                    else { 
+                        res.send({error}); 
+                    }
+                })
+            }
+        }
+    })
+
 })
 
 module.exports = router; 

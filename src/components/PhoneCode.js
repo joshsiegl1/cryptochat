@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import {StyleSheet, View, TouchableOpacity, TextInput, Text} from 'react-native'; 
+import {StyleSheet, View, TouchableOpacity, TextInput, Text, Alert} from 'react-native'; 
 
 const propTypes = { 
 
@@ -10,6 +10,20 @@ const propTypes = {
 class PhoneCode extends Component { 
     constructor(props) { 
         super(props); 
+
+        this.state = { 
+            code: ''
+        }
+    }
+
+    _onDonePressed = () => { 
+        let code = this.state.code; 
+        if (code !== '') { 
+
+        }
+        else { 
+            Alert.alert("The code field is blank", "Please enter the code that we sent you"); 
+        }
     }
 
     render() { 
@@ -17,12 +31,18 @@ class PhoneCode extends Component {
                 <View style={styles.textContainer}>
                 <Text style={styles.headerText}>Enter Your Code</Text>
 
+                <TextInput 
+                style={{paddingTop: 20, width: 200, height: 100}}
+                value={this.state.code}
+                onChangeText={(text) => this.setState({code: text})}
+                keyboardType='numeric' />
+
                 <View style={{paddingTop: 50}}>
-                <TouchableOpacity style={styles.doneButton}>
+                <TouchableOpacity style={styles.doneButton} onPress={this._onDonePressed}>
                     <Text style={{color: 'white', fontSize: 18}}>Done</Text>
                 </TouchableOpacity>
                 </View>
-                
+
                 </View>
                 </View>)
     }
