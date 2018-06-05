@@ -24,7 +24,7 @@ class AppHeader extends Component {
     onMenuPressed = () => { 
         const { nav } = this.props; 
 
-        nav.navigate('DrawerToggle'); 
+        nav.toggleDrawer(); 
     }
 
     render() { 

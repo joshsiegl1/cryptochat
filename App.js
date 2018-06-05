@@ -41,35 +41,11 @@ console.disableYellowBox = true;
 
 StatusBar.setBarStyle('default', true); 
 
-const PhoneCodeStack = createStackNavigator({
-  Home: { 
-    screen: PhoneNumberContainer, 
-    navigationOptions: {
-      title: 'Welcome to Cryptochat' 
-      //header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
-    }
-  }, 
-  PhoneCode: {
-    path: 'phonecode',  
-    screen: PhoneCodeContainer, 
-    navigationOptions: { 
-      title: 'Welcome to Cryptochat'
-      //header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
-    }
-  }
-})
-
 const AuthStack = createStackNavigator({
   Home: IntroContainer, 
-  // navigationOptions: { 
-  //   header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
-  // }, 
   PhoneNumber: { 
     path: 'phonenumber', 
     screen: PhoneNumberContainer, 
-    // navigationOptions: { 
-    //   header: props => <SafeAreaView style={{backgroundColor: 'white'}} /> 
-    // }
   }, 
   PhoneCode: { 
     path: 'phonecode', 
@@ -78,22 +54,7 @@ const AuthStack = createStackNavigator({
 })
 
 const ModalStack = createStackNavigator({
-  // Home: { 
-  //   screen: IntroContainer, 
-  //   navigationOptions: { 
-  //     header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
-  //   }
-  // }, 
-  // PhoneNumber: { 
-  //   path: 'phonenumber',
-  //   screen: PhoneCodeStack, 
-  //   navigationOptions: { 
-  //     header: props => <SafeAreaView style={{backgroundColor: 'white'}} />
-  //   }
-  // }, 
-  //CoinList: { 
   Home: {
-    //path: 'coinlist', 
     screen: CoinListContainer, 
     navigationOptions: ({navigation}) => ({
       header: props => <AppHeader nav={navigation} renderBackButton={false}/>
@@ -130,7 +91,7 @@ const ModalStack = createStackNavigator({
 })
 
 const UserStack = createStackNavigator({
-  User: { 
+  Home: { 
     screen: UserContainer, 
     navigationOptions: ({navigation}) => ({
       header: props => <AppHeader nav={navigation} renderBackButton={false}/>,
@@ -138,23 +99,24 @@ const UserStack = createStackNavigator({
   }
 })
 
+const DrawerNav = createDrawerNavigator({
+  Home: { 
+    screen: ModalStack
+  }, 
+  Account: { 
+    screen: UserStack
+  }
+}); 
+
 const StartStack = createSwitchNavigator({
   AuthLoading: AuthLoadingScreen, 
-  App: ModalStack, 
+  App: DrawerNav, 
   Auth: AuthStack
 }, 
 { 
   initialRouteName: 'AuthLoading'
 })
 
-const DrawerNav = createDrawerNavigator({
-  Home: { 
-    screen: StartStack
-  }, 
-  Account: { 
-    screen: UserStack
-  }
-}); 
 
 // const TabNav = TabNavigator({
 //   Home: { 
@@ -240,7 +202,7 @@ export default class App extends React.Component {
     else { 
       return (
         <Provider store={configureStore()}>
-          <DrawerNav />
+          <StartStack />
         </Provider>
       );
     }
