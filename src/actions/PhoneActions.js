@@ -1,6 +1,11 @@
+import { Alert } from 'react-native'; 
+
+import * as types from '../constants/ActionTypes'; 
 
 import { SEND_CODE, SUBMIT_CODE } from '../constants/ApiConstants'; 
 import { callApi } from '../utils/ApiUtils'; 
+
+import { SetPhone } from '../utils/UserStorage'; 
 
 export const SendCode = (phone) => async (dispatch) => { 
     let body = { 
@@ -32,4 +37,15 @@ export const SubmitCode = (code) => async (dispatch) => {
     }
 
     const { json } = await callApi(SUBMIT_CODE, options); 
+
+    if (json.error === null) { 
+        await SetPhone(json.phone); 
+        dispatch({
+            type: types.GET_USER, 
+            user: json.phone
+        })
+    }
+    else { 
+        Alert.alert("Error" : json.error); 
+    }
 }

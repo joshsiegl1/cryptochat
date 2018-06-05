@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import {StyleSheet, View, TouchableOpacity, TextInput, Text, Alert} from 'react-native'; 
 
 const propTypes = { 
-
+    SubmitCode: PropTypes.func, 
+    user: PropTypes.string
 }
 
 class PhoneCode extends Component { 
@@ -16,10 +17,19 @@ class PhoneCode extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) { 
+        const {user} = nextProps; 
+        if (user !== '' && user !== undefined) { 
+            this.props.navigation.navigate("App"); 
+        }
+    }
+
     _onDonePressed = () => { 
         let code = this.state.code; 
         if (code !== '') { 
+            const {SubmitCode} = this.props; 
 
+            SubmitCode(code); 
         }
         else { 
             Alert.alert("The code field is blank", "Please enter the code that we sent you"); 
@@ -32,7 +42,7 @@ class PhoneCode extends Component {
                 <Text style={styles.headerText}>Enter Your Code</Text>
 
                 <TextInput 
-                style={{paddingTop: 20, width: 200, height: 100}}
+                style={{paddingTop: 20, width: 200, height: 100, borderColor: 'black', borderWidth: 1}}
                 value={this.state.code}
                 onChangeText={(text) => this.setState({code: text})}
                 keyboardType='numeric' />

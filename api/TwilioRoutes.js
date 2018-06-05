@@ -91,7 +91,8 @@ router.post('/submit', (req, res) => {
                             })
                         }
                         console.log(result.phone); 
-                        res.send({phone: result.phone}); 
+                        res.send({phone: result.phone, 
+                                  error: null}); 
                     }
                     else { 
                         res.send({error}); 
