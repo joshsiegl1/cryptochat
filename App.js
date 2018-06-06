@@ -91,12 +91,14 @@ const ModalStack = createStackNavigator({
 })
 
 const UserStack = createStackNavigator({
-  Home: { 
+  Account: { 
     screen: UserContainer, 
     navigationOptions: ({navigation}) => ({
       header: props => <AppHeader nav={navigation} renderBackButton={false}/>,
     })
   }
+}, { 
+  initialRouteName: 'Account'
 })
 
 const DrawerNav = createDrawerNavigator({
