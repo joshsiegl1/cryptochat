@@ -42,7 +42,7 @@ class PhoneCode extends Component {
                 <Text style={styles.headerText}>Enter Your Code</Text>
 
                 <TextInput 
-                style={{paddingTop: 20, width: 200, height: 100, borderColor: 'black', borderWidth: 1}}
+                style={{paddingTop: 20, width: 200, height: 20, borderColor: 'black', borderWidth: 1}}
                 value={this.state.code}
                 onChangeText={(text) => this.setState({code: text})}
                 keyboardType='numeric' />

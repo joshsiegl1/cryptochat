@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'; 
 import React, {Component } from 'react'; 
 
-import {View, FlatList} from 'react-native'; 
+import {View, FlatList, AsyncStorage} from 'react-native'; 
 
 import { GetUser, GetItem, GetLikedPosts } from '../utils/Storage'; 
+
+import { GetPhone } from '../utils/UserStorage'; 
 
 import { registerForPushNotifications } from '../utils/PushNotification'; 
 
@@ -14,9 +16,7 @@ const propTypes = {
     currencies: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string
     })), 
-    User: PropTypes.shape({
-        userID: PropTypes.string
-    })
+    User: PropTypes.string
 }
 
 class CoinList extends Component { 
@@ -28,19 +28,8 @@ class CoinList extends Component {
         const {currencies, fetchTopFiftyCryptoCurrencies, fetchOthers, LikedPosts, DislikedPosts,
                User, DispatchUserfromStorage, DispatchLikedPostsfromStorage} = this.props; 
 
-        if (Object.keys(User).length === 0 && User.constructor === Object) { 
-            await GetUser(function (user) { 
-                if (user !== undefined && user !== null) { 
-                    registerForPushNotifications(user[0][1]); 
-                    DispatchUserfromStorage({
-                        "userID" : user[0][1], 
-                        "email" : user[1][1], 
-                        "karma" : user[2][1], 
-                        "fbid" : user[3][1]
-                    }); 
-                }
-            }); 
-        }
+        let phone = await AsyncStorage.getItem("phone"); 
+        registerForPushNotifications(phone); 
 
         if (Object.keys(LikedPosts).length === 0) { 
             await GetLikedPosts (function (liked, disliked) { 

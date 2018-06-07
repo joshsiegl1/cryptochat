@@ -7,13 +7,6 @@ import { Alert } from 'react-native';
 
 import { registerForPushNotifications } from '../utils/PushNotification'; 
 
-const getUserSuccess = (user) => {
-    return { 
-        type: types.GET_USER, 
-        user
-    }
-}
-
 ///This is used to dispatch the user to redux if it's found in storage but not in the redux store
 ///Also used to remove the user from the redux store on log out
 export const DispatchUserfromStorage = (user) => async (dispatch) => { 

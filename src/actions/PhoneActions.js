@@ -40,12 +40,13 @@ export const SubmitCode = (code) => async (dispatch) => {
 
     if (json.error === null) { 
         await SetPhone(json.phone); 
+
         dispatch({
             type: types.GET_USER, 
             user: json.phone
         })
     }
     else { 
-        Alert.alert("Error" : json.error); 
+        Alert.alert("Error", json.error); 
     }
 }

@@ -85,7 +85,7 @@ router.post('/get/:name', (req, res) => {
 })
 
 router.post('/push-token', (req, res) => { 
-    let username = req.body.username; 
+    let phone = req.body.phone; 
     let token = req.body.token; 
 
     mongoose.connect(url, {useMongoClient: true})
@@ -93,7 +93,7 @@ router.post('/push-token', (req, res) => {
 
     const User = mongoose.model('User', userSchema); 
 
-    let conditions = {userID: username}, 
+    let conditions = {phone: phone}, 
         update = {pushNotification: token}, 
         options = {multi: true}; 
 
@@ -106,36 +106,6 @@ router.post('/push-token', (req, res) => {
         })
     }
     catch(e) { 
-        console.log(e); 
-        res.send({"response" : "something went wrong"})
-    }
-})
-
-router.post('/updateUsernameFacebook', (req, res) => { 
-    let fbid = req.body.fbid;
-    let userID = req.body.userID;  
-
-    mongoose.connect(url, {useMongoClient: true})
-    const db = mongoose.connection
-
-    const User = mongoose.model('User', userSchema); 
-
-    let conditions = {fbid: fbid}, 
-        update = {userID: userID}, 
-        options = {mulit: true};  
-
-    try { 
-        User.update(conditions, update, options, function (err, numAffected) { 
-            if (err) res.send(err); 
-            console.log(numAffected);
-            
-            User.findOne({fbid: fbid}, function (err, users) { 
-                res.send(users); 
-            })
-
-        })
-    }
-    catch (e) { 
         console.log(e); 
         res.send({"response" : "something went wrong"})
     }
@@ -190,46 +160,5 @@ router.post('/vote', (req, res) => {
         res.send({"error" : e}); 
         }
 })
-
-router.post('/facebookLogin', (req, res) => { 
-    let fbid = req.body.fbid; 
-
-    mongoose.connect(url, {useMongoClient: true})
-    const db = mongoose.connection
-
-    const User = mongoose.model('User', userSchema); 
-
-    try { 
-
-        User.find({fbid: fbid}, function (err, users) { 
-            console.log(users); 
-            if (err) res.send(err); 
-
-            if (users.length <= 0) { 
-                //add user to database with facebook id
-                var newUser = new User({
-                    fbid: fbid, 
-                    karma: 0, 
-                    userID: "", 
-                    password: ""
-                })
-
-                newUser.save((error) => { 
-                    console.log(error); 
-                })
-
-                res.send(newUser); 
-            }
-            else { 
-                res.send(users); 
-            }
-        })
-    }
-    catch (e) { 
-        console.log(e); 
-        res.send({"error" : e}); 
-    }
-})
-
 
 module.exports = router; 

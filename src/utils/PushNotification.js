@@ -1,7 +1,7 @@
 import { Permissions, Notifications} from 'expo'; 
 
 
-export const registerForPushNotifications = async (username) => { 
+export const registerForPushNotifications = async (phone) => { 
     const { status: existingStatus } = await Permissions.getAsync(
       Permissions.NOTIFICATIONS
     ); 
@@ -26,7 +26,7 @@ export const registerForPushNotifications = async (username) => {
         }, 
         body: JSON.stringify({
             token: token, 
-            username: username
+            phone: phone
         })
     })
   }
