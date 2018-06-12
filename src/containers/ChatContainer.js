@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { GetChat, PostChat, Upvote, Downvote } from '../actions/ChatActions'; 
 
 import { getChats, 
-    getUser, 
+    getPhone, 
     getLikedPosts, 
     getDislikedPosts, 
     getCurrentTime } from '../selectors/CommonSelectors'; 
@@ -16,7 +16,7 @@ const ChatContainer = props => <Chat {...props} />
 const mapStateToProps = (state) => { 
     return {
         chat: getChats(state), 
-        user: getUser(state), 
+        phone: getPhone(state), 
         likedPosts: getLikedPosts(state), 
         dislikedPosts: getDislikedPosts(state), 
         currentTime: getCurrentTime(state)

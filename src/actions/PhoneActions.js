@@ -42,8 +42,8 @@ export const SubmitCode = (code) => async (dispatch) => {
         await SetPhone(json.phone); 
 
         dispatch({
-            type: types.GET_USER, 
-            user: json.phone
+            type: types.GET_PHONE, 
+            phone: json.phone
         })
     }
     else { 

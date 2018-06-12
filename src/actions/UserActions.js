@@ -9,10 +9,10 @@ import { registerForPushNotifications } from '../utils/PushNotification';
 
 ///This is used to dispatch the user to redux if it's found in storage but not in the redux store
 ///Also used to remove the user from the redux store on log out
-export const DispatchUserfromStorage = (user) => async (dispatch) => { 
+export const DispatchUserfromStorage = (phone) => async (dispatch) => { 
     dispatch( { 
-        type: types.GET_USER, 
-        user
+        type: types.GET_PHONE, 
+        phone
     } )
 }
 
@@ -26,7 +26,7 @@ export const DispatchLikedPostsfromStorage = (likedPosts, dislikedPosts) => asyn
     })
 }
 
-export const GetUser = (phone) => async (dispatch) => { 
+export const GetPhone = (phone) => async (dispatch) => { 
     let reqbody = { 
         phone
     }; 

@@ -19,7 +19,7 @@ const propTypes = {
     GetPost: PropTypes.func, 
     GetReplies: PropTypes.func, 
     PostReply: PropTypes.func, 
-    user: PropTypes.shape()
+    phone: PropTypes.string
 }
 
 class Comment extends Component { 

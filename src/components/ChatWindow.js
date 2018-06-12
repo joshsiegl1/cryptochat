@@ -22,7 +22,7 @@ import styles from '../styles/chatWindowSheet';
 // crypto: PropTypes.string, 
 
 const propTypes = { 
-    user: PropTypes.shape(), 
+    phone: PropTypes.string, 
     PostChat: PropTypes.func, 
     PostReply: PropTypes.func, 
     getSignedRequest: PropTypes.func
@@ -48,7 +48,7 @@ class ChatWindow extends Component {
 
     onPost = () => { 
         const { type, crypto, postID } = this.props.navigation.state.params; 
-        const { user, PostChat, PostReply} = this.props; 
+        const { phone, PostChat, PostReply} = this.props; 
         const { getSignedRequest } = this.props; 
 
         let text = this.state.myText; 
@@ -90,18 +90,11 @@ class ChatWindow extends Component {
             })
         }
 
-        let username = "anonymous"; 
-        if (!(Object.keys(user).length === 0 && user.constructor === Object)) { 
-            if (user.userID !== "") { 
-                username = user.userID
-            }
-        }
-
         if (type === "comment") { 
-            PostReply(crypto, username, text, postID); 
+            PostReply(crypto, phone, text, postID); 
         }
         else {  
-            PostChat(crypto, username, text); 
+            PostChat(crypto, phone, text); 
         }
 
         Keyboard.dismiss(); 

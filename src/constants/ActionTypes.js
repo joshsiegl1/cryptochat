@@ -8,7 +8,7 @@ export const GET_CHAT = 'GET_CHAT';
 export const GET_POST = 'GET_POST'; 
 export const GET_REPLIES = 'GET_REPLIES'; 
 
-export const GET_USER = "GET_USER"; 
+export const GET_PHONE = "GET_PHONE"; 
 export const ADD_USER = "ADD_USER"; 
 
 export const LIKED_POSTS = "LIKED_POSTS"; 

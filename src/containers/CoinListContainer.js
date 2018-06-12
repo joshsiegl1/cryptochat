@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import CoinList from '../components/CoinList'; 
 
-import { getCurrencies, getUser, 
+import { getCurrencies, getPhone, 
          getLikedPosts, getDislikedPosts, getCoinList } from '../selectors/CommonSelectors'; 
 
 import { DispatchUserfromStorage, DispatchLikedPostsfromStorage } from '../actions/UserActions'; 
@@ -14,7 +14,6 @@ const CoinListContainer = props => <CoinList {...props} />
 const mapStateToProps = (state) => { 
     return { 
         currencies: getCoinList(state), 
-        User: getUser(state), 
         LikedPosts: getLikedPosts(state), 
         DislikedPosts: getDislikedPosts(state)
     }

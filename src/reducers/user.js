@@ -8,10 +8,10 @@ const initialState = {
 
 const user = (state = initialState, action) => { 
     switch (action.type) { 
-        case types.GET_USER: 
+        case types.GET_PHONE: 
             return { 
                 ...state, 
-                user: action.user
+                phone: action.phone
             }
         
         case types.LIKED_POSTS: 

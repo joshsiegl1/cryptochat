@@ -19,7 +19,7 @@ const propTypes = {
     Upvote: PropTypes.func, 
     Downvote: PropTypes.func, 
     chat: PropTypes.shape(), 
-    user: PropTypes.shape(), 
+    phone: PropTypes.string, 
     likedPosts: PropTypes.arrayOf(PropTypes.string), 
     dislikedPosts: PropTypes.arrayOf(PropTypes.string), 
     currentTime: PropTypes.date

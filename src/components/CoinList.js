@@ -15,8 +15,7 @@ const propTypes = {
     navigate: PropTypes.func, 
     currencies: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string
-    })), 
-    User: PropTypes.string
+    }))
 }
 
 class CoinList extends Component { 
@@ -26,10 +25,13 @@ class CoinList extends Component {
 
     async UNSAFE_componentWillMount() { 
         const {currencies, fetchTopFiftyCryptoCurrencies, fetchOthers, LikedPosts, DislikedPosts,
-               User, DispatchUserfromStorage, DispatchLikedPostsfromStorage} = this.props; 
+               DispatchUserfromStorage, DispatchLikedPostsfromStorage} = this.props; 
 
         let phone = await AsyncStorage.getItem("phone"); 
-        registerForPushNotifications(phone); 
+        registerForPushNotifications(phone);
+        
+        //Dispatches the user's phone into the redux store from local storage
+        DispatchUserfromStorage(phone); 
 
         if (Object.keys(LikedPosts).length === 0) { 
             await GetLikedPosts (function (liked, disliked) { 

@@ -6,7 +6,7 @@ import Comment from '../components/Comment.js';
 import { GetPost, PostReply, Upvote, Downvote, GetReplies } from '../actions/ChatActions.js';
 
 import { 
-    getUser, 
+    getPhone, 
     getComment,
     getReplies, 
     getLikedPosts, 
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     return { 
         replies: getReplies(state), 
         comment: getComment(state), 
-        user: getUser(state), 
+        phone: getPhone(state), 
         likedPosts: getLikedPosts(state), 
         dislikedPosts: getDislikedPosts(state), 
         currentTime: getCurrentTime(state)

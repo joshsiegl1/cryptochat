@@ -5,13 +5,13 @@ import PhoneCode from '../components/PhoneCode';
 
 import { SubmitCode } from '../actions/PhoneActions'; 
 
-import { getUser } from '../selectors/CommonSelectors'; 
+import { getPhone } from '../selectors/CommonSelectors'; 
 
 const PhoneCodeContainer = props => <PhoneCode {...props} />
 
 const mapStateToProps = (state) => { 
     return { 
-        user: getUser(state), 
+        user: getPhone(state), 
     }
 }
 
