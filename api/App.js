@@ -117,11 +117,12 @@ app.post('/reply', (req, res) => {
             .exec((err, result) => { 
 
                 if (result.userID !== undefined && result.userID !== "anonymous") { 
-                    User.findOne({userID: result.userID})
+                    User.findOne({phone: result.userID})
                         .exec((err, theUser) => { 
-                            if (theUser.pushNotification !== "") { 
+                            try { 
                                 pushNotification(theUser.pushNotification); 
                             }
+                            catch(e) { }
                         })
                 }
 

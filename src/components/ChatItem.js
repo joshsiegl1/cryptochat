@@ -136,7 +136,7 @@ class ChatItem extends PureComponent {
                 <View style={styles.titleBox}>
                     <Image style={{width: 16, height: 16}}
                     source={{uri: `http://www.joshsiegl.com/crypto/${this.props.crypto}.png`}} />
-                    <Text style={{paddingLeft: 5, width: '90%', color: userColor, fontFamily: 'arial'}}>{item.userID}</Text>  
+                    <Text style={{paddingLeft: 5, width: '90%', color: 'lightgray', fontFamily: 'arial'}}>anonymous</Text>  
                 </View>
                 <View style={styles.bodyBox}>
                     <View style={{fontSize: 18, color: '#373F51'}}><Transform body={item.body} navigate={this.props.navigate} /></View>
