@@ -42,10 +42,20 @@ class PhoneCode extends Component {
                 <Text style={styles.headerText}>Enter Your Code</Text>
 
                 <TextInput 
-                style={{paddingTop: 20, width: 200, height: 20, borderColor: 'black', borderWidth: 1}}
+                style={{
+                    width: 200, 
+                    borderColor: 'black', 
+                    borderWidth: 1, 
+                    color: 'black', 
+                    borderRadius:20,
+                    paddingTop: 5, 
+                    paddingBottom: 5, 
+                    textAlign:'center'}}
                 value={this.state.code}
                 onChangeText={(text) => this.setState({code: text})}
-                keyboardType='numeric' />
+                keyboardType='numeric' 
+                maxLength={5}
+                autoFocus={true}/>
 
                 <View style={{paddingTop: 50}}>
                 <TouchableOpacity style={styles.doneButton} onPress={this._onDonePressed}>

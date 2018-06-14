@@ -53,7 +53,7 @@ export default class AppIntro extends React.Component {
   _renderPagination = () => {
 
     return (
-      <View style={[styles.paginationContainer, {bottom: (this.state.height / 3) - 16 + (isIphoneX ? 34 : 0)}]}>
+      <View style={[styles.paginationContainer, {bottom: (this.state.height / 3) - 68 + (isIphoneX ? 34 : 0)}]}>
         <View style={styles.paginationDots}>
           {this.props.slides.length > 1 && this.props.slides.map((_, i) => (
             <View

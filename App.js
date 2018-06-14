@@ -92,7 +92,7 @@ const ModalStack = createStackNavigator({
 
 const UserStack = createStackNavigator({
   Account: { 
-    screen: UserContainer, 
+    screen: AccountContainer, 
     navigationOptions: ({navigation}) => ({
       header: props => <AppHeader nav={navigation} renderBackButton={false}/>,
     })
@@ -172,7 +172,8 @@ export default class App extends React.Component {
         require("./assets/ic_pic.png"), 
         require("./assets/slide_one_img.png"), 
         require("./assets/slide_two_img.png"), 
-        require("./assets/slide_three_img.png")
+        require("./assets/slide_three_img.png"), 
+        require("./assets/crypto-dude.png")
       ]), 
       Font.loadAsync({
         'arial' : require('./assets/arial.ttf')
