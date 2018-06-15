@@ -17,9 +17,14 @@ class Account extends Component {
     onLogoutPressed = async () => { 
         await SetPhone(""); 
 
-        this.props.navigation.navigate("AuthLoading"); 
+        this.props.navigation.navigate("AuthLoading");   
+    }
 
-        
+    onDeleteAccountPressed = async () => { 
+        await SetPhone(""); 
+
+
+        this.props.navigation.navigate("AuthLoading"); 
     }
 
     render() { 
@@ -32,6 +37,9 @@ class Account extends Component {
             <Text style={styles.numberText}>{Phone}</Text>
             <TouchableOpacity style={styles.accountButton} onPress={this.onLogoutPressed}>
                 <Text style={styles.accountButtonText}>Logout</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.accountButton} onPress={this.onDeleteAccountPressed}> 
+                <Text style={styles.accountButtonText}>Delete Account</Text>
             </TouchableOpacity>
         </View>)
     }

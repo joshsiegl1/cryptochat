@@ -11,6 +11,17 @@ var express = require('express'),
     var userSchema = require("./models/user_model.js"); 
     var chatSchema = require("./models/chat_model.js"); 
 
+router.post('/delete', (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    const User = mongoose.model('User', userSchema)
+
+    let phoneNum = req.phone; 
+
+    
+})
+
 router.post('/', (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection
