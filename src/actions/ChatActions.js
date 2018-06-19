@@ -8,18 +8,22 @@ import {
 import * as types from '../constants/ActionTypes'; 
 import {callApi} from '../utils/ApiUtils'; 
 import { SetLikedPosts, GetLikedPosts } from '../utils/Storage'; 
+import { AsyncStorage } from 'react-native'; 
 
-export const Vote = (postID, userID, karma) => { 
+export const Vote = async (postID, userID, karma) => { 
     let vote = { 
         postID, 
         userID, 
         karma
     }
 
+    let token = await AsyncStorage.getItem('token'); 
+
     let options = { 
         method: 'post', 
         headers: { 
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x' : token
         }, 
         body: JSON.stringify(vote)
     }
@@ -67,10 +71,13 @@ export const PostChat = (id, userID, message) => async (dispatch) => {
         body: message
     }
 
+    let token = await AsyncStorage.getItem('token'); 
+
     let options = {
         method: 'post', 
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json', 
+            'cryptochat-token-x' : token
         }, 
         body: JSON.stringify(chat)
     }
@@ -88,10 +95,13 @@ export const PostReply = (id, userID, message, postID) => async (dispatch) => {
         inReplyTo: postID
     }
 
+    let token = await AsyncStorage.getItem('token'); 
+
     let options = { 
         method: 'post', 
         headers: { 
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x' : token
         }, 
         body: JSON.stringify(reply)
     }

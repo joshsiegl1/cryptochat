@@ -11,6 +11,7 @@ var authSchema = require('./models/authToken_model.js');
 const url = require("./Config.js").MongoDBConnectionString; 
 
 const twilio = require('twilio'); 
+const crypto = require('crypto'); 
 
 const accountSid = require("./Config.js").accountSid; 
 const auth_token = require("./Config.js").auth_token; 
@@ -23,6 +24,8 @@ function getRandom() {
 }
 
 router.post('/', (req, res) => { 
+
+    try { 
 
     let newNumber = req.body.phone; 
 
@@ -45,9 +48,14 @@ router.post('/', (req, res) => {
         expires: date
     })
 
+    let token = crypto.createHmac('sha1', code.toString()) 
+                      .update(newNumber.toString())
+                      .digest('hex'); 
+
     let newauth = { 
         phone: newNumber, 
-        code: code
+        code: code, 
+        token: token
     }
 
     var newAuthToken = new authToken(newauth)
@@ -72,6 +80,10 @@ router.post('/', (req, res) => {
     })
 
     res.send({"message": "success"}); 
+    }
+    catch (e) { 
+        res.send({error: e.message}); 
+    }
 })
 
 router.post('/submit', (req, res) => { 
@@ -116,6 +128,7 @@ router.post('/submit', (req, res) => {
                                     })
             
                                     res.send({phone: result.phone, 
+                                              token: auth.token, 
                                               error: null}); 
                                 }
                                 else { 

@@ -5,7 +5,7 @@ import * as types from '../constants/ActionTypes';
 import { SEND_CODE, SUBMIT_CODE } from '../constants/ApiConstants'; 
 import { callApi } from '../utils/ApiUtils'; 
 
-import { SetPhone } from '../utils/UserStorage'; 
+import { SetPhone, SetToken } from '../utils/UserStorage'; 
 
 export const SendCode = (phone) => async (dispatch) => { 
     let body = { 
@@ -40,6 +40,7 @@ export const SubmitCode = (code) => async (dispatch) => {
 
     if (json.error === null) { 
         await SetPhone(json.phone); 
+        await SetToken(json.token); 
 
         dispatch({
             type: types.GET_PHONE, 

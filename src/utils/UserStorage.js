@@ -17,3 +17,12 @@ export const GetPhone = async () => {
 
     }
 }
+
+export const SetToken = async (token) => { 
+    try { 
+        await AsyncStorage.setItem("token", token); 
+    }
+    catch (e) { 
+
+    }
+}

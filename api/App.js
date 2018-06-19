@@ -21,6 +21,8 @@ var userSchema = require("./models/user_model.js");
 var categorySchema = require("./models/category_model.js"); 
 var trackingSchema = require("./models/tracking_model.js"); 
 
+const AuthMiddleware = require("./AuthMiddleware.js"); 
+
 var port = process.env.PORT || 3000
 
 app.use(bodyParser.json());
@@ -63,7 +65,7 @@ app.use('/user', userRoutes);
 app.use('/content', contentRoutes); 
 app.use('/phone', twilioRoutes); 
 
-app.post('/chat', (req, res) => {
+app.post('/chat', AuthMiddleware, (req, res) => {
 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection
@@ -89,7 +91,7 @@ app.post('/chat', (req, res) => {
     res.send("Success");  
 })
 
-app.post('/reply', (req, res) => { 
+app.post('/reply', AuthMiddleware, (req, res) => { 
 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection
