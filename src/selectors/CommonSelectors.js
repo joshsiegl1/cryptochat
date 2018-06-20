@@ -21,3 +21,4 @@ export const getReplies = state => state.chats.replies;
 export const getCurrentTime = state => state.chats.time; 
 export const getLikedPosts = state => state.user.likedPosts; 
 export const getDislikedPosts = state => state.user.dislikedPosts; 
+export const getValidated = state => state.user.validated

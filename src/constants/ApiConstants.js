@@ -42,3 +42,4 @@ export const SIGN_LINK_URL = `${GET_CRYPTO_HOSTNAME()}/content/sign_s3?file-name
 
 export const SEND_CODE = `${GET_CRYPTO_HOSTNAME()}/phone`; 
 export const SUBMIT_CODE = `${GET_CRYPTO_HOSTNAME()}/phone/submit`
+export const VALIDATE_TOKEN = `${GET_CRYPTO_HOSTNAME()}/phone/validate`; 

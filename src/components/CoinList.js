@@ -15,7 +15,8 @@ const propTypes = {
     navigate: PropTypes.func, 
     currencies: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string
-    }))
+    })), 
+    validated: PropTypes.bool
 }
 
 class CoinList extends Component { 
@@ -23,9 +24,24 @@ class CoinList extends Component {
         super(props)
     }
 
+    componentWillReceiveProps() { 
+        const {validated} = this.props; 
+        if (validated !== null) { 
+            if (validated === false) { 
+                this.props.navigation.navigate('Auth'); 
+            }
+        }
+    }
+
     async UNSAFE_componentWillMount() { 
         const {currencies, fetchTopFiftyCryptoCurrencies, fetchOthers, LikedPosts, DislikedPosts,
-               DispatchUserfromStorage, DispatchLikedPostsfromStorage} = this.props; 
+               DispatchUserfromStorage, DispatchLikedPostsfromStorage, validated, ValidateToken} = this.props; 
+
+        if (validated === null) { 
+            ValidateToken(); 
+        }
+
+
 
         let phone = await AsyncStorage.getItem("phone"); 
         registerForPushNotifications(phone);

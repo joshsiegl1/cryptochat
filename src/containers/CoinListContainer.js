@@ -4,15 +4,16 @@ import { connect } from 'react-redux';
 import CoinList from '../components/CoinList'; 
 
 import { getCurrencies, getPhone, 
-         getLikedPosts, getDislikedPosts, getCoinList } from '../selectors/CommonSelectors'; 
+         getLikedPosts, getDislikedPosts, getCoinList, getValidated } from '../selectors/CommonSelectors'; 
 
-import { DispatchUserfromStorage, DispatchLikedPostsfromStorage } from '../actions/UserActions'; 
+import { DispatchUserfromStorage, DispatchLikedPostsfromStorage, ValidateToken } from '../actions/UserActions'; 
 import { fetchTopFiftyCryptoCurrencies, fetchOthers } from '../actions/CoinMarketCapActions';
 
 const CoinListContainer = props => <CoinList {...props} />
 
 const mapStateToProps = (state) => { 
     return { 
+        validated: getValidated(state), 
         currencies: getCoinList(state), 
         LikedPosts: getLikedPosts(state), 
         DislikedPosts: getDislikedPosts(state)
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { 
+    ValidateToken, 
     fetchTopFiftyCryptoCurrencies, 
     fetchOthers,
     DispatchUserfromStorage, 

@@ -86,6 +86,26 @@ router.post('/', (req, res) => {
     }
 })
 
+router.post('/validate', (req, res) => { 
+    let token = req.body.token; 
+
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
+
+    const authToken = mongoose.model('authToken', authSchema); 
+
+    authToken.findOne({token: token}, function (err, result) { 
+        if (!err) { 
+            if (result) { 
+                res.send(200, {result: "valid"})
+            }
+            else { 
+                res.send(301, {result: "invalid"})
+            }
+        }
+    })
+})
+
 router.post('/submit', (req, res) => { 
     let code = req.body.code; 
 

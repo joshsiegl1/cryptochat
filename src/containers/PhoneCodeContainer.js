@@ -11,7 +11,7 @@ const PhoneCodeContainer = props => <PhoneCode {...props} />
 
 const mapStateToProps = (state) => { 
     return { 
-        user: getPhone(state), 
+        phone: getPhone(state), 
     }
 }
 

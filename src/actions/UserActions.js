@@ -1,4 +1,4 @@
-import { GET_USER_URL } from '../constants/ApiConstants';
+import { GET_USER_URL, VALIDATE_TOKEN } from '../constants/ApiConstants';
 
 import * as types from '../constants/ActionTypes'; 
 import { callApi } from '../utils/ApiUtils'; 
@@ -42,5 +42,45 @@ export const GetPhone = (phone) => async (dispatch) => {
             'cryptochat-token-x' : token
         }, 
         body: JSON.stringify(reqbody)
+    }
+}
+
+export const ValidateToken = () => async (dispatch) => { 
+    let token = await AsyncStorage.getItem('token'); 
+
+    if (token === null || token === undefined) { 
+        dispatch({
+            type: types.VALIDATE, 
+            validated: false
+        })
+
+        return; 
+    }
+
+    let reqbody = { 
+        token
+    }
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type' : 'application/json'
+        }, 
+        body: JSON.stringify(reqbody)
+    }
+    
+    const { json } = await callApi(VALIDATE_TOKEN, options); 
+
+    if (json.result === "valid") { 
+        dispatch({
+            type: types.VALIDATE, 
+            validated: true
+        })
+    }
+    else { 
+        dispatch({
+            type: types.VALIDATE, 
+            validated: false
+        })
     }
 }

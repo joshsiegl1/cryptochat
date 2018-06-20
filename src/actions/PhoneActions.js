@@ -21,6 +21,12 @@ export const SendCode = (phone) => async (dispatch) => {
     }
 
     const { json } = await callApi(SEND_CODE, options); 
+
+    //Make sure that if this is after a logout, we clear the phone from the redux store
+    dispatch({
+        type: types.GET_PHONE, 
+        phone: ''
+    })
 }
 
 export const SubmitCode = (code) => async (dispatch) => { 

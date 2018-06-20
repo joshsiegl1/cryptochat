@@ -5,7 +5,7 @@ import {StyleSheet, View, TouchableOpacity, TextInput, Text, Alert} from 'react-
 
 const propTypes = { 
     SubmitCode: PropTypes.func, 
-    user: PropTypes.string
+    phone: PropTypes.string
 }
 
 class PhoneCode extends Component { 
@@ -18,8 +18,8 @@ class PhoneCode extends Component {
     }
 
     componentWillReceiveProps(nextProps) { 
-        const {user} = nextProps; 
-        if (user !== '' && user !== undefined) { 
+        const {phone} = nextProps; 
+        if (phone !== '' && phone !== undefined) { 
             this.props.navigation.navigate("App"); 
         }
     }

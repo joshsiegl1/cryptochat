@@ -1,7 +1,8 @@
 import * as types from '../constants/ActionTypes'; 
 
 const initialState = { 
-    user: {}, 
+    validated: null, 
+    phone: '', 
     likedPosts: [], 
     dislikedPosts: []
 }
@@ -12,6 +13,12 @@ const user = (state = initialState, action) => {
             return { 
                 ...state, 
                 phone: action.phone
+            }
+        
+        case types.VALIDATE: 
+            return { 
+                ...state, 
+                validated: action.validated
             }
         
         case types.LIKED_POSTS: 
