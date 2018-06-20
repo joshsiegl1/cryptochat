@@ -27,6 +27,18 @@ class Account extends Component {
         this.props.navigation.navigate("AuthLoading"); 
     }
 
+    onProfilePictureChange = async () => { 
+
+    }
+
+    onPhoneNumberChange = async () => { 
+
+    }
+
+    onChangeUsername = async () => { 
+
+    }
+
     render() { 
 
         const { Phone } = this.props; 
@@ -35,11 +47,21 @@ class Account extends Component {
             <Image source={require("../../assets/crypto-dude.png")}
              style={styles.photo} />
             <Text style={styles.numberText}>{Phone}</Text>
+            <TouchableOpacity style={styles.accountButton} onPress={this.onChangeUsername}>
+                <Text style={styles.accountButtonText}>Change Username</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.accountButton} onPress={this.onPhoneNumberChange}>
+                <Text style={styles.accountButtonText}>Change Phone Number</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.accountButton, {marginBottom: 20}]} onPress={this.onProfilePictureChange}> 
+                <Text style={styles.accountButtonText}>Change Profile Picture</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity style={styles.accountButton} onPress={this.onLogoutPressed}>
                 <Text style={styles.accountButtonText}>Logout</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.accountButton} onPress={this.onDeleteAccountPressed}> 
-                <Text style={styles.accountButtonText}>Delete Account</Text>
+                <Text style={[styles.accountButtonText, {color: 'red'}]}>Delete Account</Text>
             </TouchableOpacity>
         </View>)
     }
@@ -59,7 +81,8 @@ const styles = StyleSheet.create({
     numberText: { 
         color: 'black',
         fontSize: 18, 
-        marginTop: 20
+        marginTop: 20, 
+        marginBottom: 20
     }, 
     accountButton: { 
         width: '100%', 

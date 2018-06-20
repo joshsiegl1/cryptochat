@@ -2,6 +2,8 @@ const MongoClient = require("mongodb").MongoClient
 const mongoose = require("mongoose"); 
 var authSchema = require('./models/authToken_model.js'); 
 const url = require("./Config.js").MongoDBConnectionString; 
+const jwt = require("jsonwebtoken"); 
+const jwtSecret = require("./Config.js").jwtSecret; 
 
 function AuthMiddleware(req, res, next) { 
     
@@ -10,17 +12,27 @@ function AuthMiddleware(req, res, next) {
         res.send(403, {error: 'error authenticating: no auth token included in the request'}); 
     }
     else { 
-        mongoose.connect(url, {useMongoClient: true}); 
-        const db = mongoose.connection; 
-        const authToken = mongoose.model('authToken', authSchema); 
-        authToken.findOne({token: token.toString()}, function (err, auth) { 
-            if (!err) { 
-                if (auth === null) { 
-                    res.send(403, {error: "error authenticating: no auth token found " + token.toString()}); 
-                }
-                else next();
-            } 
+
+        jwt.verify(token, jwtSecret, function (err, decoded) { 
+            if (decoded === undefined) { 
+                res.send(403, {error: 'error authenticating: invalid jwt'})
+            }
+            else { 
+                next(); 
+            }
         })
+
+        // mongoose.connect(url, {useMongoClient: true}); 
+        // const db = mongoose.connection; 
+        // const authToken = mongoose.model('authToken', authSchema); 
+        // authToken.findOne({token: token.toString()}, function (err, auth) { 
+        //     if (!err) { 
+        //         if (auth === null) { 
+        //             res.send(403, {error: "error authenticating: no auth token found " + token.toString()}); 
+        //         }
+        //         else next();
+        //     } 
+        // })
     }
 }
 

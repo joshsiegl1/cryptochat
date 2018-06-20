@@ -9,7 +9,9 @@ module.exports = new Schema({
     password: String, 
     pushNotification: String, 
     karma: Number, 
-    phone: String, 
+    phone: String,
+    username: String,  
+    profilepic: String, 
     dateCreated: {type: Date, default: Date.now}, 
 
 }, {collection: 'users'})

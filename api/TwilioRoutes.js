@@ -4,6 +4,8 @@ router = express.Router();
 const MongoClient = require("mongodb").MongoClient
 const mongoose = require("mongoose"); 
 
+const jwt = require("jsonwebtoken"); 
+
 var phoneCodeSchema = require("./models/phoneCode_model.js");
 var userSchema = require("./models/user_model.js");  
 var authSchema = require('./models/authToken_model.js'); 
@@ -16,6 +18,7 @@ const crypto = require('crypto');
 const accountSid = require("./Config.js").accountSid; 
 const auth_token = require("./Config.js").auth_token; 
 const phoneNumber = require("./Config.js").phoneNumber; 
+const jwtSecret = require('./Config.js').jwtSecret; 
 
 const client = new twilio(accountSid, auth_token); 
 
@@ -48,9 +51,13 @@ router.post('/', (req, res) => {
         expires: date
     })
 
-    let token = crypto.createHmac('sha1', code.toString()) 
-                      .update(newNumber.toString())
-                      .digest('hex'); 
+    // let token = crypto.createHmac('sha1', code.toString()) 
+    //                   .update(newNumber.toString())
+    //                   .digest('hex'); 
+
+    let token = jwt.sign({
+        phone: newNumber
+    }, jwtSecret); 
 
     let newauth = { 
         phone: newNumber, 
@@ -136,7 +143,9 @@ router.post('/submit', (req, res) => {
                                         var newUser = new User({
                                             email: '', 
                                             karma: 1, 
-                                            phone: result.phone
+                                            phone: result.phone, 
+                                            username: 'anonymous', 
+                                            profilepic: ''
                                         })
                                         newUser.save(function(err) { 
                                             if (err) console.log(err); 
