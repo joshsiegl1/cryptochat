@@ -12,6 +12,7 @@ import { registerForPushNotifications } from '../utils/PushNotification';
 import CoinButton from './CoinButton'; 
 
 const propTypes = { 
+    user: PropTypes.shape({}), 
     navigate: PropTypes.func, 
     currencies: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string
@@ -35,13 +36,15 @@ class CoinList extends Component {
 
     async UNSAFE_componentWillMount() { 
         const {currencies, fetchTopFiftyCryptoCurrencies, fetchOthers, LikedPosts, DislikedPosts,
-               DispatchUserfromStorage, DispatchLikedPostsfromStorage, validated, ValidateToken} = this.props; 
+               DispatchUserfromStorage, DispatchLikedPostsfromStorage, validated, ValidateToken, user, GetUser} = this.props; 
 
         if (validated === null) { 
             ValidateToken(); 
         }
 
-
+        if (user === null) { 
+            GetUser(); 
+        }
 
         let phone = await AsyncStorage.getItem("phone"); 
         registerForPushNotifications(phone);

@@ -6,7 +6,9 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { SetPhone } from '../utils/UserStorage'; 
 
 const propTypes = { 
-    Phone: PropTypes.string
+    user: PropTypes.shape({}), 
+    Phone: PropTypes.string, 
+    UpdateUsername: PropTypes.func
 }
 
 class Account extends Component { 
@@ -41,11 +43,12 @@ class Account extends Component {
 
     render() { 
 
-        const { Phone } = this.props; 
+        const { Phone, user } = this.props; 
 
         return(<View style={styles.main}>
             <Image source={require("../../assets/crypto-dude.png")}
              style={styles.photo} />
+            <Text style={styles.numberText}>{user.username}</Text>
             <Text style={styles.numberText}>{Phone}</Text>
             <TouchableOpacity style={styles.accountButton} onPress={this.onChangeUsername}>
                 <Text style={styles.accountButtonText}>Change Username</Text>

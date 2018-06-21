@@ -1,4 +1,4 @@
-import { GET_USER_URL, VALIDATE_TOKEN } from '../constants/ApiConstants';
+import { GET_USER_URL, VALIDATE_TOKEN, UPDATE_USERNAME, GET_USER } from '../constants/ApiConstants';
 
 import * as types from '../constants/ActionTypes'; 
 import { callApi } from '../utils/ApiUtils'; 
@@ -43,6 +43,50 @@ export const GetPhone = (phone) => async (dispatch) => {
         }, 
         body: JSON.stringify(reqbody)
     }
+}
+
+export const GetUser = () => async (dispatch) => { 
+    
+    let token = await AsyncStorage.getItem('token'); 
+
+    let options = { 
+        method: 'get', 
+        headers: {
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x' : token
+        }
+    }
+
+    const { json } = await callApi(GET_USER, options); 
+
+    if (json) { 
+        dispatch({ 
+            type: types.GET_USER, 
+            user: json.user
+        })
+    }
+}
+
+export const UpdateUsername = (username) => async (dispatch) => { 
+      
+    let token = await AsyncStorage.getItem('token'); 
+    let phone = await AsyncStorage.getItem('phone'); 
+
+    let reqbody = { 
+        phone,
+        username 
+    }
+
+    let options = { 
+        method: 'post',
+        headers: { 
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x' : token
+        }, 
+        body: JSON.stringify(reqbody)
+    }
+
+    const { json } = await callApi(UPDATE_USERNAME, options); 
 }
 
 export const ValidateToken = () => async (dispatch) => { 

@@ -13,6 +13,8 @@ var express = require('express'),
     var authSchema = require("./models/authToken_model.js"); 
 
     const AuthMiddleware = require('./AuthMiddleware.js'); 
+    const jwt = require("jsonwebtoken"); 
+    const jwtSecret = require("./Config.js").jwtSecret; 
 
 router.post('/delete', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
@@ -30,9 +32,40 @@ router.post('/updateusername', AuthMiddleware, (req, res) => {
     const db = mongoose.connection; 
 
     const User = mongoose.model('User', userSchema)
-    const authToken = mongoose.model('authToken', authSchema); 
 
-    let phoneNum = req.phone
+    let phoneNum = req.body.phone
+    let username = req.body.username
+
+    let update = { 
+        username: username
+    }
+
+    User.findOneAndUpdate({'phone':phoneNum}, update, {upsert: true}, function (err, doc) {
+        if (err) return res.send(500, {error: err}); 
+    })
+
+    res.send(200, {ok: "username updated"})
+})
+
+router.get('/', AuthMiddleware, (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
+
+    const User = mongoose.model('User', userSchema)
+    
+    let token = req.get('cryptochat-token-x'); 
+
+    jwt.verify(token, jwtSecret, function (err, decoded) { 
+        let phoneNum = decoded.phone; 
+        User.findOne({phone: phoneNum}, function (err, doc) { 
+            if (!err) { 
+                return res.send(200, {user: doc}); 
+            }
+            else if (!doc) return res.send(404, {error: "no user found with phone number " + phoneNum})
+        })
+    })
+
+
 })
 
 router.post('/push-token', (req, res) => { 

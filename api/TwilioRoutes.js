@@ -51,10 +51,6 @@ router.post('/', (req, res) => {
         expires: date
     })
 
-    // let token = crypto.createHmac('sha1', code.toString()) 
-    //                   .update(newNumber.toString())
-    //                   .digest('hex'); 
-
     let token = jwt.sign({
         phone: newNumber
     }, jwtSecret); 

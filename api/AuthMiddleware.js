@@ -21,18 +21,6 @@ function AuthMiddleware(req, res, next) {
                 next(); 
             }
         })
-
-        // mongoose.connect(url, {useMongoClient: true}); 
-        // const db = mongoose.connection; 
-        // const authToken = mongoose.model('authToken', authSchema); 
-        // authToken.findOne({token: token.toString()}, function (err, auth) { 
-        //     if (!err) { 
-        //         if (auth === null) { 
-        //             res.send(403, {error: "error authenticating: no auth token found " + token.toString()}); 
-        //         }
-        //         else next();
-        //     } 
-        // })
     }
 }
 

@@ -36,6 +36,8 @@ export const FACEBOOK_LOGIN_URL = `${GET_CRYPTO_HOSTNAME()}/user/facebookLogin`;
 export const UPDATE_USERNAME_FACEBOOK_URL = `${GET_CRYPTO_HOSTNAME()}/user/updateUsernameFacebook`;
 export const GET_POST_URL = `${GET_CRYPTO_HOSTNAME()}/post/:postID`;  
 export const GET_REPLY_URL = `${GET_CRYPTO_HOSTNAME()}/replies/:postID`; 
+export const UPDATE_USERNAME = `${GET_CRYPTO_HOSTNAME()}/user/updateusername`; 
+export const GET_USER = `${GET_CRYPTO_HOSTNAME()}/user`; 
 
 export const POST_LINK_URL = `${GET_CRYPTO_HOSTNAME()}/content/link`; 
 export const SIGN_LINK_URL = `${GET_CRYPTO_HOSTNAME()}/content/sign_s3?file-name=:filename&file-type=:filetype`

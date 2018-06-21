@@ -14,6 +14,7 @@ export const getCoinList = createSelector(
     }
 )
 
+export const getUser = state => state.user.user; 
 export const getChats = state => state.chats.chats;
 export const getPhone = state => state.user.phone;  
 export const getComment = state => state.chats.comment; 

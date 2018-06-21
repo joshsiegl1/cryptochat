@@ -13,3 +13,5 @@ export const ADD_USER = "ADD_USER";
 
 export const LIKED_POSTS = "LIKED_POSTS"; 
 export const VALIDATE = "VALIDATE"; 
+
+export const GET_USER = "GET_USER"; 
