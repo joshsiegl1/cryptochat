@@ -67,7 +67,7 @@ export const GetUser = () => async (dispatch) => {
     }
 }
 
-export const UpdateUsername = (username) => async (dispatch) => { 
+export const UpdateUsername = (username, user) => async (dispatch) => { 
       
     let token = await AsyncStorage.getItem('token'); 
     let phone = await AsyncStorage.getItem('phone'); 
@@ -87,6 +87,17 @@ export const UpdateUsername = (username) => async (dispatch) => {
     }
 
     const { json } = await callApi(UPDATE_USERNAME, options); 
+
+    //this is dumb
+    if (json.ok === "username updated") { 
+        dispatch({
+            type: types.GET_USER, 
+            user: {
+                ...user, 
+                username: username, 
+            }
+        })
+    }
 }
 
 export const ValidateToken = () => async (dispatch) => { 

@@ -16,6 +16,7 @@ import PhoneCodeContainer from './src/containers/PhoneCodeContainer';
 import CoinListContainer from './src/containers/CoinListContainer'; 
 import ChatContainer from './src/containers/ChatContainer'; 
 import AccountContainer from './src/containers/AccountContainer'; 
+import UpdateFormContainer from './src/containers/UpdateFormContainer'; 
 import UserContainer from './src/containers/UserContainer'; 
 import CommentContainer from './src/containers/CommentContainer'; 
 import ChatWindowContainer from './src/containers/ChatWindowContainer'; 
@@ -95,6 +96,12 @@ const UserStack = createStackNavigator({
     screen: AccountContainer, 
     navigationOptions: ({navigation}) => ({
       header: props => <AppHeader nav={navigation} renderBackButton={false}/>,
+    })
+  }, 
+  UpdateForm: { 
+    screen: UpdateFormContainer, 
+    navigationOptions: ({navigation}) => ({
+      header: props => <AppHeader nav={navigation} renderBackButton={true}/>
     })
   }
 }, { 

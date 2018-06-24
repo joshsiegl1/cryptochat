@@ -38,7 +38,7 @@ class Account extends Component {
     }
 
     onChangeUsername = async () => { 
-
+        this.props.navigation.navigate("UpdateForm"); 
     }
 
     render() { 
@@ -52,9 +52,6 @@ class Account extends Component {
             <Text style={styles.numberText}>{Phone}</Text>
             <TouchableOpacity style={styles.accountButton} onPress={this.onChangeUsername}>
                 <Text style={styles.accountButtonText}>Change Username</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.accountButton} onPress={this.onPhoneNumberChange}>
-                <Text style={styles.accountButtonText}>Change Phone Number</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.accountButton, {marginBottom: 20}]} onPress={this.onProfilePictureChange}> 
                 <Text style={styles.accountButtonText}>Change Profile Picture</Text>
