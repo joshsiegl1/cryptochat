@@ -3,12 +3,18 @@ import React, {Component} from 'react';
 
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'; 
 
+import { ImagePicker, Permissions } from 'expo'; 
+
 import { SetPhone } from '../utils/UserStorage'; 
+
+import { RNS3 } from 'react-native-aws3'
+import {accessKey, secretKey } from '../aws_config.js'; 
 
 const propTypes = { 
     user: PropTypes.shape({}), 
     Phone: PropTypes.string, 
-    UpdateUsername: PropTypes.func
+    UpdateUsername: PropTypes.func, 
+    UpdateProfilePicUrl: PropTypes.func
 }
 
 class Account extends Component { 
@@ -30,7 +36,47 @@ class Account extends Component {
     }
 
     onProfilePictureChange = async () => { 
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL); 
+        if (status === 'granted') { 
+            let result = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: false, 
+                base64: true
+            }); 
 
+            if (!result.cancelled) { 
+                let fileName = this.props.Phone.toString() + 'p'; 
+                let uri = result.uri; 
+                let match = /\.(\w+)$/.exec(fileName);
+                let imagetype = match ? `image/${match[1]}` : `image`; 
+
+                const file = { 
+                    uri: uri, 
+                    name: fileName, 
+                    type: imagetype
+                }
+
+                const options = { 
+                    bucket: 'cryptochat-app-45', 
+                    region: 'us-east-1', 
+                    accessKey: accessKey, 
+                    secretKey: secretKey, 
+                    successActionStatus: 201
+                }
+
+                RNS3.put(file, options).then(response => { 
+                    if (response.status === 201) { 
+                        const { UpdateProfilePicUrl, user } = this.props; 
+                        //point user's profile image to new link
+                        let safeFileName = fileName.replace('+', "%2B"); 
+                        let imageLocation = 'https://s3.amazonaws.com/cryptochat-app-45/' + safeFileName.toString(); 
+                        UpdateProfilePicUrl(imageLocation, user); 
+                    }
+                    else { 
+
+                    }
+                })
+            }
+        }
     }
 
     onPhoneNumberChange = async () => { 
@@ -45,9 +91,19 @@ class Account extends Component {
 
         const { Phone, user } = this.props; 
 
+        let updated = user.updated; 
+        let profilepic = user.profilepic; 
+        let img = (<Image />)
+        if (profilepic === null || profilepic === undefined || profilepic === "") { 
+            img = (<Image source={require("../../assets/crypto-dude.png")}
+            style={styles.photo} />)
+        }
+        else { 
+            img = (<Image source={{uri: profilepic}} style={styles.photo} />)
+        }
+
         return(<View style={styles.main}>
-            <Image source={require("../../assets/crypto-dude.png")}
-             style={styles.photo} />
+            {img}
             <Text style={styles.numberText}>{user.username}</Text>
             <Text style={styles.numberText}>{Phone}</Text>
             <TouchableOpacity style={styles.accountButton} onPress={this.onChangeUsername}>

@@ -27,6 +27,26 @@ router.post('/delete', AuthMiddleware, (req, res) => {
     
 })
 
+router.post('/updateprofilepic', AuthMiddleware, (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    const User = mongoose.model('User', userSchema)
+
+    let phoneNum = req.body.phone
+    let profileUrl = req.body.url
+
+    let update = { 
+        profilepic: profileUrl
+    }
+
+    User.findOneAndUpdate({'phone': phoneNum}, update, {upsert: true}, function (err, doc) { 
+        if (err) return res.send(500, {error: err}); 
+    })
+
+    res.send(200, {ok: "profile pic updated"})
+})
+
 router.post('/updateusername', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection; 
