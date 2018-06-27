@@ -14,7 +14,8 @@ const propTypes = {
     user: PropTypes.shape({}), 
     Phone: PropTypes.string, 
     UpdateUsername: PropTypes.func, 
-    UpdateProfilePicUrl: PropTypes.func
+    UpdateProfilePicUrl: PropTypes.func, 
+    dispatchLoad: PropTypes.func
 }
 
 class Account extends Component { 
@@ -39,11 +40,16 @@ class Account extends Component {
         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL); 
         if (status === 'granted') { 
             let result = await ImagePicker.launchImageLibraryAsync({
-                allowsEditing: false, 
-                base64: true
+                allowsEditing: true, 
+                base64: false
             }); 
 
             if (!result.cancelled) { 
+
+                const { dispatchLoad, user } = this.props; 
+
+                dispatchLoad(user); 
+
                 let fileName = this.props.Phone.toString() + 'p'; 
                 let uri = result.uri; 
                 let match = /\.(\w+)$/.exec(fileName);

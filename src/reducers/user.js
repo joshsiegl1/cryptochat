@@ -22,6 +22,15 @@ const user = (state = initialState, action) => {
                 validated: action.validated
             }
         
+        case types.UPDATE_PROFILE_PIC: 
+            return { 
+                ...state, 
+                user: { 
+                    ...state.user, 
+                    profilepic: action.profilepic
+                }
+            }
+
         case types.GET_USER: 
             return { 
                 ...state, 

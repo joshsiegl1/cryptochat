@@ -67,6 +67,13 @@ export const GetUser = () => async (dispatch) => {
     }
 }
 
+export const dispatchLoad = (user) => async (dispatch) => { 
+    dispatch({
+        type: types.UPDATE_PROFILE_PIC, 
+        profilepic: "https://s3.amazonaws.com/cryptochat-app-45/loading.gif"
+    })
+}
+
 export const UpdateProfilePicUrl = (url, user) => async (dispatch) => { 
     let token = await AsyncStorage.getItem('token'); 
     let phone = await AsyncStorage.getItem('phone'); 
@@ -89,12 +96,8 @@ export const UpdateProfilePicUrl = (url, user) => async (dispatch) => {
 
     if (json.ok === "profile pic updated") { 
         dispatch({
-            type: types.GET_USER, 
-            user: { 
-                ...user, 
-                profilepic: url, 
-                updated: (user.updated === undefined) ? true : !user.updated
-            }
+            type: types.UPDATE_PROFILE_PIC, 
+            profilepic: url, 
         })
     }
 }
