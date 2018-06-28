@@ -105,7 +105,7 @@ class Account extends Component {
             style={styles.photo} />)
         }
         else { 
-            img = (<Image source={{uri: profilepic}} style={styles.photo} />)
+            img = (<Image source={{uri: profilepic, cache:'reload'}} style={styles.photo} />)
         }
 
         return(<View style={styles.main}>
