@@ -24,7 +24,11 @@ router.post('/delete', AuthMiddleware, (req, res) => {
 
     let phoneNum = req.phone; 
 
-    
+    User.remove({phone: phoneNum}, function(err) { 
+        if (err) res.send(500, {error: err}); 
+    })
+
+    res.send(200, {response: 'ok'}); 
 })
 
 router.post('/updateprofilepic', AuthMiddleware, (req, res) => { 

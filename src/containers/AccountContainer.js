@@ -5,7 +5,7 @@ import Account from '../components/Account';
 
 import { getPhone, getUser } from '../selectors/CommonSelectors';
 
-import { UpdateUsername, UpdateProfilePicUrl, dispatchLoad } from '../actions/UserActions'; 
+import { UpdateUsername, UpdateProfilePicUrl, dispatchLoad, DeleteAccount } from '../actions/UserActions'; 
 
 const AccountContainer = props => <Account {...props} />
 
@@ -19,5 +19,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, { 
     UpdateUsername, 
     UpdateProfilePicUrl, 
-    dispatchLoad
+    dispatchLoad, 
+    DeleteAccount
 })(AccountContainer)

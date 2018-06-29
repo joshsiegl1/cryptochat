@@ -15,7 +15,8 @@ const propTypes = {
     Phone: PropTypes.string, 
     UpdateUsername: PropTypes.func, 
     UpdateProfilePicUrl: PropTypes.func, 
-    dispatchLoad: PropTypes.func
+    dispatchLoad: PropTypes.func, 
+    DeleteAccount: PropTypes.func
 }
 
 class Account extends Component { 
@@ -30,8 +31,12 @@ class Account extends Component {
     }
 
     onDeleteAccountPressed = async () => { 
-        await SetPhone(""); 
 
+        const { DeleteAccount } = this.props; 
+
+        DeleteAccount(); 
+
+        await SetPhone(""); 
 
         this.props.navigation.navigate("AuthLoading"); 
     }

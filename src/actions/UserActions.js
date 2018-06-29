@@ -1,4 +1,10 @@
-import { GET_USER_URL, VALIDATE_TOKEN, UPDATE_USERNAME, GET_USER, UPDATE_PROFILE_PIC } from '../constants/ApiConstants';
+import { 
+    GET_USER_URL, 
+    VALIDATE_TOKEN, 
+    UPDATE_USERNAME, 
+    GET_USER, 
+    UPDATE_PROFILE_PIC, 
+    DELETE_USER } from '../constants/ApiConstants';
 
 import * as types from '../constants/ActionTypes'; 
 import { callApi } from '../utils/ApiUtils'; 
@@ -100,6 +106,26 @@ export const UpdateProfilePicUrl = (url, user) => async (dispatch) => {
             profilepic: url, 
         })
     }
+}
+
+export const DeleteAccount = () => async (dispatch) => { 
+    let token = await AsyncStorage.getItem('token'); 
+    let phone = await AsyncStorage.getItem('phone'); 
+
+    let reqbody = { 
+        phone
+    }
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x' : token
+        }, 
+        body: JSON.stringify(reqbody)
+    }
+
+    const { json } = await callApi(DELETE_USER, options);
 }
 
 export const UpdateUsername = (username, user) => async (dispatch) => { 
