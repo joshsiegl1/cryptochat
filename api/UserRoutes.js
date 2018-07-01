@@ -16,16 +16,21 @@ var express = require('express'),
     const jwt = require("jsonwebtoken"); 
     const jwtSecret = require("./Config.js").jwtSecret; 
 
-router.post('/delete', AuthMiddleware, (req, res) => { 
+router.delete('/delete', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection; 
 
     const User = mongoose.model('User', userSchema)
 
-    let phoneNum = req.phone; 
-
-    User.remove({phone: phoneNum}, function(err) { 
-        if (err) res.send(500, {error: err}); 
+    const token = req.get('cryptochat-token-x'); 
+    jwt.verify(token, jwtSecret, function (err, decoded) { 
+        if (err) { 
+            res.send(301, {response: "Access Denied"}); 
+        }
+        let phoneNum = decoded.phone; 
+        User.remove({phone: phoneNum}, function(err) { 
+            if (err) res.send(500, {error: err}); 
+        })
     })
 
     res.send(200, {response: 'ok'}); 

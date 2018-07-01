@@ -117,7 +117,7 @@ export const DeleteAccount = () => async (dispatch) => {
     }
 
     let options = { 
-        method: 'post', 
+        method: 'delete', 
         headers: { 
             'Content-Type' : 'application/json', 
             'cryptochat-token-x' : token
@@ -126,6 +126,11 @@ export const DeleteAccount = () => async (dispatch) => {
     }
 
     const { json } = await callApi(DELETE_USER, options);
+
+    dispatch({
+        type: types.DELETE_USER,  
+        user: {}  
+    })
 }
 
 export const UpdateUsername = (username, user) => async (dispatch) => { 

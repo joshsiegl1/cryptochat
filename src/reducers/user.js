@@ -31,6 +31,12 @@ const user = (state = initialState, action) => {
                 }
             }
 
+        case types.DELETE_USER: 
+        return {
+            ...state, 
+            user: null
+        }
+
         case types.GET_USER: 
             return { 
                 ...state, 
