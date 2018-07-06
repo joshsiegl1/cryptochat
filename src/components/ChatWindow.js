@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import { View, TextInput, Text, TouchableOpacity, Image, Keyboard, ScrollView, Alert } from 'react-native'; 
+import { View, TextInput, Text, TouchableOpacity, Image, Keyboard, ScrollView, Alert, AsyncStorage } from 'react-native'; 
 import Modal from 'react-native-modal'
 
-import { ImagePicker, Permissions } from 'expo'; 
+import { ImagePicker, Permissions, StoreReview } from 'expo'; 
 
 import { RNS3 } from 'react-native-aws3'
 import {accessKey, secretKey } from '../aws_config.js'; 
@@ -46,7 +46,7 @@ class ChatWindow extends Component {
         }
     }
 
-    onPost = () => { 
+    onPost = async () => { 
         const { type, crypto, postID } = this.props.navigation.state.params; 
         const { phone, PostChat, PostReply} = this.props; 
         const { getSignedRequest } = this.props; 
@@ -101,6 +101,19 @@ class ChatWindow extends Component {
 
         if (this.props.navigation.state.params.onNavigateBack !== undefined) { 
             this.props.navigation.state.params.onNavigateBack(); 
+        }
+
+        try { 
+            let count = await AsyncStorage.getItem('postcount');
+            count = JSON.parse(count);  
+            if (count === null || count === undefined || count >= 5) { 
+                StoreReview.requestReview(); 
+                await AsyncStorage.setItem('postcount', JSON.stringify(0)); 
+            }
+            else await AsyncStorage.setItem('postcount', JSON.stringify(++count)); 
+        }
+        catch(e) { 
+            await AsyncStorage.setItem('postcount', JSON.stringify(0)); 
         }
 
         this.props.navigation.goBack();

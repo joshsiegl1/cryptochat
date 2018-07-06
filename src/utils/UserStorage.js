@@ -26,3 +26,12 @@ export const SetToken = async (token) => {
 
     }
 }
+
+export const SetPostCount = async (count) => { 
+    try { 
+        await AsyncStorage.setItem("postcount", count); 
+    }
+    catch (e) { 
+
+    }
+}
