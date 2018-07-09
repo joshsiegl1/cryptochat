@@ -76,7 +76,7 @@ app.post('/chat', AuthMiddleware, (req, res) => {
         postID: uuid(), 
         karma: '0', 
         body: req.body.body, 
-        userID: req.body.userID, 
+        userID: req.body.userID, //This should be the auth number
         inReplyTo: '', 
         id: req.body.id, 
         replies: []
@@ -223,6 +223,7 @@ app.get('/chat/:crypto', (req, res) => {
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection
 
+    var user = mongoose.model('User', userSchema); 
     var chats = mongoose.model('Chat', chatSchema); 
     var tracking = mongoose.model('Tracking', trackingSchema); 
 
@@ -241,6 +242,10 @@ app.get('/chat/:crypto', (req, res) => {
     })
 
     chats.find({id: crypto})
+         .populate({
+             path : "userID", 
+             model: 'User'
+         })
          .sort({date: 'desc'})
          .exec(function(err, chats) { 
 

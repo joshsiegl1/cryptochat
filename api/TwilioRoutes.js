@@ -137,9 +137,11 @@ router.post('/submit', (req, res) => {
                                 if (!err) { 
                                     if (!user) { 
                                         var newUser = new User({
+                                            _id: result.phone, 
                                             email: '', 
                                             karma: 1, 
                                             phone: result.phone, 
+                                            userID: result.phone, 
                                             username: 'anonymous', 
                                             profilepic: ''
                                         })
