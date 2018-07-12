@@ -52,7 +52,7 @@ class Transform extends Component {
             let start_pos = (x === 0) ? 0 : indexes[x - 1];
             let piece = b.slice(start_pos, indexes[x]); 
 
-            objectBody.push(<Text style={{paddingLeft: 21, fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{piece}</Text>)
+            objectBody.push(<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{piece}</Text>)
 
             let component = (<Text></Text>); 
             if (type === "Image") {
@@ -69,11 +69,11 @@ class Transform extends Component {
 
             if (x === indexes.length - 1) { 
                 let lastPiece = b.slice(indexes[x])
-                objectBody.push(<Text style={{paddingLeft: 21, fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{lastPiece}</Text>)
+                objectBody.push(<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{lastPiece}</Text>)
             }
         }
 
-        return (objectBody.length > 0) ? (<View>{objectBody}</View>) : (<Text style={{paddingLeft: 21, fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{b}</Text>)
+        return (objectBody.length > 0) ? (<View style={{minWidth: '100%'}}>{objectBody}</View>) : (<Text style={{fontSize: 18, color: '#373F51', fontFamily: 'arial'}}>{b}</Text>)
     }
 }
 

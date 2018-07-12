@@ -126,17 +126,30 @@ class ChatItem extends PureComponent {
         let date = new Date(this.props.item.date); 
         let currentDate = new Date(this.props.currentTime); 
         let friendlyDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
-        
+
+        let username = "anonymous"
+        let profilepic = ''; 
+        if (item.userID !== null) { 
+            let user = item.userID[0]; 
+            username = user.username
+            profilepic = user.profilepic; 
+        }
+
+        if (profilepic === "") { 
+            profilepic = `http://www.joshsiegl.com/crypto/${this.props.crypto}.png`; 
+        }
+
         let userColor = '#373F51'; 
-        if (item.userID === "anonymous")
+        if (username === "anonymous")
             userColor = 'lightgray'
 
         return (
                 <View style={styles.messageBox}>
                 <View style={styles.titleBox}>
-                    <Image style={{width: 16, height: 16}}
-                    source={{uri: `http://www.joshsiegl.com/crypto/${this.props.crypto}.png`}} />
-                    <Text style={{paddingLeft: 5, width: '90%', color: 'lightgray', fontFamily: 'arial'}}>anonymous</Text>  
+                    <Image style={{width: 50, height: 50, borderRadius: 25}}
+                    source={{uri: profilepic, cache: 'reload'}}
+                    />
+                    <Text style={{paddingLeft: 5, width: '90%', color: 'lightgray', fontFamily: 'arial'}}>{username}</Text>  
                 </View>
                 <View style={styles.bodyBox}>
                     <View style={{fontSize: 18, color: '#373F51'}}><Transform body={item.body} navigate={this.props.navigate} /></View>

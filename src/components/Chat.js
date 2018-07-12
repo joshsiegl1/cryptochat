@@ -7,6 +7,7 @@ import {View, FlatList, TextInput, Button, Text, Image,
 import styles from '../styles/stylesheet'; 
 
 import ChatItem from './ChatItem'; 
+import ChatItemTwo from './ChatItemTwo'; 
 
 import ChatBar from './ChatBar'; 
 
@@ -63,7 +64,7 @@ class Chat extends Component {
     }
 
     _renderItem = ({item}) => (
-        <ChatItem item={item}
+        <ChatItemTwo item={item}
                   crypto={this.props.navigation.state.params.crypto}
                   upvote={this.props.Upvote}
                   downvote={this.props.Downvote}
