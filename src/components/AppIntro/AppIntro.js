@@ -66,7 +66,7 @@ export default class AppIntro extends React.Component {
           ))}
         </View>
         
-        <View style={[styles.chatButtonContainer, {bottom: (this.state.height / 3) - 450}]}>
+        <View style={[styles.chatButtonContainer, {bottom: (this.state.height / 3) - 350}]}>
           <TouchableOpacity style={styles.chatButton} onPress={this._onChatPressed}>
             <Text style={{color: 'white', fontSize: 18}}>Start Chatting</Text>
           </TouchableOpacity>
