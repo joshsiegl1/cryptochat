@@ -5,6 +5,8 @@ import { View, Image, Text, TouchableOpacity, Modal, StyleSheet} from 'react-nat
 
 import { Asset } from 'expo'; 
 
+import moment from 'moment'; 
+
 import Transform from './Transform'; 
 
 const propTypes = { 
@@ -42,6 +44,8 @@ class ChatItemTwo extends PureComponent {
         if (username === "anonymous")
             userColor = 'lightgray'
 
+        let date = moment(item.date).fromNow(); 
+
         return (<View style={styles.mainContent}>
                     <View style={styles.profilePicContent}>
                         <Image style={styles.profilePic} 
@@ -52,6 +56,7 @@ class ChatItemTwo extends PureComponent {
                         <View style={styles.body}>
                             <Transform body={item.body} navigate={this.props.navigate} />
                         </View>
+                        <Text style={styles.date}>{date}</Text>
                     </View>
                 </View>)
     }
@@ -82,9 +87,13 @@ const styles = StyleSheet.create({
     username: { 
         color: 'black'
     }, 
+    date: { 
+        color: 'lightgray'
+    }, 
     body: { 
         maxWidth: '100%', 
-        paddingTop: 10
+        paddingTop: 10, 
+        paddingBottom: 10
     }
 })
 
