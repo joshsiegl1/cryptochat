@@ -23,6 +23,7 @@ import ChatWindowContainer from './src/containers/ChatWindowContainer';
 import WebContainer from './src/containers/WebContainer';
 import IntroContainer from './src/containers/IntroContainer';  
 import AppHeader from './src/components/AppHeader'; 
+import AppHeaderTwo from './src/components/AppHeaderTwo'; 
 
 import AuthLoadingScreen from './src/components/AuthLoadingScreen'; 
 
@@ -58,35 +59,35 @@ const ModalStack = createStackNavigator({
   Home: {
     screen: CoinListContainer, 
     navigationOptions: ({navigation}) => ({
-      header: props => <AppHeader nav={navigation} renderBackButton={false}/>
+      headerTitle: <AppHeaderTwo />
     })
   }, 
   Chat: { 
     path: 'chat/:crypto', 
     screen: ChatContainer, 
     navigationOptions: ({navigation}) => ({
-      header: props => <AppHeader nav={navigation} renderBackButton={true}/>,
+      headerTitle: <AppHeaderTwo />
     })
   }, 
   Comment: { 
     path: 'comment/:postID/:crypto/:karma', 
     screen: CommentContainer, 
     navigationOptions: ({navigation}) => ({
-      header: props => <AppHeader nav={navigation} renderBackButton={true} />, 
+      headerTitle: <AppHeaderTwo />
     })
   }, 
   ChatWindow: { 
     path: 'chatwindow/:postID/:crypto', 
     screen: ChatWindowContainer, 
     navigationOptions: ({navigation}) => ({
-      header: props => <AppHeader nav={navigation} renderBackButton={true} />
+      headerTitle: <AppHeaderTwo />
     })
   }, 
   Web: { 
     path: 'web/:url', 
     screen: WebContainer, 
     navigationOptions: ({navigation}) => ({
-      header: props => <AppHeader nav={navigation} renderBackButton={true} />
+      headerTitle: <AppHeaderTwo />
     })
   }
 })
@@ -95,13 +96,13 @@ const UserStack = createStackNavigator({
   Account: { 
     screen: AccountContainer, 
     navigationOptions: ({navigation}) => ({
-      header: props => <AppHeader nav={navigation} renderBackButton={false}/>,
+      headerTitle: <AppHeaderTwo />,
     })
   }, 
   UpdateForm: { 
     screen: UpdateFormContainer, 
     navigationOptions: ({navigation}) => ({
-      header: props => <AppHeader nav={navigation} renderBackButton={true}/>
+      headerTitle: <AppHeaderTwo />
     })
   }
 }, { 
@@ -117,38 +118,38 @@ const DrawerNav = createDrawerNavigator({
   }
 }); 
 
+const TabNav = createTabNavigator({
+  Home: { 
+    screen: ModalStack, 
+    navigationOptions: { 
+      tabBarLabel: 'Home', 
+      tabBarOptions: {activeTintColor: 'blue'}, 
+      tabBarPosition: 'bottom', 
+      tabBarIcon: ({tintColor}) => <Icon name="home" size={35} color={tintColor} />
+    }
+  }, 
+  User: { 
+    screen: UserStack, 
+    navigationOptions: { 
+      tabBarLabel: 'User', 
+      tabBarOptions: {activeTintColor: 'blue'}, 
+      tabBarPosition: 'bottom', 
+      tabBarIcon: ({tintColor}) => <Icon name="person" size={35} color={tintColor}/>
+    }
+  }
+}, { 
+  tabBarPosition: 'bottom'
+})
+
 const StartStack = createSwitchNavigator({
   AuthLoading: AuthLoadingScreen, 
-  App: DrawerNav, 
+  App: TabNav, 
   Auth: AuthStack
 }, 
 { 
   initialRouteName: 'AuthLoading'
 })
 
-
-// const TabNav = TabNavigator({
-//   Home: { 
-//     screen: ModalStack, 
-//     navigationOptions: { 
-//       tabBarLabel: 'Home', 
-//       tabBarOptions: {activeTintColor: 'blue'}, 
-//       tabBarPosition: 'bottom', 
-//       tabBarIcon: ({tintColor}) => <Icon name="home" size={35} color={tintColor} />
-//     }
-//   }, 
-//   User: { 
-//     screen: UserStack, 
-//     navigationOptions: { 
-//       tabBarLabel: 'User', 
-//       tabBarOptions: {activeTintColor: 'blue'}, 
-//       tabBarPosition: 'bottom', 
-//       tabBarIcon: ({tintColor}) => <Icon name="person" size={35} color={tintColor}/>
-//     }
-//   }
-// }, { 
-//   tabBarPosition: 'bottom'
-// })
 
 
 export default class App extends React.Component {

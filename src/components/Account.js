@@ -102,20 +102,24 @@ class Account extends Component {
 
         const { Phone, user } = this.props; 
 
-        let updated = user.updated; 
-        let profilepic = user.profilepic; 
         let img = (<Image />)
-        if (profilepic === null || profilepic === undefined || profilepic === "") { 
-            img = (<Image source={require("../../assets/crypto-dude.png")}
-            style={styles.photo} />)
-        }
-        else { 
-            img = (<Image source={{uri: profilepic, cache:'reload'}} style={styles.photo} />)
+        let username = ""; 
+        if (user !== null && user !== undefined)
+        { 
+            let profilepic = user.profilepic; 
+            username = user.username; 
+            if (profilepic === null || profilepic === undefined || profilepic === "") { 
+                img = (<Image source={require("../../assets/crypto-dude.png")}
+                style={styles.photo} />)
+            }
+            else { 
+                img = (<Image source={{uri: profilepic, cache:'reload'}} style={styles.photo} />)
+            }
         }
 
         return(<View style={styles.main}>
             {img}
-            <Text style={styles.numberText}>{user.username}</Text>
+            <Text style={styles.numberText}>{username}</Text>
             <Text style={styles.numberText}>{Phone}</Text>
             <TouchableOpacity style={styles.accountButton} onPress={this.onChangeUsername}>
                 <Text style={styles.accountButtonText}>Change Username</Text>
@@ -144,14 +148,6 @@ const styles = StyleSheet.create({
         width: 100, 
         height: 100, 
         borderRadius: 50, 
-        shadowColor: 'black', 
-        shadowOffset: {
-            width: 3,
-            height: 3
-          },
-          shadowRadius: 5,
-          shadowOpacity: 1.0
-        
     }, 
     numberText: { 
         color: 'black',

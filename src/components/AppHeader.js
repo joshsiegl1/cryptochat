@@ -47,7 +47,7 @@ class AppHeader extends Component {
             <Image source={require('../../assets/header_logo.png')} />
             <TouchableOpacity onPress={() => this.onMenuPressed()}> 
                 <Image source={require('../../assets/menu_btn.png')} />
-            </TouchableOpacity>
+            </TouchableOpacity> 
         </View></SafeAreaView>)
     }
 }
