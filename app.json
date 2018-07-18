@@ -9,7 +9,7 @@
       "ios",
       "android"
     ],
-    "version": "1.4.3",
+    "version": "1.4.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -19,7 +19,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.joshsiegl.cryptochat",
-      "buildNumber": "1.4.3",
+      "buildNumber": "1.4.5",
       "supportsTablet": false, 
       "infoPlist": { 
         "NSLocationAlwaysUsageDescription" : "location"
@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.joshsiegl.cryptochat",
-      "versionCode": 10
+      "versionCode": 11
     }
   }
 }
