@@ -25,6 +25,10 @@ class ChatItemTwo extends PureComponent {
         super(props)
     }
 
+    onReplyPressed = () => { 
+
+    }
+
     render() { 
         const { item, likedPosts, dislikedPosts } = this.props; 
 
@@ -56,7 +60,13 @@ class ChatItemTwo extends PureComponent {
                         <View style={styles.body}>
                             <Transform body={item.body} navigate={this.props.navigate} />
                         </View>
-                        <Text style={styles.date}>{date}</Text>
+                        <View style={styles.bottom}>
+                            <TouchableOpacity style={styles.reply} onPress={this.onReplyPressed}>
+                                <Image style={styles.replyImage} source={require('../../assets/reply.png')}/>
+                                <Text style={styles.replyFont}>Reply</Text>
+                            </TouchableOpacity>
+                            <Text style={styles.date}>{date}</Text>
+                        </View>
                     </View>
                 </View>)
     }
@@ -94,6 +104,29 @@ const styles = StyleSheet.create({
         maxWidth: '100%', 
         paddingTop: 10, 
         paddingBottom: 10
+    }, 
+    bottom: { 
+        flex: 1, 
+        flexDirection: 'row', 
+        paddingTop: 10, 
+        paddingBottom: 10
+    }, 
+    reply: { 
+        display: 'flex', 
+        flexDirection: 'row', 
+        alignItems: 'center', 
+    }, 
+    replyImage: { 
+        width: 15, 
+        height: 15, 
+        paddingRight: 5
+    }, 
+    replyFont: { 
+        lineHeight: 12, 
+        fontSize: 12, 
+        color: '#373F51',
+        paddingLeft: 5, 
+        paddingRight: 15
     }
 })
 
