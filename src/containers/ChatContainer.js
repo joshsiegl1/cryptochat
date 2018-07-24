@@ -10,8 +10,9 @@ import { getChats,
     getCurrentTime } from '../selectors/CommonSelectors'; 
 
 import Chat from '../components/Chat'; 
+import ChatTwo from '../components/ChatTwo'; 
 
-const ChatContainer = props => <Chat {...props} />
+const ChatContainer = props => <ChatTwo {...props} />
 
 const mapStateToProps = (state) => { 
     return {
