@@ -18,7 +18,8 @@ class ChatTwo extends Component {
 
         this.state = { 
             message: '', 
-            height: 50
+            height: 50, 
+            hasFocus: false
         }
     }
 
@@ -69,6 +70,16 @@ class ChatTwo extends Component {
         }); 
     }
 
+    onFocus = () => { 
+        this.updateSize(95); 
+        this.setState({hasFocus: true})
+    }
+
+    onBlur = () => { 
+        this.updateSize(35); 
+        this.setState({hasFocus: false})
+    }
+
     render() { 
         const { chat, navigation} = this.props; 
         const { crypto, postID } = navigation.state.params; 
@@ -80,6 +91,29 @@ class ChatTwo extends Component {
         }
 
         let textInputStyle = StyleSheet.flatten([styles.chatBar, {height: height}]); 
+        let chatContainerStyle = styles.chatBarContainer; 
+        let link = <View />
+        let submit = <View />
+
+        if (this.state.hasFocus) { 
+            link = (
+                <TouchableOpacity>
+                    <Image style={styles.linkImage} 
+                    source={require('../../assets/ic_link.png')} />
+                </TouchableOpacity>
+            )
+            submit = (
+                <TouchableOpacity>
+                    <Image style={styles.submitImage}
+                    source={require('../../assets/ic_send.png')} />
+                </TouchableOpacity>
+            )
+            chatContainerStyle = StyleSheet.flatten([styles.chatBarContainer, {
+                display: 'flex', 
+                flexDirection: 'row'
+            }])
+            textInputStyle = StyleSheet.flatten([styles.chatBar, {height: height, flex: 1}])
+        }
         
 
         return (
@@ -99,7 +133,8 @@ class ChatTwo extends Component {
 
             {/* <Ad /> */}
 
-            <View style={styles.chatBarContainer}>
+            <View style={chatContainerStyle}>
+                {link}
                 <TextInput 
                            style={textInputStyle}
                            multiline={true}
@@ -107,11 +142,11 @@ class ChatTwo extends Component {
                            editable={true}
                            value={message}
                            onChangeText={(message) => this.setState({message})}
-                           onBlur={(e) => this.updateSize(35)}
-                           onFocus={(e) => this.updateSize(95)}
-                           //onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)}
+                           onBlur={this.onBlur}
+                           onFocus={this.onFocus}
                            >
                 </TextInput>
+                {submit}
             </View>
 
             </KeyboardAvoidingView>
@@ -139,6 +174,16 @@ const styles = StyleSheet.create({
         borderWidth: 1, 
         borderColor: '#E5E5E5', 
         padding: 5, 
+    }, 
+    linkImage: { 
+        width: 20, 
+        height: 20, 
+        marginRight: 10
+    }, 
+    submitImage: { 
+        width: 20, 
+        height: 20, 
+        marginLeft: 10
     }
 })
 
