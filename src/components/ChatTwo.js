@@ -2,11 +2,18 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react'; 
 
 import { View, FlatList, TextInput, Button, Text, Image, 
-KeyBoardAvoidingView, StyleSheet, TouchableOpacity, Keyboard, KeyboardAvoidingView} from 'react-native'; 
+KeyBoardAvoidingView, StyleSheet, TouchableOpacity, 
+Keyboard, KeyboardAvoidingView, Alert} from 'react-native'; 
+
+import { ImagePicker, Permissions, StoreReview } from 'expo'; 
 
 import ChatItemTwo from './ChatItemTwo'; 
 
+import { RNS3 } from 'react-native-aws3'; 
+import { accessKey, secretKey } from '../aws_config.js'; 
+
 import Ad from './Ad'; 
+import { PostChat } from '../actions/ChatActions';
 
 const propTypes = { 
     id: PropTypes.string
@@ -16,6 +23,7 @@ class ChatTwo extends Component {
     constructor(props) { 
         super(props)
 
+        this.imagePressed = false; 
         this.state = { 
             message: '', 
             height: 50, 
@@ -80,6 +88,78 @@ class ChatTwo extends Component {
         this.setState({hasFocus: false})
     }
 
+    onPost = async () => { 
+
+        const { crypto } = this.props.navigation.state.params; 
+        const { phone, PostChat, GetChat } = this.props; 
+
+        let message = this.state.message; 
+        if (message === '') return; 
+
+        await PostChat(crypto, phone, message); 
+
+        Keyboard.dismiss(); 
+
+        await GetChat(crypto); 
+
+        this.setState({
+            message: ""
+        })
+    }
+
+    onImage = async () => { 
+        if (!this.imagePressed) { 
+            this.imagePressed = true; 
+
+            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL); 
+            const { crypto } = this.props.navigation.state.params; 
+            const { phone, PostChat, GetChat } = this.props; 
+
+            if (status === 'granted') { 
+                let result = await ImagePicker.launchImageLibraryAsync({
+                    allowsEditing: false, 
+                    base64: true
+                })
+
+                if (!result.cancelled) { 
+                    let fileName = result.uri.split('/').pop(); 
+                    let message = "{" + fileName + "}"; 
+                    let match = /\.(\w+)$/.exec(fileName);
+                    let imagetype = match ? `image/${match[1]}` : `image`; 
+
+                    const file = { 
+                        uri: result.uri, 
+                        name: fileName, 
+                        type: imagetype
+                    }
+
+                    const options = { 
+                        bucket: 'cryptochat-app-45', 
+                        region: 'us-east-1', 
+                        accessKey: accessKey, 
+                        secretKey: secretKey, 
+                        successActionStatus: 201
+                    }
+
+                    RNS3.put(file, options).then(response => { 
+                        if (response.status !== 201) { 
+                            Alert.alert('Error uploading file', 'There was an error uploading the image you selected, please try again'); 
+                        }
+                        
+                    })
+
+                    await PostChat(crypto, phone, message); 
+                    
+                    await GetChat(crypto); 
+
+                    this.forceUpdate(); 
+                }
+            }
+            this.imagePressed = false; 
+            Keyboard.dismiss(); 
+        }
+    }
+
     render() { 
         const { chat, navigation} = this.props; 
         const { crypto, postID } = navigation.state.params; 
@@ -97,13 +177,13 @@ class ChatTwo extends Component {
 
         if (this.state.hasFocus) { 
             link = (
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.onImage}>
                     <Image style={styles.linkImage} 
                     source={require('../../assets/ic_link.png')} />
                 </TouchableOpacity>
             )
             submit = (
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.onPost}>
                     <Image style={styles.submitImage}
                     source={require('../../assets/ic_send.png')} />
                 </TouchableOpacity>
