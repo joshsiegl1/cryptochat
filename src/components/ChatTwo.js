@@ -155,6 +155,7 @@ class ChatTwo extends Component {
                     this.forceUpdate(); 
                 }
             }
+            this.messageBox.focus(); 
             this.imagePressed = false; 
             Keyboard.dismiss(); 
         }
@@ -216,6 +217,8 @@ class ChatTwo extends Component {
             <View style={chatContainerStyle}>
                 {link}
                 <TextInput 
+                           ref={(input) => {this.messageBox = input}}
+                           blurOnSubmit={false}
                            style={textInputStyle}
                            multiline={true}
                            placeholder="Message"
