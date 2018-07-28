@@ -36,8 +36,17 @@ class ChatItemTwo extends PureComponent {
         let profilepic = ''; 
         if (item.userID !== null) { 
             let user = item.userID[0]; 
-            username = user.username
-            profilepic = user.profilepic; 
+            if (user !== undefined) { 
+                if (user.username !== null && user.username !== undefined)
+                {
+                    username = user.username
+                }
+
+                if (user.profilepic !== null && user.profilepic !== undefined) 
+                { 
+                    profilepic = user.profilepic; 
+                }
+            }
         }
 
         if (profilepic === "") { 
@@ -56,7 +65,7 @@ class ChatItemTwo extends PureComponent {
                         source={{uri: profilepic, cache: 'reload'}}/>
                     </View>
                     <View style={styles.chatContent}>
-                        <Text style={styles.username}>{username}</Text>  
+                        <Text style={styles.user}>{username}</Text>  
                         <View style={styles.body}>
                             <Transform body={item.body} navigate={this.props.navigate} />
                         </View>
@@ -94,7 +103,7 @@ const styles = StyleSheet.create({
         padding: 20, 
         maxWidth: '85%'
     }, 
-    username: { 
+    user: { 
         color: 'black'
     }, 
     date: { 
