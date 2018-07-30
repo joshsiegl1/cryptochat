@@ -1,4 +1,5 @@
 
+//legacy
 export const parseLinks = (text) => { 
     let linkArray = []; 
 
@@ -20,6 +21,20 @@ export const parseLinks = (text) => {
         }
         if (link.name !== "" && link.url !== "") { 
             linkArray.push(link); 
+        }
+    }
+
+    return linkArray; 
+}
+
+export const parseRealLinks = (text) => { 
+    let linkArray = []; 
+
+    let n = text.split(" "); 
+    for (let i = 0; i < n.length; i++) { 
+        if (n[i].startsWith('www.') || 
+            n[i].startsWith('http')) { 
+            linkArray.push(n[i]); 
         }
     }
 

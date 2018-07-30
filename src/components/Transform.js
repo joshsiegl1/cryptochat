@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import { View, Text} from 'react-native'; 
+import { View, Text, Image} from 'react-native'; 
 
 import Link from './Link'; 
 import SmartImage from './SmartImage'; 
 
-import { parseLinks, parseImage } from '../utils/ChatUtils'; 
+import { parseLinks, parseImage, parseRealLinks } from '../utils/ChatUtils'; 
 
 const propTypes = { 
     body: PropTypes.string.isRequired, 
@@ -21,12 +21,19 @@ class Transform extends Component {
     render() { 
         let { body } = this.props;
 
+        let realLinks = parseRealLinks(body); 
         let image = parseImage(body); 
         let links = parseLinks(body); 
 
         let uri = "https://s3.amazonaws.com/cryptochat-app-45/" + image;
         
         let b = body; 
+
+        let realLinkIndexes = []; 
+        for (let i = 0; i < realLinks.length; i++) { 
+            realLinkIndexes.push(b.search(realLinks[i])); 
+            b = b.replace(realLinks[i], ""); 
+        }
         
         let imageIndex = []; 
         if (image !== "") { 
@@ -41,13 +48,22 @@ class Transform extends Component {
             b = b.replace(p, ""); 
         }
 
-        let indexes = [...imageIndex, ...linkIndexes]; 
+        let indexes = [...realLinkIndexes, ...imageIndex, ...linkIndexes]; 
         indexes = indexes.sort((a, b) => a - b); 
 
         let objectBody = []; 
         for (let x = 0; x < indexes.length; x++) {
 
-            let type = (linkIndexes.indexOf(indexes[x]) !== -1) ? "Link" : "Image"; 
+            let type = ""; 
+            if (realLinkIndexes.indexOf(indexes[x]) !== -1) {
+                type = "RealLink"; 
+            }
+            else if (linkIndexes.indexOf(indexes[x]) !== -1) { 
+                type = "Link"; 
+            }
+            else { 
+                type = "Image"; 
+            }
 
             let start_pos = (x === 0) ? 0 : indexes[x - 1];
             let piece = b.slice(start_pos, indexes[x]); 
@@ -56,13 +72,17 @@ class Transform extends Component {
 
             let component = (<Text></Text>); 
             if (type === "Image") {
-                component = (<SmartImage uri={uri} />)
+                component = (<Image source={{uri: uri, cache: 'force-cache'}} style={{width: '100%', height: 300}} />)
             }
-            else {  
+            else if (type === "Link") {  
                 component = (<Link navigate={this.props.navigate}
                                    name={links[x].name}
-                                   url={links[x].url}
-                                   style={{paddingLeft: 21}} />)
+                                   url={links[x].url} />)
+            }
+            else { 
+                component = (<Link navigate={this.props.navigate}
+                                   name={realLinks[x]}
+                                   url={realLinks[x]} />)
             }
 
             objectBody.push(component); 
