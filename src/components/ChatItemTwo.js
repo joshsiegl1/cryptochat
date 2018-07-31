@@ -17,7 +17,9 @@ const propTypes = {
     navigate: PropTypes.func, 
     likedPosts: PropTypes.arrayOf(PropTypes.string), 
     dislikedPosts: PropTypes.arrayOf(PropTypes.string), 
-    currentTime: PropTypes.date
+    currentTime: PropTypes.date, 
+    onReplyPressed: PropTypes.func, 
+    fullData: PropTypes.shape
 }
 
 class ChatItemTwo extends PureComponent { 
@@ -25,12 +27,16 @@ class ChatItemTwo extends PureComponent {
         super(props)
     }
 
-    onReplyPressed = () => { 
+    _onReplyPressed = () => { 
+        const { onReplyPressed, item } = this.props; 
 
+
+
+        onReplyPressed(item.Id); 
     }
 
     render() { 
-        const { item, likedPosts, dislikedPosts } = this.props; 
+        const { item, likedPosts, dislikedPosts, fullData } = this.props; 
 
         let username = "anonymous"
         let profilepic = ''; 
@@ -59,6 +65,8 @@ class ChatItemTwo extends PureComponent {
 
         let date = moment(item.date).fromNow(); 
 
+        let data = fullData[this.props.crypto]; 
+
         return (<View style={styles.mainContent}>
                     <View style={styles.profilePicContent}>
                         <Image style={styles.profilePic} 
@@ -67,10 +75,12 @@ class ChatItemTwo extends PureComponent {
                     <View style={styles.chatContent}>
                         <Text style={styles.user}>{username}</Text>  
                         <View style={styles.body}>
-                            <Transform body={item.body} navigate={this.props.navigate} />
+                            <Transform body={item.body} 
+                                       navigate={this.props.navigate}
+                                       fullData={data} />
                         </View>
                         <View style={styles.bottom}>
-                            <TouchableOpacity style={styles.reply} onPress={this.onReplyPressed}>
+                            <TouchableOpacity style={styles.reply} onPress={this._onReplyPressed}>
                                 <Image style={styles.replyImage} source={require('../../assets/reply.png')}/>
                                 <Text style={styles.replyFont}>Reply</Text>
                             </TouchableOpacity>

@@ -6,11 +6,12 @@ import { View, Text, Image} from 'react-native';
 import Link from './Link'; 
 import SmartImage from './SmartImage'; 
 
-import { parseLinks, parseImage, parseRealLinks } from '../utils/ChatUtils'; 
+import { parseLinks, parseImage, parseRealLinks, parseReplies } from '../utils/ChatUtils'; 
 
 const propTypes = { 
     body: PropTypes.string.isRequired, 
-    navigate: PropTypes.func
+    navigate: PropTypes.func, 
+    fullData: PropTypes.shape
 }
 
 class Transform extends Component { 
@@ -19,8 +20,11 @@ class Transform extends Component {
     }
 
     render() { 
-        let { body } = this.props;
+        let { body, fullData } = this.props;
 
+        let data = fullData; 
+
+        let replies = parseReplies(body); 
         let realLinks = parseRealLinks(body); 
         let image = parseImage(body); 
         let links = parseLinks(body); 

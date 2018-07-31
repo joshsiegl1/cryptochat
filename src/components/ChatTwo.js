@@ -67,10 +67,20 @@ class ChatTwo extends Component {
                   navigate={this.props.navigation.navigate}
                   likedPosts={this.props.likedPosts}
                   dislikedPosts={this.props.dislikedPosts}
-                  currentTime={this.props.currentTime} />
+                  currentTime={this.props.currentTime} 
+                  onReplyPressed={this.onReplyPressed}
+                  fullData={this.props.chat}/>
     )
 
     _keyExtractor = (item, index) => item.postID
+
+    onReplyPressed = (userID) => {
+        this.setState({
+            message: "@" + userID + "\n"
+        }); 
+
+        this.messageBox.focus(); 
+    }
 
     updateSize = (height) => { 
         this.setState({

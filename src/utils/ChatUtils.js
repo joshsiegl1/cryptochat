@@ -27,13 +27,25 @@ export const parseLinks = (text) => {
     return linkArray; 
 }
 
+export const parseReplies = (text) => { 
+    let replyArray = []; 
+
+    let n = text.split(" "); 
+    for (let i = 0; i < n.length; i++) { 
+        if (n[i].startsWith("@"))  { 
+            replyArray.push(n[i]); 
+        }
+    }
+
+    return replyArray; 
+}
+
 export const parseRealLinks = (text) => { 
     let linkArray = []; 
 
     let n = text.split(" "); 
     for (let i = 0; i < n.length; i++) { 
-        if (n[i].startsWith('www.') || 
-            n[i].startsWith('http')) { 
+        if (n[i].startsWith('http')) { 
             linkArray.push(n[i]); 
         }
     }
