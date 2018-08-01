@@ -31,9 +31,17 @@ export const parseReplies = (text) => {
     let replyArray = []; 
 
     let n = text.split(" "); 
+    let ar = []; 
     for (let i = 0; i < n.length; i++) { 
-        if (n[i].startsWith("@"))  { 
-            replyArray.push(n[i]); 
+        let sub = n[i].split("\n"); 
+        for (let x = 0; x < sub.length; x++) { 
+            ar.push(sub[x]); 
+        }
+    }
+
+    for (let i = 0; i < ar.length; i++) { 
+        if (ar[i].startsWith("@"))  { 
+            replyArray.push(ar[i].trim()); 
         }
     }
 

@@ -5,8 +5,12 @@ import { View, Text, Image} from 'react-native';
 
 import Link from './Link'; 
 import SmartImage from './SmartImage'; 
+import Reply from './Reply'; 
 
-import { parseLinks, parseImage, parseRealLinks, parseReplies } from '../utils/ChatUtils'; 
+import { parseLinks, 
+         parseImage, 
+         parseRealLinks, 
+         parseReplies } from '../utils/ChatUtils'; 
 
 const propTypes = { 
     body: PropTypes.string.isRequired, 
@@ -33,6 +37,19 @@ class Transform extends Component {
         
         let b = body; 
 
+        let replyIndexes = []; 
+        let replyData = ''; 
+        for (let i = 0; i < replies.length; i++) { 
+            let id = replies[i].substr(1, replies[i].length); 
+            for (let x = 0; x < data.length; x++) { 
+                if (data[x].Id === id) { 
+                    replyData = data[x]; 
+                }
+            }
+            replyIndexes.push(b.search(replies[i])); 
+            b = b.replace(replies[i], ""); 
+        }
+
         let realLinkIndexes = []; 
         for (let i = 0; i < realLinks.length; i++) { 
             realLinkIndexes.push(b.search(realLinks[i])); 
@@ -52,7 +69,12 @@ class Transform extends Component {
             b = b.replace(p, ""); 
         }
 
-        let indexes = [...realLinkIndexes, ...imageIndex, ...linkIndexes]; 
+        //these are the locations of the content within the block of text or "message"
+        let indexes = [...replyIndexes, 
+                       ...realLinkIndexes,
+                       ...imageIndex,
+                       ...linkIndexes]; 
+
         indexes = indexes.sort((a, b) => a - b); 
 
         let objectBody = []; 
@@ -64,6 +86,9 @@ class Transform extends Component {
             }
             else if (linkIndexes.indexOf(indexes[x]) !== -1) { 
                 type = "Link"; 
+            }
+            else if (replyIndexes.indexOf(indexes[x]) !== -1) { 
+                type = "Reply"; 
             }
             else { 
                 type = "Image"; 
@@ -82,6 +107,11 @@ class Transform extends Component {
                 component = (<Link navigate={this.props.navigate}
                                    name={links[x].name}
                                    url={links[x].url} />)
+            }
+            else if (type === "Reply") { 
+                component = (<Reply data={replyData}
+                                    navigate={this.props.navigate}
+                                    fullData={this.props.fullData} />); 
             }
             else { 
                 component = (<Link navigate={this.props.navigate}
