@@ -7,8 +7,9 @@ import style from '../styles/stylesheet';
 const propTypes = { 
     navigate: PropTypes.func, 
     id: PropTypes.string, 
-    num: PropTypes.number, 
-    name: PropTypes.string
+    num: PropTypes.string, 
+    name: PropTypes.string, 
+    slug: PropTypes.string
 }
 
 class CoinButton extends Component { 
@@ -18,9 +19,9 @@ class CoinButton extends Component {
 
     onPress = () => { 
 
-        const {id, navigate} = this.props; 
+        const {id, slug, navigate} = this.props; 
 
-        navigate('Chat', {title: id, crypto: id}); 
+        navigate('Chat', {title: slug, crypto: slug}); 
     }
 
     render(){ 
@@ -33,7 +34,8 @@ class CoinButton extends Component {
             <Text style={{paddingRight: 10, color: 'lightgray', fontFamily: 'arial'}}>{num}</Text>
             <Image
                 style={{width: 16, height: 16}}
-                source={{uri: `http://www.joshsiegl.com/crypto/${id}.png`}}
+                //source={{uri: `http://www.joshsiegl.com/crypto/${id}.png`}}
+                source={{uri: `https://s2.coinmarketcap.com/static/img/coins/16x16/${id}.png`}}
                 />
             <Text style={style.cryptoButtonText}>{name}</Text>
         </TouchableOpacity>

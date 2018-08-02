@@ -1,8 +1,11 @@
 const COINMARKETCAP_API_HOSTNAME = 'https://api.coinmarketcap.com/v1'; 
+const PRO_COINMARKETCAP_API_HOSTNAME = 'https://pro-api.coinmarketcap.com/v1'; 
 
 export const GLOBAL_URL = `${COINMARKETCAP_API_HOSTNAME}/global/`; 
 export const TICKER_URL = `${COINMARKETCAP_API_HOSTNAME}/ticker/`; 
 export const TICKER_LIMIT_URL = `${COINMARKETCAP_API_HOSTNAME}/ticker/?limit=:limit`; 
+
+export const GLOBAL_MAP_URL = `${PRO_COINMARKETCAP_API_HOSTNAME}/cryptocurrency/listings/latest`; 
 
 const CRYPTOCHAT_API_HOSTNAME = 'https://obscure-coast-72434.herokuapp.com'; 
 const DEBUG_API_HOSTNAME = 'https://cryptochat-test.herokuapp.com'; 

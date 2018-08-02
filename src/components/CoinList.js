@@ -35,7 +35,7 @@ class CoinList extends Component {
     }
 
     async UNSAFE_componentWillMount() { 
-        const {currencies, fetchTopFiftyCryptoCurrencies, fetchOthers, LikedPosts, DislikedPosts,
+        const {currencies, fetchTopFiftyCryptoCurrencies, fetchOthers, LikedPosts, DislikedPosts, fetchCryptoCurrencies,
                DispatchUserfromStorage, DispatchLikedPostsfromStorage, validated, ValidateToken, user, GetUser} = this.props; 
 
         if (validated === null) { 
@@ -62,7 +62,8 @@ class CoinList extends Component {
         }
 
         if (currencies === null) { 
-            fetchTopFiftyCryptoCurrencies(); 
+            //fetchTopFiftyCryptoCurrencies(); 
+            fetchCryptoCurrencies(); 
             fetchOthers(); 
         }
     }
@@ -71,8 +72,9 @@ class CoinList extends Component {
         <CoinButton 
         id={item.id}
         navigate={this.props.navigation.navigate}
-        num={item.rank}
-        name={item.name} />
+        num={item.cmcRank}
+        name={item.name}
+        slug={item.slug} />
 
     )
 

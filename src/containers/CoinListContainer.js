@@ -7,7 +7,7 @@ import { getCurrencies, getPhone,
          getLikedPosts, getDislikedPosts, getCoinList, getValidated, getUser } from '../selectors/CommonSelectors'; 
 
 import { DispatchUserfromStorage, DispatchLikedPostsfromStorage, ValidateToken, GetUser } from '../actions/UserActions'; 
-import { fetchTopFiftyCryptoCurrencies, fetchOthers } from '../actions/CoinMarketCapActions';
+import { fetchTopFiftyCryptoCurrencies, fetchOthers, fetchCryptoCurrencies } from '../actions/CoinMarketCapActions';
 
 const CoinListContainer = props => <CoinList {...props} />
 
@@ -26,6 +26,7 @@ export default connect(mapStateToProps, {
     ValidateToken, 
     fetchTopFiftyCryptoCurrencies, 
     fetchOthers,
+    fetchCryptoCurrencies, 
     DispatchUserfromStorage, 
     DispatchLikedPostsfromStorage
 })(CoinListContainer)
