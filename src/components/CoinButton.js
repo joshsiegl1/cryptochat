@@ -21,7 +21,7 @@ class CoinButton extends Component {
 
         const {id, slug, navigate} = this.props; 
 
-        navigate('Chat', {title: slug, crypto: slug}); 
+        navigate('Chat', {title: slug, crypto: slug, id: id}); 
     }
 
     render(){ 
@@ -34,8 +34,7 @@ class CoinButton extends Component {
             <Text style={{paddingRight: 10, color: 'lightgray', fontFamily: 'arial'}}>{num}</Text>
             <Image
                 style={{width: 16, height: 16}}
-                //source={{uri: `http://www.joshsiegl.com/crypto/${id}.png`}}
-                source={{uri: `https://s2.coinmarketcap.com/static/img/coins/16x16/${id}.png`}}
+                source={{uri: `https://s2.coinmarketcap.com/static/img/coins/64x64/${id}.png`}}
                 />
             <Text style={style.cryptoButtonText}>{name}</Text>
         </TouchableOpacity>

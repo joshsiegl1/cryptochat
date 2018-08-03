@@ -19,7 +19,8 @@ const propTypes = {
     dislikedPosts: PropTypes.arrayOf(PropTypes.string), 
     currentTime: PropTypes.date, 
     onReplyPressed: PropTypes.func, 
-    fullData: PropTypes.shape
+    fullData: PropTypes.shape, 
+    cryptoID: PropTypes.num
 }
 
 class ChatItemTwo extends PureComponent { 
@@ -36,7 +37,7 @@ class ChatItemTwo extends PureComponent {
     }
 
     render() { 
-        const { item, likedPosts, dislikedPosts, fullData } = this.props; 
+        const { item, likedPosts, dislikedPosts, fullData, cryptoID } = this.props; 
 
         let username = "anonymous"
         let profilepic = ''; 
@@ -56,7 +57,7 @@ class ChatItemTwo extends PureComponent {
         }
 
         if (profilepic === "") { 
-            profilepic = `http://www.joshsiegl.com/crypto/${this.props.crypto}.png`; 
+            profilepic = `https://s2.coinmarketcap.com/static/img/coins/64x64/${cryptoID}.png`; 
         }
 
         let userColor = '#373F51'; 

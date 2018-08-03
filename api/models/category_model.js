@@ -4,5 +4,6 @@ const Schema = mongoose.Schema;
 module.exports = new Schema({
     id: String, 
     name: String, 
-    rank: Number
+    cmc_rank: Number, 
+    slug: String
 }, {collection: 'categories'})

@@ -69,6 +69,7 @@ class ChatTwo extends Component {
                   dislikedPosts={this.props.dislikedPosts}
                   currentTime={this.props.currentTime} 
                   onReplyPressed={this.onReplyPressed}
+                  cryptoID={this.props.navigation.state.params.id}
                   fullData={this.props.chat}/>
     )
 
