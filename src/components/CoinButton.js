@@ -12,6 +12,7 @@ const propTypes = {
     slug: PropTypes.string
 }
 
+//This should be pure
 class CoinButton extends Component { 
     constructor(props) { 
         super(props) 

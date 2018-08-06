@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 module.exports = new Schema({
     id: String, 
-    name: String, 
+    name: String,  
     cmc_rank: Number, 
-    slug: String
+    slug: String, 
+    cmc_id: Number, 
+    source: String
 }, {collection: 'categories'})
