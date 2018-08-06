@@ -7,8 +7,10 @@ export const getCoinList = createSelector(
     getCurrencies, 
     getOthers, 
     (currencies, others) => { 
-        if (currencies && others !== null)
-            return [...others, ...currencies];
+        if (others !== null) { 
+            var sorted = others.sort(function(a, b){ return a.cmcRank - b.cmcRank});
+            return sorted; 
+        }
             
         return null; 
     }

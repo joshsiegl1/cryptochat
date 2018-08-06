@@ -63,7 +63,7 @@ class CoinList extends Component {
 
         if (currencies === null) { 
             //fetchTopFiftyCryptoCurrencies(); 
-            fetchCryptoCurrencies(); 
+            //fetchCryptoCurrencies(); 
             fetchOthers(); 
         }
     }
