@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'; 
-import React, { Component } from 'react'; 
+import React, { Component, PureComponent } from 'react'; 
 import {View, TouchableOpacity, Text, Image} from 'react-native'; 
 
 import style from '../styles/stylesheet'; 
@@ -13,7 +13,7 @@ const propTypes = {
 }
 
 //This should be pure
-class CoinButton extends Component { 
+class CoinButton extends PureComponent { 
     constructor(props) { 
         super(props) 
     }

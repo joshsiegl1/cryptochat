@@ -14,7 +14,7 @@ const cmcendpoint = "/v1/cryptocurrency/listings/latest";
 
 var categorySchema = require('./models/category_model.js'); 
 
-const cmc_url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"; 
+const cmc_url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=1000"; 
 
 router.get('/', async (req, res) => { 
     
