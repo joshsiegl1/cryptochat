@@ -9,9 +9,9 @@ import { getChats,
     getDislikedPosts, 
     getCurrentTime } from '../selectors/CommonSelectors'; 
 
-import ChatTwo from '../components/ChatTwo'; 
+import Chat from '../components/Chat'; 
 
-const ChatContainer = props => <ChatTwo {...props} />
+const ChatContainer = props => <Chat {...props} />
 
 const mapStateToProps = (state) => { 
     return {

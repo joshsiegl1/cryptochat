@@ -23,7 +23,7 @@ const propTypes = {
     cryptoID: PropTypes.num
 }
 
-class ChatItemTwo extends PureComponent { 
+class ChatItem extends PureComponent { 
     constructor(props) { 
         super(props)
     }
@@ -150,6 +150,6 @@ const styles = StyleSheet.create({
     }
 })
 
-ChatItemTwo.propTypes = propTypes; 
+ChatItem.propTypes = propTypes; 
 
-export default ChatItemTwo; 
+export default ChatItem; 

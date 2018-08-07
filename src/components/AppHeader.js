@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 import {Image} from 'react-native'; 
 
-class AppHeaderTwo extends Component { 
+class AppHeader extends Component { 
     constructor(props) { 
         super(props)
     }
@@ -13,4 +13,4 @@ class AppHeaderTwo extends Component {
     }
 }
 
-export default AppHeaderTwo; 
+export default AppHeader; 

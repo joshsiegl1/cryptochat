@@ -7,7 +7,7 @@ Keyboard, KeyboardAvoidingView, Alert} from 'react-native';
 
 import { ImagePicker, Permissions, StoreReview } from 'expo'; 
 
-import ChatItemTwo from './ChatItemTwo'; 
+import ChatItem from './ChatItem'; 
 
 import { RNS3 } from 'react-native-aws3'; 
 import { accessKey, secretKey } from '../aws_config.js'; 
@@ -19,7 +19,7 @@ const propTypes = {
     id: PropTypes.string
 }
 
-class ChatTwo extends Component { 
+class Chat extends Component { 
     constructor(props) { 
         super(props)
 
@@ -60,7 +60,7 @@ class ChatTwo extends Component {
             }
 
     _renderItem = ({item}) => (
-        <ChatItemTwo item={item}
+        <ChatItem item={item}
                   crypto={this.props.navigation.state.params.crypto}
                   upvote={this.props.Upvote}
                   downvote={this.props.Downvote}
@@ -281,6 +281,6 @@ const styles = StyleSheet.create({
     }
 })
 
-ChatTwo.propTypes = propTypes; 
+Chat.propTypes = propTypes; 
 
-export default ChatTwo; 
+export default Chat; 

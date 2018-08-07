@@ -20,7 +20,7 @@ import UpdateFormContainer from './src/containers/UpdateFormContainer';
 import UserContainer from './src/containers/UserContainer'; 
 import WebContainer from './src/containers/WebContainer';
 import IntroContainer from './src/containers/IntroContainer';  
-import AppHeaderTwo from './src/components/AppHeaderTwo'; 
+import AppHeader from './src/components/AppHeader'; 
 
 import AuthLoadingScreen from './src/components/AuthLoadingScreen'; 
 
@@ -56,21 +56,21 @@ const ModalStack = createStackNavigator({
   Home: {
     screen: CoinListContainer, 
     navigationOptions: ({navigation}) => ({
-      headerTitle: <AppHeaderTwo />
+      headerTitle: <AppHeader />
     })
   }, 
   Chat: { 
     path: 'chat/:crypto', 
     screen: ChatContainer, 
     navigationOptions: ({navigation}) => ({
-      headerTitle: <AppHeaderTwo />
+      headerTitle: <AppHeader />
     })
   }, 
   Web: { 
     path: 'web/:url', 
     screen: WebContainer, 
     navigationOptions: ({navigation}) => ({
-      headerTitle: <AppHeaderTwo />
+      headerTitle: <AppHeader />
     })
   }
 })
@@ -79,13 +79,13 @@ const UserStack = createStackNavigator({
   Account: { 
     screen: AccountContainer, 
     navigationOptions: ({navigation}) => ({
-      headerTitle: <AppHeaderTwo />,
+      headerTitle: <AppHeader />,
     })
   }, 
   UpdateForm: { 
     screen: UpdateFormContainer, 
     navigationOptions: ({navigation}) => ({
-      headerTitle: <AppHeaderTwo />
+      headerTitle: <AppHeader />
     })
   }
 }, { 
