@@ -18,11 +18,8 @@ import ChatContainer from './src/containers/ChatContainer';
 import AccountContainer from './src/containers/AccountContainer'; 
 import UpdateFormContainer from './src/containers/UpdateFormContainer'; 
 import UserContainer from './src/containers/UserContainer'; 
-import CommentContainer from './src/containers/CommentContainer'; 
-import ChatWindowContainer from './src/containers/ChatWindowContainer'; 
 import WebContainer from './src/containers/WebContainer';
 import IntroContainer from './src/containers/IntroContainer';  
-import AppHeader from './src/components/AppHeader'; 
 import AppHeaderTwo from './src/components/AppHeaderTwo'; 
 
 import AuthLoadingScreen from './src/components/AuthLoadingScreen'; 
@@ -65,20 +62,6 @@ const ModalStack = createStackNavigator({
   Chat: { 
     path: 'chat/:crypto', 
     screen: ChatContainer, 
-    navigationOptions: ({navigation}) => ({
-      headerTitle: <AppHeaderTwo />
-    })
-  }, 
-  Comment: { 
-    path: 'comment/:postID/:crypto/:karma', 
-    screen: CommentContainer, 
-    navigationOptions: ({navigation}) => ({
-      headerTitle: <AppHeaderTwo />
-    })
-  }, 
-  ChatWindow: { 
-    path: 'chatwindow/:postID/:crypto', 
-    screen: ChatWindowContainer, 
     navigationOptions: ({navigation}) => ({
       headerTitle: <AppHeaderTwo />
     })
