@@ -26,7 +26,7 @@ class Chat extends Component {
         this.imagePressed = false; 
         this.state = { 
             message: '', 
-            height: 50, 
+            height: 45, 
             hasFocus: false
         }
     }

@@ -7,9 +7,10 @@ import { callApi } from '../utils/ApiUtils';
 
 import { SetPhone, SetToken } from '../utils/UserStorage'; 
 
-export const SendCode = (phone) => async (dispatch) => { 
+export const SendCode = (phone, help) => async (dispatch) => { 
     let body = { 
-        phone
+        phone, 
+        help
     }
 
     let options = { 

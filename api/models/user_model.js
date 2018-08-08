@@ -5,6 +5,7 @@ module.exports = new Schema({
     _id: { type: String}, 
     id: String, 
     fbid: String, 
+    help: Boolean,
     email: String, 
     userID: String, 
     password: String, 

@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native'; 
 
+import { CheckBox } from 'react-native-elements'; 
+
 import PhoneInput from 'react-native-phone-input'; 
 import CountryPicker from 'react-native-country-picker-modal'; 
 
@@ -15,7 +17,8 @@ class PhoneNumber extends Component {
         super(props)
 
         this.state = { 
-            cca2: 'US'
+            cca2: 'US', 
+            help: false
         }
     }
 
@@ -23,7 +26,7 @@ class PhoneNumber extends Component {
         const { SendCode } = this.props; 
         const { navigate } = this.props.navigation;
         if (this.phone.isValidNumber()) { 
-            SendCode(this.phone.getValue()); 
+            SendCode(this.phone.getValue(), this.state.help); 
             navigate("PhoneCode"); 
         }
         else { 
@@ -76,6 +79,9 @@ class PhoneNumber extends Component {
                 >
                 <View />
                 </CountryPicker>
+                <CheckBox title="Yes, I'd like to help make Cryptochat better. Allow the creator to text me asking for input and feedback."
+                          checked={this.state.help} 
+                          onPress={() => this.setState({help: !this.state.help})}/>
                 </View>
             
             <View style={{paddingTop: 50}}>

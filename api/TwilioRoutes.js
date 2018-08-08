@@ -31,6 +31,7 @@ router.post('/', (req, res) => {
     try { 
 
     let newNumber = req.body.phone; 
+    let help = req.body.help; 
 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection
@@ -46,7 +47,8 @@ router.post('/', (req, res) => {
     let date = new Date();
     date.setHours(date.getHours() + 1);  
     var newPhoneCode = new phoneCode({
-        phone: newNumber, 
+        phone: newNumber,
+        help: help,  
         code: code, 
         expires: date
     })
@@ -137,7 +139,8 @@ router.post('/submit', (req, res) => {
                                 if (!err) { 
                                     if (!user) { 
                                         var newUser = new User({
-                                            _id: result.phone, 
+                                            _id: result.phone,
+                                            help: result.help,  
                                             email: '', 
                                             karma: 1, 
                                             phone: result.phone, 
