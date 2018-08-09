@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 import { View, FlatList, TextInput, Button, Text, Image, 
 KeyBoardAvoidingView, StyleSheet, TouchableOpacity, 
-Keyboard, KeyboardAvoidingView, Alert} from 'react-native'; 
+Keyboard, KeyboardAvoidingView, Alert, Dimensions} from 'react-native'; 
 
 import { ImagePicker, Permissions, StoreReview } from 'expo'; 
 
@@ -26,7 +26,9 @@ class Chat extends Component {
         this.imagePressed = false; 
         this.state = { 
             message: '', 
-            height: 45, 
+            height: '100%',
+            chatHeight: '10%',  
+            flatHeight: '90%', 
             hasFocus: false
         }
     }
@@ -85,17 +87,15 @@ class Chat extends Component {
 
     updateSize = (height) => { 
         this.setState({
-            height: height + 10
+            height: height
         }); 
     }
 
     onFocus = () => { 
-        this.updateSize(95); 
         this.setState({hasFocus: true})
     }
 
     onBlur = () => { 
-        this.updateSize(35); 
         this.setState({hasFocus: false})
     }
 
@@ -175,17 +175,22 @@ class Chat extends Component {
     render() { 
         const { chat, navigation} = this.props; 
         const { crypto, postID } = navigation.state.params; 
-        const { message, height } = this.state; 
+        const { message } = this.state; 
 
         let chats = []; 
         if (Object.keys(chat).length > 0) { 
             chats = chat[crypto]; 
         }
 
-        let textInputStyle = StyleSheet.flatten([styles.chatBar, {height: height}]); 
-        let chatContainerStyle = styles.chatBarContainer; 
+        let textInputStyle = StyleSheet.flatten([styles.chatBar, {height: this.state.height}]); 
+        let chatContainerStyle = StyleSheet.flatten([styles.chatBarContainer, {height: this.state.chatHeight}]); 
+        let flatStyle = StyleSheet.flatten([styles.flatList, {height: this.state.flatHeight}])
         let link = <View />
         let submit = <View />
+
+        let { width, height } = Dimensions.get('window'); 
+        
+        let offset = height * 0.1; 
 
         if (this.state.hasFocus) { 
             link = (
@@ -202,22 +207,23 @@ class Chat extends Component {
             )
             chatContainerStyle = StyleSheet.flatten([styles.chatBarContainer, {
                 display: 'flex', 
-                flexDirection: 'row'
+                flexDirection: 'row', 
+                //height: '30%'
             }])
-            textInputStyle = StyleSheet.flatten([styles.chatBar, {height: height, flex: 1}])
+            textInputStyle = StyleSheet.flatten([styles.chatBar, {height: this.state.height, flex: 1}])
         }
         
 
         return (
             <KeyboardAvoidingView
             behavior="position"
-            keyboardVerticalOffset={150}
+            keyboardVerticalOffset={offset}
             style={styles.KeyboardView}> 
 
             <FlatList 
             removeClippedSubviews
             ref={ref => this.flatList = ref}
-            style={styles.flatList}
+            style={flatStyle}
             data={chats}
             keyExtractor={this._keyExtractor}
             renderItem={this._renderItem}
@@ -250,7 +256,8 @@ class Chat extends Component {
 
 const styles = StyleSheet.create({
     KeyboardView: { 
-        flex: 1
+        flex: 1, 
+        height: '100%'
     }, 
     flatList: { 
         height: '90%'
@@ -260,6 +267,7 @@ const styles = StyleSheet.create({
         borderColor: 'lightgray', 
         borderTopWidth: 1, 
         width: '100%', 
+        height: '10%', 
         padding: 10, 
     }, 
     chatBar: { 
@@ -267,7 +275,7 @@ const styles = StyleSheet.create({
         borderRadius: 5, 
         borderWidth: 1, 
         borderColor: '#E5E5E5', 
-        padding: 5, 
+        padding: 5
     }, 
     linkImage: { 
         width: 20, 
