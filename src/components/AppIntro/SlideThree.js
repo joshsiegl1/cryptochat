@@ -8,7 +8,7 @@ export default class SlideThree extends Component {
         return (<View style={styles.main}>
             <Image style={styles.img} source={require("../../../assets/slide_three_img.png")} /> 
             <Text style={styles.title}>Secure</Text>
-            <Text style={styles.subTitle}>Cryptochat keeps all of your private data encrypted, protecting you from hackers.</Text>
+            <Text style={styles.subTitle}>Cryptochat keeps all of your private data encrypted and your identity secure.</Text>
         </View>)
     }
 }

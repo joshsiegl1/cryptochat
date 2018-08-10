@@ -24,6 +24,7 @@ class Chat extends Component {
         super(props)
 
         this.imagePressed = false; 
+        
         this.state = { 
             message: '', 
             height: '100%',

@@ -9,7 +9,7 @@ export default class SlideOne extends Component {
         return (<View style={styles.main}>
             <Image style={styles.img} source={require("../../../assets/slide_one_img.png")} /> 
             <Text style={styles.title}>Cryptochat</Text>
-            <Text style={styles.subTitle}>Join one of the largest online cryptocurrency communities</Text>
+            <Text style={styles.subTitle}>Join the newest online cryptocurrency community, and take part in the crypto revolution.</Text>
         </View>)
     }
 }
