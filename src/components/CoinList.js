@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component } from 'react'; 
 
-import {View, FlatList, AsyncStorage} from 'react-native'; 
+import {View, FlatList, AsyncStorage, TextInput} from 'react-native'; 
 
 import { GetUser, GetItem, GetLikedPosts } from '../utils/Storage'; 
 
@@ -23,6 +23,10 @@ const propTypes = {
 class CoinList extends Component { 
     constructor(props) { 
         super(props)
+
+        this.state = { 
+            search: ""
+        }; 
     }
 
     componentWillReceiveProps() { 
@@ -84,14 +88,47 @@ class CoinList extends Component {
 
         const { currencies} = this.props; 
 
-        const nav = this.props.navigation.navigate; 
+        const nav = this.props.navigation.navigate;
+        
+        let curratedCurrencies = []; 
+        if (this.state.search !== "") { 
+            for (let i = 0; i < currencies.length; i++) { 
+                if (currencies[i].name.indexOf(this.state.search) !== -1) { 
+                    curratedCurrencies.push(currencies[i]); 
+                }
+            }
+        }
+        else { 
+            curratedCurrencies = currencies; 
+        }
 
-        return (<FlatList
-                 data={currencies} 
+        return (
+            <View>
+                <View style={{
+                    backgroundColor: 'white', 
+                    padding: 10, 
+                    borderBottomColor: 'gray', 
+                    borderBottomWidth: 1
+                }}>
+                    <TextInput placeholder="Search"
+                               style={{
+                                   width: '100%', 
+                                   borderRadius: 5, 
+                                   borderWidth: 1, 
+                                   borderColor: 'lightgray', 
+                                   padding: 5
+                                }}
+                               value={this.state.search}
+                               onChangeText={(search)=>this.setState({search})}>
+                    </TextInput>
+                </View>
+                <FlatList
+                 data={curratedCurrencies} 
                  extraData={nav} 
                  keyExtractor={this._keyExtractor} 
                  renderItem={this._renderItem}
-                 />)
+                 />
+            </View>)
     }
 }
 
