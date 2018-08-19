@@ -18,19 +18,25 @@ class PhoneNumber extends Component {
 
         this.state = { 
             cca2: 'US', 
-            help: false
+            help: false, 
+            eula: false
         }
     }
 
     onDonePressed = () => { 
         const { SendCode } = this.props; 
         const { navigate } = this.props.navigation;
-        if (this.phone.isValidNumber()) { 
-            SendCode(this.phone.getValue(), this.state.help); 
-            navigate("PhoneCode"); 
+        if (this.state.eula) { 
+            if (this.phone.isValidNumber()) { 
+                SendCode(this.phone.getValue(), this.state.help); 
+                navigate("PhoneCode"); 
+            }
+            else { 
+                Alert.alert("Invalid Number", "The Number provided appears to be invalid, please double check it");
+            }
         }
         else { 
-            Alert.alert("Invalid Number", "The Number provided appears to be invalid, please double check it");
+            Alert.alert("Terms of Service", "You must agree to the terms of services as outlined in the EULA"); 
         }
     }
 
@@ -82,6 +88,9 @@ class PhoneNumber extends Component {
                 <CheckBox title="Yes, I'd like to help make Cryptochat better. Allow the creator to text me asking for input and feedback."
                           checked={this.state.help} 
                           onPress={() => this.setState({help: !this.state.help})}/>
+                <CheckBox title="I agree to the Terms of Service as outlined in the EULA"
+                          checked={this.state.eula}
+                          onPress={() => this.setState({eula: !this.state.eula})} />
                 </View>
             
             <View style={{paddingTop: 50}}>
