@@ -164,7 +164,8 @@ export default class App extends React.Component {
         require("./assets/slide_one_img.png"), 
         require("./assets/slide_two_img.png"), 
         require("./assets/slide_three_img.png"), 
-        require("./assets/crypto-dude.png")
+        require("./assets/crypto-dude.png"), 
+        require("./assets/flag.png")
       ]), 
       Font.loadAsync({
         'arial' : require('./assets/arial.ttf')

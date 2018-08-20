@@ -128,6 +128,10 @@ class Account extends Component {
                 <Text style={styles.accountButtonText}>Change Profile Picture</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity style={[styles.accountButton, {marginBottom: 20}]} >
+                <Text style={styles.accountButtonText}>Blocked Users</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity style={styles.accountButton} onPress={this.onLogoutPressed}>
                 <Text style={styles.accountButtonText}>Logout</Text>
             </TouchableOpacity>

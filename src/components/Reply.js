@@ -20,8 +20,15 @@ class Reply extends Component {
 
         const { data } = this.props; 
 
+        let username = "anonymous";
+
+        try { 
         let userID = data.userID[0]; 
-        let username = userID.username; 
+        username = userID.username; 
+        }
+        catch (e) { 
+
+        }
 
         return (<View style={styles.main}>
                 <Text>{username}</Text>

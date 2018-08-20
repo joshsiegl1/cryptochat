@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native'; 
+import {View, Text, StyleSheet, TouchableOpacity, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native'; 
 
 import { CheckBox } from 'react-native-elements'; 
 
@@ -36,7 +36,7 @@ class PhoneNumber extends Component {
             }
         }
         else { 
-            Alert.alert("Terms of Service", "You must agree to the terms of services as outlined in the EULA"); 
+            Alert.alert("Terms of Service", "You must agree to the terms of service as outlined in the EULA"); 
         }
     }
 
@@ -51,6 +51,7 @@ class PhoneNumber extends Component {
 
     render() { 
         return (<View style={styles.main}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.textContainer}>
                 <Text style={styles.headerText}>Enter Your Phone Number</Text>
                 <Text style={styles.subText}>Please enter your country code and phone number, we'll send you a text in a moment.</Text>
@@ -99,6 +100,7 @@ class PhoneNumber extends Component {
             </TouchableOpacity>
             </View>
             </View>
+            </TouchableWithoutFeedback>
         </View>); 
     }
 }

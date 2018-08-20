@@ -36,6 +36,10 @@ class ChatItem extends PureComponent {
         onReplyPressed(item.Id); 
     }
 
+    _onFlagPressed = () => { 
+
+    }
+
     render() { 
         const { item, likedPosts, dislikedPosts, fullData, cryptoID } = this.props; 
 
@@ -86,6 +90,10 @@ class ChatItem extends PureComponent {
                                 <Text style={styles.replyFont}>Reply</Text>
                             </TouchableOpacity>
                             <Text style={styles.date}>{date}</Text>
+                            <TouchableOpacity style={styles.flag} onPress={this._onFlagPressed}>
+                                <Image style={styles.flagImage} source={require("../../assets/flag.png")}/>
+                                <Text style={styles.flagFont}>Flag</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>)
@@ -136,12 +144,29 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'center', 
     }, 
+    flag: { 
+        display: 'flex', 
+        flexDirection: 'row', 
+        alignItems: 'center', 
+    }, 
     replyImage: { 
         width: 15, 
         height: 15, 
         paddingRight: 5
     }, 
+    flagImage: { 
+        width: 15, 
+        height: 15, 
+        paddingLeft: 5
+    }, 
     replyFont: { 
+        lineHeight: 12, 
+        fontSize: 12, 
+        color: '#373F51',
+        paddingLeft: 5, 
+        paddingRight: 15
+    }, 
+    flagFont: { 
         lineHeight: 12, 
         fontSize: 12, 
         color: '#373F51',
