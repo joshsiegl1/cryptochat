@@ -91,7 +91,7 @@ class ChatItem extends PureComponent {
                             </TouchableOpacity>
                             <Text style={styles.date}>{date}</Text>
                             <TouchableOpacity style={styles.flag} onPress={this._onFlagPressed}>
-                                <Image style={styles.flagImage} source={require("../../assets/flag.png")}/>
+                                <Image style={styles.flagImage} source={require("../../assets/dots.png")}/>
                                 <Text style={styles.flagFont}>Flag</Text>
                             </TouchableOpacity>
                         </View>

@@ -18,6 +18,7 @@ import ChatContainer from './src/containers/ChatContainer';
 import AccountContainer from './src/containers/AccountContainer'; 
 import UpdateFormContainer from './src/containers/UpdateFormContainer'; 
 import UserContainer from './src/containers/UserContainer'; 
+import BlockedUsersContainer from './src/containers/BlockedUsersContainer'; 
 import WebContainer from './src/containers/WebContainer';
 import IntroContainer from './src/containers/IntroContainer';  
 import AppHeader from './src/components/AppHeader'; 
@@ -84,6 +85,12 @@ const UserStack = createStackNavigator({
   }, 
   UpdateForm: { 
     screen: UpdateFormContainer, 
+    navigationOptions: ({navigation}) => ({
+      headerTitle: <AppHeader />
+    })
+  }, 
+  BlockedUsersForm: { 
+    screen: BlockedUsersContainer, 
     navigationOptions: ({navigation}) => ({
       headerTitle: <AppHeader />
     })
@@ -165,7 +172,8 @@ export default class App extends React.Component {
         require("./assets/slide_two_img.png"), 
         require("./assets/slide_three_img.png"), 
         require("./assets/crypto-dude.png"), 
-        require("./assets/flag.png")
+        require("./assets/flag.png"), 
+        require("./assets/dots.png")
       ]), 
       Font.loadAsync({
         'arial' : require('./assets/arial.ttf')

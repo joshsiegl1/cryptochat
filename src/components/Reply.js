@@ -23,8 +23,8 @@ class Reply extends Component {
         let username = "anonymous";
 
         try { 
-        let userID = data.userID[0]; 
-        username = userID.username; 
+            let userID = data.userID[0]; 
+            username = userID.username; 
         }
         catch (e) { 
 

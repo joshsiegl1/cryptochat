@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'; 
+import { View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native'; 
 
 const propTypes = { 
-    UpdateUsername: PropTypes.func, 
-    user: PropTypes.shape({})
+
 }
 
-class UpdateForm extends Component { 
+class BlockedUsersForm extends Component { 
     constructor(props) { 
         super(props)
 
@@ -17,37 +16,38 @@ class UpdateForm extends Component {
         }
     }
 
-    onDonePressed = () => { 
-        const { UpdateUsername, user } = this.props; 
+    onAddPressed = () => { 
 
         if (this.state.username !== "") { 
-            UpdateUsername(this.state.username, user); 
 
-            this.props.navigation.goBack(); 
         }
+
     }
 
     render() { 
         return (<View style={styles.main}>
-                    <View style={styles.inputView}>
-                        <Text style={styles.usernameText}>Username</Text>
-                        <TextInput style={styles.input} 
-                                   placeholder={"Your Username"}
+                <View style={styles.inputView}>
+                    <Text style={styles.usernameText}>User</Text>
+                    <TextInput style={styles.input} 
+                                   placeholder={"User to block"}
                                    onChangeText={(text) => this.setState({username: text})}/>
-                    </View>
-                    <View style={{
+                </View>
+                <View style={{
                         marginTop: 25, 
                         justifyContent: 'center', 
                         alignItems: 'center'
                     }}>
                         <Text style={styles.instructionText}>
-                            Please choose a new username, this will be used to identify you across the platform.
+                            You can add users to block under this section, blocked users won't be able to interact with you across the platform.
                         </Text>
-                        <TouchableOpacity style={[styles.doneButton, {marginTop: 25}]} onPress={this.onDonePressed}> 
-                            <Text style={{color: 'white'}}>Done</Text>
+                        <Text style={styles.instructionText}>
+                        If a user is anonymous, you can block that user by going to their comments and clicking the three dot link.
+                        </Text>
+                        <TouchableOpacity style={[styles.doneButton, {marginTop: 25}]} onPress={this.onAddPressed}> 
+                            <Text style={{color: 'white'}}>Add User</Text>
                         </TouchableOpacity>
                     </View>
-                </View>)
+               </View>)
     }
 }
 
@@ -96,6 +96,6 @@ const styles = StyleSheet.create({
     }
 })
 
-UpdateForm.propTypes = propTypes; 
+BlockedUsersForm.propTypes = propTypes; 
 
-export default UpdateForm; 
+export default BlockedUsersForm; 

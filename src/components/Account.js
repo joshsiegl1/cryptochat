@@ -94,6 +94,10 @@ class Account extends Component {
 
     }
 
+    onBlockedUsers = async () => { 
+        this.props.navigation.navigate("BlockedUsersForm"); 
+    }
+
     onChangeUsername = async () => { 
         this.props.navigation.navigate("UpdateForm"); 
     }
@@ -128,7 +132,7 @@ class Account extends Component {
                 <Text style={styles.accountButtonText}>Change Profile Picture</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.accountButton, {marginBottom: 20}]} >
+            <TouchableOpacity style={[styles.accountButton, {marginBottom: 20}]} onPress={this.onBlockedUsers}>
                 <Text style={styles.accountButtonText}>Blocked Users</Text>
             </TouchableOpacity>
 
