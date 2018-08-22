@@ -50,6 +50,10 @@ const AuthStack = createStackNavigator({
   PhoneCode: { 
     path: 'phonecode', 
     screen: PhoneCodeContainer
+  }, 
+  Web: { 
+    path: 'web/:url', 
+    screen: WebContainer
   }
 })
 

@@ -49,6 +49,12 @@ class PhoneNumber extends Component {
         this.setState({ cca2: country.cca2 }); 
     }
 
+    onTermsPressed = () => { 
+        const { navigate } = this.props.navigation; 
+
+        navigate("Web", {url: "http://www.cryptochatapp.org/html-eula.html"}); 
+    }
+
     render() { 
         return (<View style={styles.main}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -89,6 +95,7 @@ class PhoneNumber extends Component {
                 <CheckBox title="Yes, I'd like to help make Cryptochat better. Allow the creator to text me asking for input and feedback."
                           checked={this.state.help} 
                           onPress={() => this.setState({help: !this.state.help})}/>
+                <Text style={{padding: 10}}>Please read through the <Text style={{color: 'blue'}} onPress={this.onTermsPressed}>Terms of Service</Text></Text>
                 <CheckBox title="I agree to the Terms of Service as outlined in the EULA"
                           checked={this.state.eula}
                           onPress={() => this.setState({eula: !this.state.eula})} />
