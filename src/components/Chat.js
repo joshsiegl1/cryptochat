@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import { View, FlatList, TextInput, Button, Text, Image, 
-KeyBoardAvoidingView, StyleSheet, TouchableOpacity, 
-Keyboard, KeyboardAvoidingView, Alert, Dimensions} from 'react-native'; 
+import { View, FlatList, TextInput, Button, Text, Image, StyleSheet, TouchableOpacity, 
+Keyboard, KeyboardAvoidingView, Alert, Dimensions, Modal} from 'react-native'; 
 
 import { ImagePicker, Permissions, StoreReview } from 'expo'; 
 
@@ -30,7 +29,11 @@ class Chat extends Component {
             height: '100%',
             chatHeight: '10%',  
             flatHeight: '90%', 
-            hasFocus: false
+            hasFocus: false, 
+            modal: { 
+                visible: false, 
+                item: null
+            }
         }
     }
 
@@ -62,6 +65,18 @@ class Chat extends Component {
                 
             }
 
+    onMoreDotsPressed = (item) => { 
+
+        let modal = { 
+            visible: true, 
+            item: item
+        }
+
+        this.setState({modal: modal})
+    }
+
+    onModalClose = () => this.setState({modal: { visible: false, item: null}})
+
     _renderItem = ({item}) => (
         <ChatItem item={item}
                   crypto={this.props.navigation.state.params.crypto}
@@ -73,7 +88,8 @@ class Chat extends Component {
                   currentTime={this.props.currentTime} 
                   onReplyPressed={this.onReplyPressed}
                   cryptoID={this.props.navigation.state.params.id}
-                  fullData={this.props.chat}/>
+                  fullData={this.props.chat}
+                  onMoreDotsPressed={this.onMoreDotsPressed}/>
     )
 
     _keyExtractor = (item, index) => item.postID
@@ -249,7 +265,18 @@ class Chat extends Component {
                 </TextInput>
                 {submit}
             </View>
-
+            <Modal visible={this.state.modal.visible}
+                   transparent={true}
+                   onRequestClose={this.onModalClose}>
+                <View style={styles.modalOuter}> 
+                    <View style={styles.modalContent}>
+                        <Text>Hello</Text>
+                        <TouchableOpacity onPress={this.onModalClose}>
+                            <Text>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
             </KeyboardAvoidingView>
         )
     }
@@ -258,7 +285,7 @@ class Chat extends Component {
 const styles = StyleSheet.create({
     KeyboardView: { 
         flex: 1, 
-        height: '100%'
+        //height: '100%'
     }, 
     flatList: { 
         height: '90%'
@@ -287,7 +314,25 @@ const styles = StyleSheet.create({
         width: 20, 
         height: 20, 
         marginLeft: 10
-    }
+    }, 
+    modalContent: { 
+        width: '100%', 
+        backgroundColor: 'white',
+        padding: 22,
+        alignItems: 'center',
+        borderRadius: 4,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+    }, 
+    modalOuter: { 
+        flex: 1,
+        justifyContent: 'flex-end', 
+        margin: 0,
+        backgroundColor: '#00000080'
+    }, 
+    bottomModal: {
+        justifyContent: 'flex-end',
+        margin: 0,
+    },
 })
 
 Chat.propTypes = propTypes; 

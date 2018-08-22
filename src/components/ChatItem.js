@@ -20,7 +20,8 @@ const propTypes = {
     currentTime: PropTypes.date, 
     onReplyPressed: PropTypes.func, 
     fullData: PropTypes.shape, 
-    cryptoID: PropTypes.num
+    cryptoID: PropTypes.num, 
+    onMoreDotsPressed: PropTypes.func
 }
 
 class ChatItem extends PureComponent { 
@@ -36,8 +37,10 @@ class ChatItem extends PureComponent {
         onReplyPressed(item.Id); 
     }
 
-    _onFlagPressed = () => { 
+    _onMoreDotsPressed = () => { 
+        const {onMoreDotsPressed, item} = this.props; 
 
+        onMoreDotsPressed(item); 
     }
 
     render() { 
@@ -90,9 +93,8 @@ class ChatItem extends PureComponent {
                                 <Text style={styles.replyFont}>Reply</Text>
                             </TouchableOpacity>
                             <Text style={styles.date}>{date}</Text>
-                            <TouchableOpacity style={styles.flag} onPress={this._onFlagPressed}>
-                                <Image style={styles.flagImage} source={require("../../assets/dots.png")}/>
-                                <Text style={styles.flagFont}>Flag</Text>
+                            <TouchableOpacity style={styles.dots} onPress={this._onMoreDotsPressed}>
+                                <Image style={styles.dotsImage} source={require("../../assets/dots.png")}/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -144,7 +146,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'center', 
     }, 
-    flag: { 
+    dots: { 
+        paddingLeft: 15, 
         display: 'flex', 
         flexDirection: 'row', 
         alignItems: 'center', 
@@ -154,10 +157,9 @@ const styles = StyleSheet.create({
         height: 15, 
         paddingRight: 5
     }, 
-    flagImage: { 
+    dotsImage: { 
         width: 15, 
         height: 15, 
-        paddingLeft: 5
     }, 
     replyFont: { 
         lineHeight: 12, 
