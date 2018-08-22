@@ -270,9 +270,20 @@ class Chat extends Component {
                    onRequestClose={this.onModalClose}>
                 <View style={styles.modalOuter}> 
                     <View style={styles.modalContent}>
-                        <Text>Hello</Text>
-                        <TouchableOpacity onPress={this.onModalClose}>
-                            <Text>Close</Text>
+                        <TouchableOpacity style={styles.modalButton}>
+                            <Image style={styles.modalImage} source={require("../../assets/block.png")} />
+                            <Text style={styles.modalFont}>Block User</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.modalButton}>
+                            <Image style={styles.modalImage} source={require("../../assets/flag.png")} />
+                            <Text style={styles.modalFont}>Report Post</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.modalButton}>
+                            <Image style={styles.modalImage} source={require("../../assets/stop.png")} />
+                            <Text style={styles.modalFont}>Block Post</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.closeModalButton} onPress={this.onModalClose}>
+                            <Text style={{color: 'white'}}>Close</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -319,6 +330,7 @@ const styles = StyleSheet.create({
         width: '100%', 
         backgroundColor: 'white',
         padding: 22,
+        paddingBottom: 44,
         alignItems: 'center',
         borderRadius: 4,
         borderColor: 'rgba(0, 0, 0, 0.1)',
@@ -326,13 +338,47 @@ const styles = StyleSheet.create({
     modalOuter: { 
         flex: 1,
         justifyContent: 'flex-end', 
+        flexDirection: "column",
         margin: 0,
         backgroundColor: '#00000080'
     }, 
-    bottomModal: {
-        justifyContent: 'flex-end',
-        margin: 0,
-    },
+    closeModalButton: { 
+        width: 200, 
+        height: 50, 
+        backgroundColor: '#373F51', 
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center', 
+        borderRadius:10,
+        borderWidth: 1,
+        borderColor: '#373F51', 
+        marginTop: 5, 
+        marginBottom: 5,   
+    }, 
+    modalImage: { 
+        width: 25, 
+        height: 25, 
+        marginRight: 5
+    }, 
+    modalFont: { 
+        fontSize: 18, 
+        color: '#373F51', 
+        lineHeight: 25
+    }, 
+    modalButton: { 
+        width: 200, 
+        height: 50,
+        marginTop: 5, 
+        marginBottom: 5, 
+        flexDirection: 'row', 
+        borderRadius:10,
+        borderWidth: 1,
+        borderColor: 'gray',
+        backgroundColor: 'lightgray', 
+        padding: 10, 
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 })
 
 Chat.propTypes = propTypes; 
