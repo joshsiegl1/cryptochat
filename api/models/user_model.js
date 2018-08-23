@@ -14,6 +14,10 @@ module.exports = new Schema({
     phone: String,
     username: String,  
     profilepic: String, 
+    blockedUsers: [{
+        _id: { type: String}, 
+        id: String
+    }], 
     dateCreated: {type: Date, default: Date.now}, 
 
 }, {collection: 'users'})

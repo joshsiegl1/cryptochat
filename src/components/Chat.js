@@ -267,7 +267,8 @@ class Chat extends Component {
             </View>
             <Modal visible={this.state.modal.visible}
                    transparent={true}
-                   onRequestClose={this.onModalClose}>
+                   onRequestClose={this.onModalClose}
+                   animationType="fade">
                 <View style={styles.modalOuter}> 
                     <View style={styles.modalContent}>
                         <TouchableOpacity style={styles.modalButton}>
@@ -280,7 +281,7 @@ class Chat extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.modalButton}>
                             <Image style={styles.modalImage} source={require("../../assets/stop.png")} />
-                            <Text style={styles.modalFont}>Block Post</Text>
+                            <Text style={styles.modalFont}>Hide Post</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.closeModalButton} onPress={this.onModalClose}>
                             <Text style={{color: 'white'}}>Close</Text>

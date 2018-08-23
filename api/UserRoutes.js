@@ -56,6 +56,67 @@ router.post('/updateprofilepic', AuthMiddleware, (req, res) => {
     res.send(200, {ok: "profile pic updated"})
 })
 
+router.post('/blockuser', AuthMiddleware, (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    const User = mongoose.model('User', userSchema)
+
+    let userBlockId = req.body.id; 
+    let userBlockUsername = req.body.username; 
+
+    let token = req.get('cryptochat-token-x'); 
+    jwt.verify(token, jwtSecret, function (err, decoded) { 
+        let phoneNum = decoded.phone; 
+        User.findOne({phone: phoneNum}, function (err, doc) { 
+            if (!err) { 
+                if (userBlockId !== undefined && userBlockId !== "" && userBlockId !== null) { 
+                    let existingUsers = doc.blockedUsers; 
+                    if (existingUsers !== null && existingUsers !== undefined) { 
+                        existingUsers.push(userBlockId); 
+                        doc.set({blockedUsers: existingUsers}); 
+                    }
+                    else { 
+                        let users = []; 
+                        users.push(userBlockId); 
+                        doc.set({blockedUsers: users}); 
+                    }
+
+                    doc.save((err, saved) => { 
+                        if (err) res.send(500, err.message); 
+                        else res.send(200, saved); 
+                    })
+                }
+
+                if (userBlockUsername !== undefined && userBlockUsername !== "" && userBlockUsername !== null) { 
+                    User.findOne({username: userBlockUsername}, function (err, u) { 
+                        if (!err) { 
+                            if (u) { 
+                                let existingUsers = doc.blockedUsers
+                                if (existingUsers !== null && existingUsers !== undefined) { 
+                                    existingUsers.push(u.phone); 
+                                    doc.set({blockedUsers: existingUsers}); 
+                                }
+                                else { 
+                                    let users = []; 
+                                    users.push(u.phone); 
+                                    doc.set({blockedUsers: users}); 
+                                }
+
+                                doc.save((err, saved) => { 
+                                    if (err) res.send(500, err.message); 
+                                    else res.send(200, saved); 
+                                })
+                            }
+                        }
+                    })
+                }
+            }
+            else if (!doc) return res.send(404, {error: "no user found with phone number " + phoneNum})
+        })
+    })
+})
+
 router.post('/updateusername', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection; 
