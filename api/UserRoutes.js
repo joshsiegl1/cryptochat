@@ -56,6 +56,33 @@ router.post('/updateprofilepic', AuthMiddleware, (req, res) => {
     res.send(200, {ok: "profile pic updated"})
 })
 
+router.post('/flagpost', AuthMiddleware, (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    const Chat = mongoose.model('Chat', chatSchema)
+    
+    let postID = req.body.postID; 
+
+    Chat.findOne({postID: postID}, function (err, doc) { 
+        if (!err) { 
+            if (doc !== null && doc !== undefined) { 
+                let count = doc.flaggedCount; 
+                if (count === null || count === undefined) count = 0; 
+                count++; 
+                doc.set("flaggedCount", count); 
+                doc.save((err, saved) => { 
+                    if (err) res.send(500, err); 
+                    else res.send(200, saved); 
+                })
+                
+            }
+            else res.send(404, "post not found"); 
+        }
+        else res.send(500, err); 
+    })
+})
+
 router.post('/blockuser', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection; 
