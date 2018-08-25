@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native'; 
 
 const propTypes = { 
-
+    BlockUser: PropTypes.func, 
+    user: PropTypes.shape({})
 }
 
 class BlockedUsersForm extends Component { 
@@ -17,9 +18,9 @@ class BlockedUsersForm extends Component {
     }
 
     onAddPressed = () => { 
-
+        const { BlockUser } = this.props; 
         if (this.state.username !== "") { 
-
+            BlockUser(this.state.username, ""); 
         }
 
     }

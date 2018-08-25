@@ -170,6 +170,7 @@ router.post('/blockuser', AuthMiddleware, (req, res) => {
                                     else res.send(200, saved); 
                                 })
                             }
+                            else res.send(200, {error: "user not found"})
                         }
                     })
                 }

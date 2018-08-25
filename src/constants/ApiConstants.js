@@ -43,6 +43,9 @@ export const UPDATE_USERNAME = `${GET_CRYPTO_HOSTNAME()}/user/updateusername`;
 export const UPDATE_PROFILE_PIC = `${GET_CRYPTO_HOSTNAME()}/user/updateprofilepic`; 
 export const GET_USER = `${GET_CRYPTO_HOSTNAME()}/user`; 
 export const DELETE_USER = `${GET_CRYPTO_HOSTNAME()}/user/delete`; 
+export const BLOCK_POST = `${GET_CRYPTO_HOSTNAME()}/user/blockpost`; 
+export const FLAG_POST = `${GET_CRYPTO_HOSTNAME()}/user/flagpost`; 
+export const BLOCK_USER = `${GET_CRYPTO_HOSTNAME()}/user/blockuser`; 
 
 export const POST_LINK_URL = `${GET_CRYPTO_HOSTNAME()}/content/link`; 
 export const SIGN_LINK_URL = `${GET_CRYPTO_HOSTNAME()}/content/sign_s3?file-name=:filename&file-type=:filetype`

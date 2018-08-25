@@ -4,7 +4,10 @@ import {
     UPDATE_USERNAME, 
     GET_USER, 
     UPDATE_PROFILE_PIC, 
-    DELETE_USER } from '../constants/ApiConstants';
+    DELETE_USER, 
+    BLOCK_POST, 
+    BLOCK_USER, 
+    FLAG_POST } from '../constants/ApiConstants';
 
 import * as types from '../constants/ActionTypes'; 
 import { callApi } from '../utils/ApiUtils'; 
@@ -32,6 +35,74 @@ export const DispatchLikedPostsfromStorage = (likedPosts, dislikedPosts) => asyn
         likedPosts: likedPosts.likedPosts, 
         dislikedPosts: likedPosts.dislikedPosts
     })
+}
+
+export const BlockUser = (username, id) => async (dispatch) => { 
+    let reqbody = { 
+        username, 
+        id
+    }
+
+    let token = await AsyncStorage.getItem('token'); 
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x' : token
+        }, 
+        body: JSON.stringify(reqbody)
+    }
+
+    const { json } = await callApi(BLOCK_USER, options);
+    
+    if (json.error) { 
+        Alert.alert("User not found", "The user you are trying to block could not be found"); 
+    }
+    else if (json) { 
+        dispatch({
+            type: types.GET_USER, 
+            user: json
+        })
+    }
+}
+
+export const BlockPost = (postID) => async (dispatch) => { 
+    let reqbody = { 
+        postID
+    }
+
+    let token = await AsyncStorage.getItem('token'); 
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x' : token
+        }, 
+        body: JSON.stringify(reqbody)
+    }
+
+    const { json } = await callApi(BLOCK_POST, options); 
+}
+
+export const FlagPost = (postID) => async (dispatch) => { 
+    let reqbody = { 
+        postID
+    }
+
+    let token = await AsyncStorage.getItem('token'); 
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x' : token
+        }, 
+        body: JSON.stringify(reqbody)
+    }
+
+    const { json } = await callApi(FLAG_POST, options); 
 }
 
 export const GetPhone = (phone) => async (dispatch) => { 
