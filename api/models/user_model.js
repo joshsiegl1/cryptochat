@@ -18,6 +18,10 @@ module.exports = new Schema({
         _id: { type: String}, 
         id: String
     }], 
+    blockedPosts: [{
+        _id: { type: String}, 
+        id: String
+    }], 
     dateCreated: {type: Date, default: Date.now}, 
 
 }, {collection: 'users'})

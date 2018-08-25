@@ -56,6 +56,41 @@ router.post('/updateprofilepic', AuthMiddleware, (req, res) => {
     res.send(200, {ok: "profile pic updated"})
 })
 
+router.post('/blockpost', AuthMiddleware, (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    const User = mongoose.model('User', userSchema); 
+
+    let postID = req.body.postID; 
+
+    let token = req.get('cryptochat-token-x'); 
+    jwt.verify(token, jwtSecret, function (err, decoded) { 
+        let phoneNum = decoded.phone; 
+        User.findOne({phone: phoneNum}, function (err, doc) { 
+            if (!err) { 
+                if (doc !== null && doc !== undefined) { 
+                    let blockedPosts = doc.blockedPosts; 
+                    if (blockedPosts !== null && blockedPosts !== undefined) { 
+                        blockedPosts.push(postID); 
+                    }
+                    else { 
+                        blockedPosts = []; 
+                        blockedPosts.push(postID); 
+                    }
+                    doc.set("blockedPosts", blockedPosts); 
+                    doc.save((err, saved) => { 
+                        if (err) res.send(500, err) 
+                        else res.send(200, saved); 
+                    })
+                }
+                else res.send(404, "user not found"); 
+            }
+            else res.send(500, err); 
+        })
+    })
+})
+
 router.post('/flagpost', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection; 
