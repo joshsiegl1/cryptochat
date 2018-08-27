@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import { View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native'; 
+import { View, Text, StyleSheet, 
+    TextInput, TouchableOpacity, Image, Dimensions} from 'react-native'; 
 
 const propTypes = { 
     BlockUser: PropTypes.func, 
     user: PropTypes.shape({})
 }
+
+const screenWidth = Dimensions.get('window').width; 
 
 class BlockedUsersForm extends Component { 
     constructor(props) { 
@@ -26,7 +29,26 @@ class BlockedUsersForm extends Component {
     }
 
     render() { 
+
+        const { user } = this.props; 
+
+        let blockedUsers = []; 
+        if (user !== null && user !== undefined) { 
+            blockedUsers = user.blockedUsers.map(u => {
+                let num = u.Id.slice(0, -6) + '******'; 
+                return (<View style={styles.numContainer}>
+                    <Text style={styles.number}>{num}</Text>
+                    <TouchableOpacity>
+                    <Image style={styles.remove} source={require("../../assets/remove.png")}/>
+                    </TouchableOpacity>
+                </View>)
+            }); 
+        }
+
         return (<View style={styles.main}>
+                <View>
+                    {blockedUsers}
+                </View>
                 <View style={styles.inputView}>
                     <Text style={styles.usernameText}>User</Text>
                     <TextInput style={styles.input} 
@@ -94,6 +116,26 @@ const styles = StyleSheet.create({
         borderRadius:10,
         borderWidth: 1,
         borderColor: '#373F51'     
+    }, 
+    number: { 
+        fontSize: 16, 
+        padding: 5, 
+        lineHeight: 15
+    }, 
+    remove: { 
+        width: 15, 
+        height: 15
+    }, 
+    numContainer: { 
+        flexDirection: 'row', 
+        padding: 5, 
+        paddingRight: 25, 
+        paddingLeft: 25, 
+        width: screenWidth, 
+        justifyContent: 'space-between', 
+        borderColor: 'lightgray', 
+        borderBottomWidth: 1, 
+        backgroundColor: 'white'
     }
 })
 

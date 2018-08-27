@@ -118,6 +118,41 @@ router.post('/flagpost', AuthMiddleware, (req, res) => {
     })
 })
 
+router.post('/unblockuser', AuthMiddleware, (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection
+
+    const User = mongoose.model('User', userSchema)
+
+    let userUnBlockId = req.body.id; 
+    let userUnBlockUsername = req.body.username; 
+
+    let token = req.get('cryptochat-token-x'); 
+    jwt.verify(token, jwtSecret, function (err, decoded) { 
+        let phoneNum = decoded.phone; 
+        if (!err) { 
+            User.findOne({phone: phoneNum}, function (err, doc) { 
+                if (!err) { 
+                    if (userUnBlockId !== undefined && userUnBlockId !== "" && userUnBlockId !== null) { 
+                        let existingUsers = doc.blockedUsers; 
+                        if (existingUsers !== null && existingUsers !== undefined) { 
+                            let index = existingUsers.indexOf(userUnBlockId); 
+                            if (index > -1) { 
+                                existingUsers.splice(index, 1); 
+                            }
+                            doc.set("blockedUsers", existingUsers); 
+                            doc.save((err, saved) => { 
+                                if (err) res.send(200, {error: err}); 
+                                else res.send(200, saved); 
+                            })
+                        }
+                    }
+                }
+            })
+        }
+    }
+})
+
 router.post('/blockuser', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection; 
