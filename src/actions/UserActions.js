@@ -7,7 +7,8 @@ import {
     DELETE_USER, 
     BLOCK_POST, 
     BLOCK_USER, 
-    FLAG_POST } from '../constants/ApiConstants';
+    FLAG_POST, 
+    UNBLOCK_USER } from '../constants/ApiConstants';
 
 import * as types from '../constants/ActionTypes'; 
 import { callApi } from '../utils/ApiUtils'; 
@@ -35,6 +36,36 @@ export const DispatchLikedPostsfromStorage = (likedPosts, dislikedPosts) => asyn
         likedPosts: likedPosts.likedPosts, 
         dislikedPosts: likedPosts.dislikedPosts
     })
+}
+
+export const UnBlockUser = (username, id) => async (dispatch) => { 
+    let reqbody = { 
+        username, 
+        id
+    }
+
+    let token = await AsyncStorage.getItem('token'); 
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x' : token
+        }, 
+        body: JSON.stringify(reqbody)
+    }
+
+    const { json } = await callApi(UNBLOCK_USER, options); 
+
+    if (json.error) { 
+        Alert.alert("Error" : "There was an error unblocking this user"); 
+    }
+    else if (json) { 
+        dispatch({
+            type: types.GET_USER, 
+            user: json
+        })
+    }
 }
 
 export const BlockUser = (username, id) => async (dispatch) => { 
@@ -84,6 +115,17 @@ export const BlockPost = (postID) => async (dispatch) => {
     }
 
     const { json } = await callApi(BLOCK_POST, options); 
+
+    if (json.error) { 
+        Alert.alert("Error", "There was an error trying to block this post"); 
+    }
+    else if (json) { 
+        dispatch({
+            type: types.GET_USER, 
+            user: json
+        })
+        Alert.alert("Post has been hidden", "You won't see this post again"); 
+    }
 }
 
 export const FlagPost = (postID) => async (dispatch) => { 

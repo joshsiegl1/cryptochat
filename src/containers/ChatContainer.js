@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { GetChat, PostChat, Upvote, Downvote } from '../actions/ChatActions'; 
 
+import { FlagPost, BlockPost, BlockUser } from '../actions/UserActions'; 
+
 import { getChats, 
     getPhone, 
     getLikedPosts, 
@@ -27,5 +29,8 @@ export default connect(mapStateToProps, {
     GetChat, 
     PostChat,
     Upvote, 
-    Downvote
+    Downvote, 
+    FlagPost, 
+    BlockPost, 
+    BlockUser
 })(ChatContainer)

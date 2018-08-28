@@ -1,7 +1,7 @@
 import React from 'react'; 
 import { connect } from 'react-redux'; 
 
-import { BlockUser } from '../actions/UserActions'; 
+import { BlockUser, UnBlockUser } from '../actions/UserActions'; 
 
 import { getUser } from '../selectors/CommonSelectors'; 
 
@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { 
-    BlockUser
+    BlockUser, 
+    UnBlockUser
 })(BlockedUsersContainer)
 

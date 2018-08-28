@@ -75,6 +75,29 @@ class Chat extends Component {
         this.setState({modal: modal})
     }
 
+    onBlockUser = (id) => { 
+        const { BlockUser } = this.props; 
+
+        BlockUser("", id); 
+
+        Alert.alert("User Blocked", "This user has been blocked, you can undo this by visiting the account page and viewing the blocked user list")
+    }
+
+    onBlockPost = (postId) => { 
+        const { BlockPost } = this.props; 
+
+        BlockPost(postId);
+    
+    }
+
+    onFlagPost = (postId) => { 
+        const { FlagPost } = this.props; 
+
+        FlagPost(postId); 
+
+        Alert.alert("Post has been flagged", "This post has successfully been flagged for objectionable content, please allow our team up to three days for review"); 
+    }
+
     onModalClose = () => this.setState({modal: { visible: false, item: null}})
 
     _renderItem = ({item}) => (
@@ -271,15 +294,15 @@ class Chat extends Component {
                    animationType="fade">
                 <View style={styles.modalOuter}> 
                     <View style={styles.modalContent}>
-                        <TouchableOpacity style={styles.modalButton}>
+                        <TouchableOpacity style={styles.modalButton} onPress={() => this.onBlockUser(this.state.modal.item.userID[0].Id)}>
                             <Image style={styles.modalImage} source={require("../../assets/block.png")} />
                             <Text style={styles.modalFont}>Block User</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.modalButton}>
+                        <TouchableOpacity style={styles.modalButton} onPress={() => this.onFlagPost(this.state.modal.item.postID)}>
                             <Image style={styles.modalImage} source={require("../../assets/flag.png")} />
                             <Text style={styles.modalFont}>Report Post</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.modalButton}>
+                        <TouchableOpacity style={styles.modalButton} onPress={() => this.onBlockPost(this.state.modal.item.postID)}>
                             <Image style={styles.modalImage} source={require("../../assets/stop.png")} />
                             <Text style={styles.modalFont}>Hide Post</Text>
                         </TouchableOpacity>

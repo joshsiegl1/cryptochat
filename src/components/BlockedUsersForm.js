@@ -6,6 +6,7 @@ import { View, Text, StyleSheet,
 
 const propTypes = { 
     BlockUser: PropTypes.func, 
+    UnBlockUser: PropTypes.func, 
     user: PropTypes.shape({})
 }
 
@@ -18,6 +19,11 @@ class BlockedUsersForm extends Component {
         this.state = { 
             username: ""
         }
+    }
+
+    onUnblockUser = (id) => { 
+        const { UnBlockUser } = this.props; 
+        UnBlockUser("", id); 
     }
 
     onAddPressed = () => { 
@@ -38,7 +44,7 @@ class BlockedUsersForm extends Component {
                 let num = u.Id.slice(0, -6) + '******'; 
                 return (<View style={styles.numContainer}>
                     <Text style={styles.number}>{num}</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.onUnblockUser(u.Id)}>
                     <Image style={styles.remove} source={require("../../assets/remove.png")}/>
                     </TouchableOpacity>
                 </View>)

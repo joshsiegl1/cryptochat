@@ -136,11 +136,13 @@ router.post('/unblockuser', AuthMiddleware, (req, res) => {
                     if (userUnBlockId !== undefined && userUnBlockId !== "" && userUnBlockId !== null) { 
                         let existingUsers = doc.blockedUsers; 
                         if (existingUsers !== null && existingUsers !== undefined) { 
-                            let index = existingUsers.indexOf(userUnBlockId); 
-                            if (index > -1) { 
-                                existingUsers.splice(index, 1); 
+                            let newArray = []; 
+                            for (let i = 0; i < existingUsers.length; i++) { 
+                                if (existingUsers[i]._id !== userUnBlockId) { 
+                                    newArray.push(existingUsers[i]); 
+                                }
                             }
-                            doc.set("blockedUsers", existingUsers); 
+                            doc.set("blockedUsers", newArray); 
                             doc.save((err, saved) => { 
                                 if (err) res.send(200, {error: err}); 
                                 else res.send(200, saved); 
@@ -150,7 +152,7 @@ router.post('/unblockuser', AuthMiddleware, (req, res) => {
                 }
             })
         }
-    }
+    })
 })
 
 router.post('/blockuser', AuthMiddleware, (req, res) => { 
