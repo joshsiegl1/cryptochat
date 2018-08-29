@@ -18,6 +18,10 @@ module.exports = new Schema({
         _id: { type: String}, 
         id: String
     }], 
+    blockedBy: [{
+        _id: { type: String}, 
+        id: String
+    }], 
     blockedPosts: [{
         _id: { type: String}, 
         id: String

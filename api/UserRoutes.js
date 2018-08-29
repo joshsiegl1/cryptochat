@@ -142,6 +142,25 @@ router.post('/unblockuser', AuthMiddleware, (req, res) => {
                                     newArray.push(existingUsers[i]); 
                                 }
                             }
+
+                            User.findOne({phone: userUnBlockId}, function (err, u) { 
+                                if (u) { 
+                                    let blockedBy = u.blockedBy; 
+                                    if (blockedBy !== null && blockedBy !== undefined) { 
+                                        let newBlockedBy = []; 
+                                        for (let i = 0; i < blockedBy.length; i++) { 
+                                            if (blockedBy[i]._id !== phoneNum) { 
+                                                newBlockedBy.push(blockedBy[i]); 
+                                            }
+                                        }
+                                        u.set("blockedBy", newBlockedBy); 
+                                        u.save((err, saved) => { 
+
+                                        })
+                                    }
+                                }
+                            })
+
                             doc.set("blockedUsers", newArray); 
                             doc.save((err, saved) => { 
                                 if (err) res.send(200, {error: err}); 
@@ -181,6 +200,21 @@ router.post('/blockuser', AuthMiddleware, (req, res) => {
                         doc.set({blockedUsers: users}); 
                     }
 
+                    User.findOne({phone: userBlockId}, function (err, b) { 
+                        if (!err) { 
+                            if (b !== null && b !== undefined) { 
+                                let blockedBy = b.blockedBy; 
+                                if (blockedBy !== null && blockedBy !== undefined) { 
+                                    blockedBy.push(phoneNum); 
+                                    b.set({blockedBy: blockedBy}); 
+                                }
+                                b.save((err, saved) => { 
+                                    
+                                })
+                            }
+                        }
+                    })
+
                     doc.save((err, saved) => { 
                         if (err) res.send(500, err.message); 
                         else res.send(200, saved); 
@@ -201,6 +235,16 @@ router.post('/blockuser', AuthMiddleware, (req, res) => {
                                     users.push(u.phone); 
                                     doc.set({blockedUsers: users}); 
                                 }
+
+                                let blockedBy = u.blockedBy; 
+                                if (blockedBy !== null && blockedBy !== undefined) { 
+                                    blockedBy.push(phoneNum); 
+                                    u.set({blockedBy: blockedBy}); 
+                                }
+
+                                u.save((err, saved) => { 
+
+                                })
 
                                 doc.save((err, saved) => { 
                                     if (err) res.send(500, err.message); 

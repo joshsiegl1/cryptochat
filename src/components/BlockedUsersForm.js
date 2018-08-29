@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react'; 
 
 import { View, Text, StyleSheet, 
-    TextInput, TouchableOpacity, Image, Dimensions} from 'react-native'; 
+    TextInput, TouchableOpacity, Image, Dimensions, Alert} from 'react-native'; 
 
 const propTypes = { 
     BlockUser: PropTypes.func, 
@@ -28,8 +28,12 @@ class BlockedUsersForm extends Component {
 
     onAddPressed = () => { 
         const { BlockUser } = this.props; 
-        if (this.state.username !== "") { 
+        if (this.state.username !== "" && this.state.username !== "anonymous"
+            && this.state.username !== this.props.user.username) { 
             BlockUser(this.state.username, ""); 
+        }
+        else { 
+            Alert.alert("Invalid", "You cannot block this user"); 
         }
 
     }
