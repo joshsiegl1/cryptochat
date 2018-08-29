@@ -58,7 +58,7 @@ export const UnBlockUser = (username, id) => async (dispatch) => {
     const { json } = await callApi(UNBLOCK_USER, options); 
 
     if (json.error) { 
-        Alert.alert("Error" : "There was an error unblocking this user"); 
+        Alert.alert("Error", "There was an error unblocking this user"); 
     }
     else if (json) { 
         dispatch({

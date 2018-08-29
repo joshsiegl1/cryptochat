@@ -11,6 +11,8 @@ import ChatItem from './ChatItem';
 import { RNS3 } from 'react-native-aws3'; 
 import { accessKey, secretKey } from '../aws_config.js'; 
 
+import ChatModal from './ChatModal'; 
+
 import Ad from './Ad'; 
 import { PostChat } from '../actions/ChatActions';
 
@@ -288,30 +290,13 @@ class Chat extends Component {
                 </TextInput>
                 {submit}
             </View>
-            <Modal visible={this.state.modal.visible}
-                   transparent={true}
-                   onRequestClose={this.onModalClose}
-                   animationType="fade">
-                <View style={styles.modalOuter}> 
-                    <View style={styles.modalContent}>
-                        <TouchableOpacity style={styles.modalButton} onPress={() => this.onBlockUser(this.state.modal.item.userID[0].Id)}>
-                            <Image style={styles.modalImage} source={require("../../assets/block.png")} />
-                            <Text style={styles.modalFont}>Block User</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.modalButton} onPress={() => this.onFlagPost(this.state.modal.item.postID)}>
-                            <Image style={styles.modalImage} source={require("../../assets/flag.png")} />
-                            <Text style={styles.modalFont}>Report Post</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.modalButton} onPress={() => this.onBlockPost(this.state.modal.item.postID)}>
-                            <Image style={styles.modalImage} source={require("../../assets/stop.png")} />
-                            <Text style={styles.modalFont}>Hide Post</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.closeModalButton} onPress={this.onModalClose}>
-                            <Text style={{color: 'white'}}>Close</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+
+            <ChatModal visible={this.state.modal.visible} 
+                       item={this.state.modal.item}
+                       onModalClose={this.onModalClose} 
+                       onBlockUser={this.onBlockUser}
+                       onFlagPost={this.onFlagPost}
+                       onBlockPost={this.onBlockPost}/>
             </KeyboardAvoidingView>
         )
     }
@@ -349,59 +334,6 @@ const styles = StyleSheet.create({
         width: 20, 
         height: 20, 
         marginLeft: 10
-    }, 
-    modalContent: { 
-        width: '100%', 
-        backgroundColor: 'white',
-        padding: 22,
-        paddingBottom: 44,
-        alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    }, 
-    modalOuter: { 
-        flex: 1,
-        justifyContent: 'flex-end', 
-        flexDirection: "column",
-        margin: 0,
-        backgroundColor: '#00000080'
-    }, 
-    closeModalButton: { 
-        width: 200, 
-        height: 50, 
-        backgroundColor: '#373F51', 
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center', 
-        borderRadius:10,
-        borderWidth: 1,
-        borderColor: '#373F51', 
-        marginTop: 5, 
-        marginBottom: 5,   
-    }, 
-    modalImage: { 
-        width: 25, 
-        height: 25, 
-        marginRight: 5
-    }, 
-    modalFont: { 
-        fontSize: 18, 
-        color: '#373F51', 
-        lineHeight: 25
-    }, 
-    modalButton: { 
-        width: 200, 
-        height: 50,
-        marginTop: 5, 
-        marginBottom: 5, 
-        flexDirection: 'row', 
-        borderRadius:10,
-        borderWidth: 1,
-        borderColor: 'gray',
-        backgroundColor: 'lightgray', 
-        padding: 10, 
-        justifyContent: 'center',
-        alignItems: 'center'
     }
 })
 
