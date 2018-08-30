@@ -11,6 +11,7 @@ import Transform from './Transform';
 
 const propTypes = { 
     item: PropTypes.shape,
+    user: PropTypes.shape, 
     crypto: PropTypes.string.isRequired, 
     upvote: PropTypes.func, 
     downvote: PropTypes.func, 
@@ -44,7 +45,37 @@ class ChatItem extends PureComponent {
     }
 
     render() { 
-        const { item, likedPosts, dislikedPosts, fullData, cryptoID } = this.props; 
+        const { item, user, likedPosts, dislikedPosts, fullData, cryptoID } = this.props; 
+
+        let blocked = false; 
+        for (let i = 0; i < user.blockedPosts.length; i++) { 
+            if (item.postID === user.blockedPosts[i].Id) { 
+                blocked = true; 
+                break; 
+            }
+        }
+
+        if (!blocked && item.userID !== null) { 
+            for (let i = 0; i < user.blockedBy.length; i++) { 
+                if (item.userID[0].Id === user.blockedBy[i].Id) { 
+                    blocked = true; 
+                    break; 
+                }
+            }
+        }
+
+        if (!blocked && item.userID !== null) { 
+            for (let i = 0; i < user.blockedUsers.length; i++) { 
+                if (item.userID[0].Id === user.blockedUsers[i].Id) { 
+                    blocked = true; 
+                    break; 
+                }
+            }
+        }
+
+        if (blocked) { 
+            return (<View></View>)
+        }
 
         let username = "anonymous"
         let profilepic = ''; 

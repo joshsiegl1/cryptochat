@@ -17,7 +17,8 @@ import Ad from './Ad';
 import { PostChat } from '../actions/ChatActions';
 
 const propTypes = { 
-    id: PropTypes.string
+    id: PropTypes.string, 
+    user: PropTypes.shape({})
 }
 
 class Chat extends Component { 
@@ -104,6 +105,7 @@ class Chat extends Component {
 
     _renderItem = ({item}) => (
         <ChatItem item={item}
+                  user={this.props.user} 
                   crypto={this.props.navigation.state.params.crypto}
                   upvote={this.props.Upvote}
                   downvote={this.props.Downvote}
@@ -215,7 +217,7 @@ class Chat extends Component {
     }
 
     render() { 
-        const { chat, navigation} = this.props; 
+        const { chat, navigation, user} = this.props; 
         const { crypto, postID } = navigation.state.params; 
         const { message } = this.state; 
 

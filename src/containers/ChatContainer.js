@@ -9,7 +9,8 @@ import { getChats,
     getPhone, 
     getLikedPosts, 
     getDislikedPosts, 
-    getCurrentTime } from '../selectors/CommonSelectors'; 
+    getCurrentTime, 
+    getUser } from '../selectors/CommonSelectors'; 
 
 import Chat from '../components/Chat'; 
 
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => {
     return {
         chat: getChats(state), 
         phone: getPhone(state), 
+        user: getUser(state), 
         likedPosts: getLikedPosts(state), 
         dislikedPosts: getDislikedPosts(state), 
         currentTime: getCurrentTime(state)
