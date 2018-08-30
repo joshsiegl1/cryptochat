@@ -41,6 +41,12 @@ class Account extends Component {
         this.props.navigation.navigate("AuthLoading"); 
     }
 
+    formatPhoneNumber = (phoneNumberString) => { 
+        var cleaned = ("" + phoneNumberString).replace(/\D/g, '');
+        var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+        return (!match) ? phoneNumberString : "(" + match[1] + ") " + match[2] + "-" + match[3];
+    }
+
     onProfilePictureChange = async () => { 
         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL); 
         if (status === 'granted') { 
@@ -124,7 +130,7 @@ class Account extends Component {
         return(<View style={styles.main}>
             {img}
             <Text style={styles.numberText}>{username}</Text>
-            <Text style={styles.numberText}>{Phone}</Text>
+            <Text style={styles.numberText}>{this.formatPhoneNumber(Phone)}</Text>
             <TouchableOpacity style={styles.accountButton} onPress={this.onChangeUsername}>
                 <Text style={styles.accountButtonText}>Change Username</Text>
             </TouchableOpacity>

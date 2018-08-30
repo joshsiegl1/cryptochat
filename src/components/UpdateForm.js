@@ -21,7 +21,8 @@ class UpdateForm extends Component {
         const { UpdateUsername, user } = this.props; 
 
         if (this.state.username !== "") { 
-            UpdateUsername(this.state.username, user); 
+            let username = this.state.username.trim(); 
+            UpdateUsername(username, user); 
 
             this.props.navigation.goBack(); 
         }

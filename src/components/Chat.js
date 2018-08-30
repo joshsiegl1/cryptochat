@@ -29,6 +29,7 @@ class Chat extends Component {
         
         this.state = { 
             message: '', 
+            posting: false, 
             height: '100%',
             chatHeight: '10%',  
             flatHeight: '90%', 
@@ -145,21 +146,29 @@ class Chat extends Component {
 
     onPost = async () => { 
 
-        const { crypto } = this.props.navigation.state.params; 
-        const { phone, PostChat, GetChat } = this.props; 
+        if (!this.state.posting) { 
 
-        let message = this.state.message; 
-        if (message === '') return; 
+            this.setState({
+                posting: true
+            })
 
-        await PostChat(crypto, phone, message); 
+            const { crypto } = this.props.navigation.state.params; 
+            const { phone, PostChat, GetChat } = this.props; 
 
-        Keyboard.dismiss(); 
+            let message = this.state.message; 
+            if (message === '') return; 
 
-        await GetChat(crypto); 
+            await PostChat(crypto, phone, message); 
 
-        this.setState({
-            message: ""
-        })
+            Keyboard.dismiss(); 
+
+            await GetChat(crypto); 
+
+            this.setState({
+                message: "", 
+                posting: false
+            })
+        }
     }
 
     onImage = async () => { 
