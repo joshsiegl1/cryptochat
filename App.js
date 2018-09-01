@@ -21,7 +21,10 @@ import UserContainer from './src/containers/UserContainer';
 import BlockedUsersContainer from './src/containers/BlockedUsersContainer'; 
 import WebContainer from './src/containers/WebContainer';
 import IntroContainer from './src/containers/IntroContainer';  
+import MessageContainer from './src/containers/MessageContainer'; 
+import NewTopicContainer from './src/containers/NewTopicContainer'; 
 import AppHeader from './src/components/AppHeader'; 
+import AppHeaderHome from './src/components/AppHeaderHome'; 
 
 import AuthLoadingScreen from './src/components/AuthLoadingScreen'; 
 
@@ -61,12 +64,19 @@ const ModalStack = createStackNavigator({
   Home: {
     screen: CoinListContainer, 
     navigationOptions: ({navigation}) => ({
-      headerTitle: <AppHeader />
+      headerTitle: <AppHeaderHome nav={navigation}/>
     })
   }, 
   Chat: { 
     path: 'chat/:crypto', 
     screen: ChatContainer, 
+    navigationOptions: ({navigation}) => ({
+      headerTitle: <AppHeader />
+    })
+  }, 
+  NewTopic: { 
+    path: 'newtopic', 
+    screen: NewTopicContainer, 
     navigationOptions: ({navigation}) => ({
       headerTitle: <AppHeader />
     })
@@ -78,6 +88,17 @@ const ModalStack = createStackNavigator({
       headerTitle: <AppHeader />
     })
   }
+})
+
+const MessageStack = createStackNavigator({
+  List: { 
+    screen: MessageContainer, 
+    navigationOptions: ({navigation}) => ({
+      headerTitle: <AppHeader />
+    })
+  }
+}, {
+  initialRouteName: 'List'
 })
 
 const UserStack = createStackNavigator({
@@ -119,20 +140,29 @@ const TabNav = createTabNavigator({
       tabBarLabel: 'Home', 
       tabBarOptions: {activeTintColor: 'blue'}, 
       tabBarPosition: 'bottom', 
-      tabBarIcon: ({tintColor}) => <Icon name="home" size={35} color={tintColor} />
+      tabBarIcon: ({tintColor}) => <Icon name="home" size={25} color={tintColor} />
+    }
+  }, 
+  Messages: { 
+    screen: MessageStack, 
+    navigationOptions: { 
+      tabBarLabel: 'Messages', 
+      tabBarOptions: {activeTintColor: 'blue'}, 
+      tabBarPosition: 'bottom', 
+      tabBarIcon: ({tintColor}) => <Icon name="mail" size={25} color={tintColor} />
     }
   }, 
   User: { 
     screen: UserStack, 
     navigationOptions: { 
-      tabBarLabel: 'User', 
+      tabBarLabel: 'Account', 
       tabBarOptions: {activeTintColor: 'blue'}, 
       tabBarPosition: 'bottom', 
-      tabBarIcon: ({tintColor}) => <Icon name="person" size={35} color={tintColor}/>
+      tabBarIcon: ({tintColor}) => <Icon name="person" size={25} color={tintColor}/>
     }
   }
 }, { 
-  tabBarPosition: 'bottom'
+  tabBarPosition: 'bottom', 
 })
 
 const StartStack = createSwitchNavigator({

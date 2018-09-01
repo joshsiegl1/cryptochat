@@ -35,7 +35,7 @@ class CoinButton extends PureComponent {
             <Text style={{paddingRight: 10, color: 'lightgray', fontFamily: 'arial'}}>{num}</Text>
             <Image
                 style={{width: 16, height: 16}}
-                source={{uri: `https://s2.coinmarketcap.com/static/img/coins/64x64/${id}.png`}}
+                source={{uri: `https://s2.coinmarketcap.com/static/img/coins/32x32/${id}.png`}}
                 />
             <Text style={style.cryptoButtonText}>{name}</Text>
         </TouchableOpacity>

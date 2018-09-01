@@ -63,8 +63,6 @@ router.post('/', (req, res) => {
         token: token
     }
 
-    var newAuthToken = new authToken(newauth)
-
     newPhoneCode.save((error) => { 
         if (error) { 
             res.send(error); 

@@ -86,7 +86,7 @@ class CoinList extends Component {
 
     render() { 
 
-        const { currencies} = this.props; 
+        const { currencies, user} = this.props; 
 
         const nav = this.props.navigation.navigate;
         
