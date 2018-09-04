@@ -12,6 +12,10 @@ const aws = require('aws-sdk');
 const S3_BUCKET = 'cryptochat-app-45'; 
 aws.config.loadFromPath('./aws_config.json'); 
 
+router.post('/category', (req, res) => { 
+    
+})
+
 router.get('/sign_s3', (req, res) => { 
     const s3 = new aws.S3({
         apiVersion: '2006-03-01'

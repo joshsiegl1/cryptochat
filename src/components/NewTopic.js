@@ -3,7 +3,11 @@ import React, {Component} from 'react';
 
 import { View, Text, TextInput, KeyboardAvoidingView, 
     StyleSheet, TouchableOpacity, ScrollView, Image, Keyboard, 
-    TouchableWithoutFeedback } from 'react-native';
+    TouchableWithoutFeedback, Alert } from 'react-native';
+
+import { ImagePicker, Permissions } from 'expo'; 
+import { RNS3 } from 'react-native-aws3'
+import {accessKey, secretKey } from '../aws_config.js'; 
 
 import ModalDropdown from 'react-native-modal-dropdown'; 
 
@@ -16,13 +20,69 @@ class NewTopic extends Component {
         this.state = { 
             name: "", 
             description: "", 
-            photo: "", 
+            photo: { 
+                uri: "", 
+                name: "", 
+                imagetype: ""
+            }, 
             category: "", 
             type: "",
         }
     }
 
+    onImage = async () => { 
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status === 'granted') { 
+            let result = await ImagePicker.launchImageLibraryAsync({
+                allowsEditing: true, 
+                base64: false
+            }); 
+
+            if (!result.cancelled) { 
+                let uri = result.uri; 
+                let name = "idk"; //this could be userphone plus some random num
+                
+                let match = /\.(\w+)$/.exec(name); 
+                let imagetype = match ? `image/${match[1]}` : `image`;
+                
+                this.setState({
+                    photo: { 
+                        uri: uri, 
+                        name: name, 
+                        imagetype: imagetype
+                    }
+                })
+            }
+        }
+        else { 
+            Alert.alert("Camera Permissions Denied", "It looks like you denied this application access to the Camera, you'll need to go into your settings and reverse this action if you'd like to upload an image"); 
+        }
+    }
+
+    onLaunch = () => { 
+        const { name, description, photo, category, type} = this.state; 
+        if (name === "") { 
+            Alert.alert("Name Required", "Please enter a name for this channel"); 
+            return; 
+        }
+        else if (photo.uri === "") { 
+            Alert.alert("Photo Required", "You need to select a photo for this channel, tap the photo icon to select one from this phones library"); 
+            return
+        }
+        else if (category === "") { 
+            Alert.alert("Category Required", "You need to select a category for this channel"); 
+            return; 
+        }
+        else if (type === "") { 
+            Alert.alert("Type Required", "You need to select a type for this channel, please choose either Public, Read-Only, or Private"); 
+            return; 
+        }
+    }
+
     render() { 
+
+        let topImage = (this.state.photo.uri !== "") ? (<Image style={styles.image} source={{uri: this.state.photo.uri}} />) : (<Image style={styles.image} source={require("../../assets/camera_icon.png")} />)
+
         return (
         <KeyboardAvoidingView
                     behavior="position"
@@ -30,20 +90,21 @@ class NewTopic extends Component {
         <TouchableWithoutFeedback style={{height: 10000}} onPress={Keyboard.dismiss} accessible={false}>
 
             <ScrollView style={styles.scrollView}>
-            <View style={styles.centered}>
-                <Image style={styles.image} 
-                        source={require("../../assets/camera_icon.png")} />
-            </View>
+            <TouchableOpacity style={styles.centered} onPress={this.onImage}>
+                {topImage}
+            </TouchableOpacity>
             <View style={styles.inputView}>
                 <Text style={styles.text}>Channel Name</Text>
                 <TextInput style={styles.input}
-                           placeholder={"Name"}/>
+                           placeholder={"Name"}
+                           onChangeText={(text) => this.setState({name: text})}/>
             </View>
             <View style={styles.inputView}>
             <Text style={styles.text}>Channel Description</Text>
                 <TextInput style={styles.input}
                            placeholder={"Description"}
-                           multiline={true}/>
+                           multiline={true}
+                           onChangeText={(text) => this.setState({description: text})}/>
             </View>
             <View style={styles.inputView}>
                 <Text style={styles.text}>Channel Category</Text>
@@ -63,9 +124,9 @@ class NewTopic extends Component {
             </View>
 
             <View style={styles.centered}>
-            <TouchableOpacity style={[styles.doneButton, {marginTop: 25}]} onPress={this.onDonePressed}> 
-                            <Text style={{color: 'white'}}>Launch</Text>
-                        </TouchableOpacity>
+            <TouchableOpacity style={[styles.doneButton, {marginTop: 25}]} onPress={this.onLaunch}> 
+                <Text style={{color: 'white'}}>Launch</Text>
+            </TouchableOpacity>
             </View>
             
             </ScrollView>

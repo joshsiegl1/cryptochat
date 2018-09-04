@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'; 
+import { View, Text, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native'; 
 
 import { ImagePicker, Permissions } from 'expo'; 
 
@@ -93,6 +93,9 @@ class Account extends Component {
                     }
                 })
             }
+        }
+        else { 
+            Alert.alert("Camera Permissions Denied", "It looks like you denied this application access to the Camera, you'll need to go into your settings and reverse this action if you'd like to upload an image"); 
         }
     }
 
