@@ -78,7 +78,8 @@ class CoinList extends Component {
         navigate={this.props.navigation.navigate}
         num={item.cmcRank}
         name={item.name}
-        slug={item.slug} />
+        slug={item.slug}
+        source={item.source} />
 
     )
 

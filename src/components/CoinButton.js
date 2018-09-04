@@ -26,7 +26,7 @@ class CoinButton extends PureComponent {
     }
 
     render(){ 
-        let { id, num, name } = this.props; 
+        let { id, num, name, source } = this.props; 
 
         return (
             <TouchableOpacity
@@ -35,7 +35,7 @@ class CoinButton extends PureComponent {
             <Text style={{paddingRight: 10, color: 'lightgray', fontFamily: 'arial'}}>{num}</Text>
             <Image
                 style={{width: 16, height: 16}}
-                source={{uri: `https://s2.coinmarketcap.com/static/img/coins/32x32/${id}.png`}}
+                source={{uri: source}}
                 />
             <Text style={style.cryptoButtonText}>{name}</Text>
         </TouchableOpacity>
