@@ -8,5 +8,7 @@ module.exports = new Schema({
     slug: String, 
     cmc_id: Number, 
     source: String, 
-    description: String
+    description: String, 
+    type: String, 
+    _category: String
 }, {collection: 'categories'})

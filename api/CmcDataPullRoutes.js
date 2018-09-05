@@ -14,7 +14,7 @@ const cmcendpoint = "/v1/cryptocurrency/listings/latest";
 
 var categorySchema = require('./models/category_model.js'); 
 
-const cmc_url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=1200"; 
+const cmc_url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=1500"; 
 
 router.get('/', async (req, res) => { 
     
@@ -47,7 +47,9 @@ router.get('/', async (req, res) => {
                     cmc_rank: element.cmc_rank, 
                     cmc_id: element.id, 
                     id: element.id, 
-                    source: `https://s2.coinmarketcap.com/static/img/coins/64x64/${element.id}.png`
+                    source: `https://s2.coinmarketcap.com/static/img/coins/64x64/${element.id}.png`, 
+                    type: 'public', 
+                    _category: 'cryptocurrency'
                 }
                 query['name'] = reducedElement['name']; 
                 bulk.find(query).upsert().update({
@@ -57,7 +59,9 @@ router.get('/', async (req, res) => {
                         cmc_rank: reducedElement.cmc_rank, 
                         cmc_id: reducedElement.id, 
                         id: reducedElement.id, 
-                        source: reducedElement.source
+                        source: reducedElement.source, 
+                        type: reducedElement.type, 
+                        _category: reducedElement._category
                     }
                 })
             });
