@@ -22,7 +22,7 @@ class AppHeaderHome extends Component {
             <View style={styles.invisible} />
             <Image source={require('../../assets/header_logo.png')} />
             <TouchableOpacity style={styles.icon} onPress={this.onNewTopic}>
-                <Icon name="add-circle-outline" size={25} color='blue'/>
+                <Icon name="add-circle-outline" size={35} color='#373F51'/>
             </TouchableOpacity>
             </View>)
     }
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
         paddingLeft: 15
     }, 
     icon: { 
-        width: 25, 
-        height: 25, 
+        width: 35, 
+        height: 35, 
         padding: 0, 
         margin: 0, 
         lineHeight: 25, 

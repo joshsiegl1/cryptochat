@@ -40,7 +40,7 @@ export const parseReplies = (text) => {
     }
 
     for (let i = 0; i < ar.length; i++) { 
-        if (ar[i].startsWith("@"))  { 
+        if (ar[i].startsWith("@") && ar[i].length > 10)  { 
             replyArray.push(ar[i].trim()); 
         }
     }

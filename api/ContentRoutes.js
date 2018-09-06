@@ -16,26 +16,29 @@ router.post('/category', AuthMiddleware, (req, res) => {
 
     const Category = mongoose.model("Category", categorySchema); 
 
-    let id = req.id; 
-    let type = req.type; 
-    let source = req.source; 
-    let _category = req._category; 
-    let name = req.name; 
-    let description = req.description; 
-    let slug = req.slug; //make this the users phone number + category name + random number
+    let id = req.body.id; 
+    let type = req.body.type; 
+    let source = req.body.source; 
+    let _category = req.body._category; 
+    let name = req.body.name; 
+    let description = req.body.description; 
+    let slug = req.body.slug; 
 
     let newCategory = new Category({ 
-        id, 
-        type, 
-        source, 
-        _category, 
-        name, 
-        description, 
-        slug
+        id: id, 
+        type: type, 
+        source: source, 
+        _category: _category, 
+        name: name, 
+        description: description, 
+        slug: slug, 
+        cmc_rank: 0, 
+        cmc_id: 0
     })
 
     newCategory.save(function(err, results) { 
-
+        if (err) res.send({error: err}); 
+        else res.send(results); 
     }); 
 
 })

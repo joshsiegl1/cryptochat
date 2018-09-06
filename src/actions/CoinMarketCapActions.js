@@ -44,7 +44,6 @@ const fetchOthersSuccess = (result) => {
 }
 
 export const fetchOthers = () => async (dispatch) => { 
-
     const { json } = await callApi(OTHERS_URL); 
     dispatch(fetchOthersSuccess(json.items)); 
 }

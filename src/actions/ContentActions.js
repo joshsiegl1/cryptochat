@@ -1,46 +1,35 @@
-import { SIGN_LINK_URL } from '../constants/ApiConstants'; 
+import { ADD_CATEGORY } from '../constants/ApiConstants'; 
 
 import * as types from '../constants/ActionTypes'; 
 import {callApi} from '../utils/ApiUtils'; 
 
-const uploadFile = ( file, signedRequest, url) => { 
-    // const xhr = new XMLHttpRequest(); 
-    // xhr.open('PUT', signedRequest); 
-    // xhr.onreadystatechange = () => { 
-    //     if (xhr.readyState === 4) { 
-    //         if (xhr.status === 200) { 
-    //             //THis is where we'll point to the files location
-    //         }
-    //     }
-    // }; 
-    // xhr.send(file); 
+import { AsyncStorage, Alert } from 'react-native';
 
-    const options = { 
-        method: 'PUT', 
-        body: file
-    }; 
-
-    fetch(signedRequest, options)
-        .then(response => { 
-            if (!response.ok) { 
-                console.log(response); 
-            }
-        })
-}
-
-export const getSignedRequest = (fileName, type, uri) => async (dispatch) => { 
-    const xhr = new XMLHttpRequest(); 
-    let url = SIGN_LINK_URL.replace(":filename", fileName).replace(":filetype", type); 
-    xhr.open('GET', url); 
-    xhr.onreadystatechange = () => { 
-        if (xhr.readyState === 4) { 
-            if (xhr.status === 200) { 
-                const response = JSON.parse(xhr.responseText); 
-                let file = new FormData(); 
-                file.append(fileName, {uri: uri, name: fileName, type})
-                uploadFile(file, response.signedRequest, response.url); 
-            }
-        }
+export const AddCategory = (category) => async (dispatch) => { 
+    let reqbody = { 
+        id: category.id, 
+        source: category.source, 
+        type: category.type, 
+        _category: category._category, 
+        name: category.name, 
+        description: category.description, 
+        slug: category.slug
     }
-    xhr.send(); 
+
+    let token = await AsyncStorage.getItem('token'); 
+
+    let options = { 
+        method: 'post', 
+        headers: { 
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x' : token
+        }, 
+        body: JSON.stringify(reqbody)
+    }
+
+    const { json } = await callApi(ADD_CATEGORY, options); 
+
+    if (json.error) { 
+        Alert.alert("Error", "There was an error adding this channel"); 
+    }
 }

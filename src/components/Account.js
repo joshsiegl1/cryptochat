@@ -122,7 +122,7 @@ class Account extends Component {
             let profilepic = user.profilepic; 
             username = user.username; 
             if (profilepic === null || profilepic === undefined || profilepic === "") { 
-                img = (<Image source={require("../../assets/crypto-dude.png")}
+                img = (<Image source={require("../../assets/camera_icon.png")}
                 style={styles.photo} />)
             }
             else { 

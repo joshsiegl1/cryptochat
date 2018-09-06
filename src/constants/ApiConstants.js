@@ -48,6 +48,8 @@ export const FLAG_POST = `${GET_CRYPTO_HOSTNAME()}/user/flagpost`;
 export const BLOCK_USER = `${GET_CRYPTO_HOSTNAME()}/user/blockuser`; 
 export const UNBLOCK_USER = `${GET_CRYPTO_HOSTNAME()}/user/unblockuser`; 
 
+export const ADD_CATEGORY = `${GET_CRYPTO_HOSTNAME()}/content/category`; 
+
 export const POST_LINK_URL = `${GET_CRYPTO_HOSTNAME()}/content/link`; 
 export const SIGN_LINK_URL = `${GET_CRYPTO_HOSTNAME()}/content/sign_s3?file-name=:filename&file-type=:filetype`
 

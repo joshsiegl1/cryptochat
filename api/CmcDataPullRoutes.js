@@ -9,9 +9,6 @@ const mongoose = require("mongoose");
 const url = require("./Config.js").MongoDBConnectionString; 
 const cmc_key = require("./Config").CMC_KEY; 
 
-const cmchost = "pro-api.coinmarketcap.com"; 
-const cmcendpoint = "/v1/cryptocurrency/listings/latest"; 
-
 var categorySchema = require('./models/category_model.js'); 
 
 const cmc_url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=1500"; 

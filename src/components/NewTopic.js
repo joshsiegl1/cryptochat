@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 import { View, Text, TextInput, KeyboardAvoidingView, 
     StyleSheet, TouchableOpacity, ScrollView, Image, Keyboard, 
-    TouchableWithoutFeedback, Alert } from 'react-native';
+    TouchableWithoutFeedback, Alert, ActivityIndicator } from 'react-native';
 
 import { ImagePicker, Permissions } from 'expo'; 
 import { RNS3 } from 'react-native-aws3'
@@ -11,7 +11,10 @@ import {accessKey, secretKey } from '../aws_config.js';
 
 import ModalDropdown from 'react-native-modal-dropdown'; 
 
-const propTypes = { }
+const propTypes = {
+    AddCategory: PropTypes.func, 
+    fetchOthers: PropTypes.func
+ }
 
 class NewTopic extends Component { 
     constructor(props) { 
@@ -26,7 +29,8 @@ class NewTopic extends Component {
                 imagetype: ""
             }, 
             category: "", 
-            type: "",
+            type: "", 
+            launching: false
         }
     }
 
@@ -59,7 +63,19 @@ class NewTopic extends Component {
         }
     }
 
+    guid() {
+        function s4() {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+      }
+
     onLaunch = () => { 
+        if (this.state.launching) return; 
+
+        const { AddCategory, fetchOthers} = this.props; 
         const { name, description, photo, category, type} = this.state; 
         if (name === "") { 
             Alert.alert("Name Required", "Please enter a name for this channel"); 
@@ -77,6 +93,42 @@ class NewTopic extends Component {
             Alert.alert("Type Required", "You need to select a type for this channel, please choose either Public, Read-Only, or Private"); 
             return; 
         }
+
+        this.setState({launching: true}); 
+
+        let fileName = this.guid().toString(); 
+
+        const file = { 
+            uri: this.state.photo.uri, 
+            name: fileName, 
+            type: this.state.photo.imagetype
+        }
+
+        let newCategory = { 
+            name: this.state.name, 
+            description: this.state.description, 
+            source: this.state.photo.name, 
+            _category: this.state.category, 
+            type: this.state.type, 
+            slug: this.state.name
+        }
+
+        const options = { 
+            bucket: 'cryptochat-app-45', 
+            region: 'us-east-1', 
+            accessKey: accessKey, 
+            secretKey: secretKey, 
+            successActionStatus: 201
+        }
+
+        RNS3.put(file, options).then(response => { 
+            if (response.status === 201) { 
+                let imageLocation = 'https://s3.amazonaws.com/cryptochat-app-45/' + fileName; 
+                newCategory.source = imageLocation; 
+                AddCategory(newCategory); 
+                fetchOthers().then(() => this.props.navigation.navigate("Home", {refresh: true})); 
+            }
+        })
     }
 
     render() { 
@@ -125,7 +177,8 @@ class NewTopic extends Component {
 
             <View style={styles.centered}>
             <TouchableOpacity style={[styles.doneButton, {marginTop: 25}]} onPress={this.onLaunch}> 
-                <Text style={{color: 'white'}}>Launch</Text>
+                {this.state.launching && (<ActivityIndicator animating={true}/>)}
+                {!this.state.launching && (<Text style={{color: 'white'}}>Launch</Text>)}
             </TouchableOpacity>
             </View>
             

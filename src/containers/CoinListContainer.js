@@ -28,5 +28,5 @@ export default connect(mapStateToProps, {
     fetchOthers,
     fetchCryptoCurrencies, 
     DispatchUserfromStorage, 
-    DispatchLikedPostsfromStorage
+    DispatchLikedPostsfromStorage, 
 })(CoinListContainer)

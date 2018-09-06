@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component } from 'react'; 
 
-import {View, FlatList, AsyncStorage, TextInput} from 'react-native'; 
+import {View, FlatList, AsyncStorage, TextInput, RefreshControl} from 'react-native'; 
 
 import { GetUser, GetItem, GetLikedPosts } from '../utils/Storage'; 
 
@@ -25,17 +25,24 @@ class CoinList extends Component {
         super(props)
 
         this.state = { 
-            search: ""
+            search: "", 
+            refreshing: false
         }; 
     }
 
-    componentWillReceiveProps() { 
-        const {validated} = this.props; 
+    componentWillReceiveProps(nextProps) { 
+        const {validated, fetchOthers} = this.props; 
         if (validated !== null) { 
             if (validated === false) { 
                 this.props.navigation.navigate('Auth'); 
             }
         }
+        if (this.props.navigation.state.params !== undefined && this.props.navigation.state.params !== null) { 
+            if (this.props.navigation.state.params.hasOwnProperty("refresh")) {            
+                 fetchOthers();
+            } 
+        }
+
     }
 
     async UNSAFE_componentWillMount() { 
@@ -56,20 +63,7 @@ class CoinList extends Component {
         //Dispatches the user's phone into the redux store from local storage
         DispatchUserfromStorage(phone); 
 
-        if (Object.keys(LikedPosts).length === 0) { 
-            await GetLikedPosts (function (liked, disliked) { 
-                DispatchLikedPostsfromStorage({
-                    "likedPosts" : liked, 
-                    "dislikedPosts" : disliked
-                })
-            })
-        }
-
-        if (currencies === null) { 
-            //fetchTopFiftyCryptoCurrencies(); 
-            //fetchCryptoCurrencies(); 
-            fetchOthers(); 
-        }
+        fetchOthers();
     }
 
     _renderItem = ({item}) => (
@@ -82,6 +76,15 @@ class CoinList extends Component {
         source={item.source} />
 
     )
+
+    _onRefresh = () => {
+        const { fetchOthers } = this.props; 
+        this.setState({refreshing: true});  
+        fetchOthers().then(() => { 
+            this.setState({refreshing: false})
+        })
+
+    }
 
     _keyExtractor = (item, index) => item.Id; 
 
@@ -124,6 +127,11 @@ class CoinList extends Component {
                     </TextInput>
                 </View>
                 <FlatList
+                 refreshControl={
+                     <RefreshControl 
+                      refreshing={this.state.refreshing}
+                      onRefresh={this._onRefresh}/>
+                 }
                  data={curratedCurrencies} 
                  extraData={nav} 
                  keyExtractor={this._keyExtractor} 
