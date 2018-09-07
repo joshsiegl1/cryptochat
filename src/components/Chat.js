@@ -12,6 +12,7 @@ import { RNS3 } from 'react-native-aws3';
 import { accessKey, secretKey } from '../aws_config.js'; 
 
 import ChatModal from './ChatModal'; 
+import ChatModalUser from './ChatModalUser'; 
 
 import Ad from './Ad'; 
 import { PostChat } from '../actions/ChatActions';
@@ -35,6 +36,10 @@ class Chat extends Component {
             flatHeight: '90%', 
             hasFocus: false, 
             modal: { 
+                visible: false, 
+                item: null
+            }, 
+            userModal: { 
                 visible: false, 
                 item: null
             }
@@ -71,12 +76,28 @@ class Chat extends Component {
 
     onMoreDotsPressed = (item) => { 
 
-        let modal = { 
-            visible: true, 
-            item: item
+        const { user } = this.props; 
+
+        let userModal = { 
+            visible: false, 
+            item: null
         }
 
-        this.setState({modal: modal})
+        let modal = { 
+            visible: false, 
+            item: null
+        }
+
+        if (user.phone === item.userID[0].Id) { 
+            userModal.visible = true; 
+            userModal.item = item; 
+        }
+        else { 
+            modal.visible = true; 
+            modal.item = item; 
+        }
+
+        this.setState({modal: modal, userModal: userModal})
     }
 
     onBlockUser = (id) => { 
@@ -102,7 +123,7 @@ class Chat extends Component {
         Alert.alert("Post has been flagged", "This post has successfully been flagged for objectionable content, please allow our team up to three days for review"); 
     }
 
-    onModalClose = () => this.setState({modal: { visible: false, item: null}})
+    onModalClose = () => this.setState({modal: { visible: false, item: null}, userModal: {visible: false, item: null}})
 
     _renderItem = ({item}) => (
         <ChatItem item={item}
@@ -308,6 +329,9 @@ class Chat extends Component {
                        onBlockUser={this.onBlockUser}
                        onFlagPost={this.onFlagPost}
                        onBlockPost={this.onBlockPost}/>
+            <ChatModalUser visible={this.state.userModal.visible}
+                           item={this.state.userModal.item}
+                           onModalClose={this.onModalClose} />
             </KeyboardAvoidingView>
         )
     }

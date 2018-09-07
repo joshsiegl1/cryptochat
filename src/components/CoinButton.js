@@ -32,9 +32,9 @@ class CoinButton extends PureComponent {
             <TouchableOpacity
                 style={style.container} 
                 onPress={this.onPress}> 
-            <Text style={{paddingRight: 10, color: 'lightgray', fontFamily: 'arial'}}>{num}</Text>
+            <Text style={{paddingRight: 10, color: 'lightgray', lineHeight: 24}}>{num}</Text>
             <Image
-                style={{width: 16, height: 16}}
+                style={{width: 24, height: 24}}
                 source={{uri: source}}
                 />
             <Text style={style.cryptoButtonText}>{name}</Text>

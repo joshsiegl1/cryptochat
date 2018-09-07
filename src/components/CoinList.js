@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; 
 import React, {Component } from 'react'; 
 
-import {View, FlatList, AsyncStorage, TextInput, RefreshControl} from 'react-native'; 
+import {View, FlatList, AsyncStorage, TextInput, RefreshControl, ActivityIndicator, Dimensions} from 'react-native'; 
 
 import { GetUser, GetItem, GetLikedPosts } from '../utils/Storage'; 
 
@@ -106,13 +106,18 @@ class CoinList extends Component {
             curratedCurrencies = currencies; 
         }
 
+        let width = Dimensions.get("screen").width; 
+        let height = Dimensions.get("screen").height; 
+
         return (
             <View>
+                <ActivityIndicator size='large' style={{position: 'absolute', left: (width / 2) - 15, top: (height / 2) - 100, zIndex: 0}} />
                 <View style={{
                     backgroundColor: 'white', 
                     padding: 10, 
                     borderBottomColor: 'gray', 
-                    borderBottomWidth: 1
+                    borderBottomWidth: 1, 
+                    zIndex: 1
                 }}>
                     <TextInput placeholder="Search"
                                style={{
@@ -127,6 +132,7 @@ class CoinList extends Component {
                     </TextInput>
                 </View>
                 <FlatList
+                style={{zIndex: 1}}
                  refreshControl={
                      <RefreshControl 
                       refreshing={this.state.refreshing}
@@ -136,6 +142,7 @@ class CoinList extends Component {
                  extraData={nav} 
                  keyExtractor={this._keyExtractor} 
                  renderItem={this._renderItem}
+                 initialNumToRender={10}
                  />
             </View>)
     }
