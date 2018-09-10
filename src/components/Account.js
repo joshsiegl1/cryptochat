@@ -34,6 +34,17 @@ class Account extends Component {
 
         const { DeleteAccount } = this.props; 
 
+        Alert.alert(
+            "Delete Account", 
+            "Are you sure you want to delete your account?", 
+            [{
+                text: "Yes", onPress: () => DeleteAccount()
+            }, 
+            { 
+                text: "No", onPress: () => onDismiss()
+            }]
+        )
+
         DeleteAccount(); 
 
         await SetPhone(""); 

@@ -56,6 +56,49 @@ router.post('/updateprofilepic', AuthMiddleware, (req, res) => {
     res.send(200, {ok: "profile pic updated"})
 })
 
+router.delete('/deletepost', AuthMiddleware, (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    const User = mongoose.model('User', userSchema); 
+    const Chat = mongoose.model('Chat', chatSchema); 
+
+    let postID = req.body.postID; 
+
+    let token = req.get('cryptochat-token-x'); 
+    jwt.verify(token, jwtSecret, function (err, decoded) { 
+        let phoneNum = decoded.phone; 
+        User.findOne({phone: phoneNum}, function (err, doc) { 
+            if (!err) { 
+                if (doc !== null && doc !== undefined) { 
+                    Chat.findOne({postID: postID}, function (error, chat) { 
+                        if (!error) { 
+                            if (chat !== null && doc !== undefined) { 
+                                if (Array.isArray(chat.userID)) { 
+                                    if (chat.userID.indexOf(phoneNum) !== -1) { 
+                                        Chat.findOneAndRemove({postID: postID}, function (err, c) { 
+                                            if (!err) { 
+                                                res.send(200, {Success: "delete successful"}); 
+                                            }
+                                            else res.send(200, {Erorr: "something went wrong"})
+                                        })
+                                    }
+                                    else res.send(200, {Error: "You can't delete something that's not yours"})
+                                }
+                            }
+                            else res.send(200, {Erorr: "No chat found"})
+                        }
+                        else res.send(200, {Error: "No chat found"})
+                    })
+
+                }
+                else res.send(200, {Error: "User not found"})
+            }
+            else res.send(200, {Error: "User not found"})
+        })
+    })
+})
+
 router.post('/blockpost', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection; 

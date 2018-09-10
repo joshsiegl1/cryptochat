@@ -47,6 +47,7 @@ export const BLOCK_POST = `${GET_CRYPTO_HOSTNAME()}/user/blockpost`;
 export const FLAG_POST = `${GET_CRYPTO_HOSTNAME()}/user/flagpost`; 
 export const BLOCK_USER = `${GET_CRYPTO_HOSTNAME()}/user/blockuser`; 
 export const UNBLOCK_USER = `${GET_CRYPTO_HOSTNAME()}/user/unblockuser`; 
+export const DELETE_POST = `${GET_CRYPTO_HOSTNAME()}/user/deletepost`; 
 
 export const ADD_CATEGORY = `${GET_CRYPTO_HOSTNAME()}/content/category`; 
 

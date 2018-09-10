@@ -123,6 +123,21 @@ class Chat extends Component {
         Alert.alert("Post has been flagged", "This post has successfully been flagged for objectionable content, please allow our team up to three days for review"); 
     }
 
+    onDeletePost = (postID) => { 
+        const { DeletePost } = this.props; 
+
+        Alert.alert(
+            "Delete Post", 
+            "Are you sure you want to delete this post?", 
+            [{
+                text: "Yes", onPress: () => DeletePost(postID) 
+            }, 
+            { 
+                text: "No"
+            }]
+        )
+    }
+
     onModalClose = () => this.setState({modal: { visible: false, item: null}, userModal: {visible: false, item: null}})
 
     _renderItem = ({item}) => (
@@ -331,6 +346,7 @@ class Chat extends Component {
                        onBlockPost={this.onBlockPost}/>
             <ChatModalUser visible={this.state.userModal.visible}
                            item={this.state.userModal.item}
+                           onDeletePost={this.onDeletePost}
                            onModalClose={this.onModalClose} />
             </KeyboardAvoidingView>
         )

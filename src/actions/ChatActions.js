@@ -4,7 +4,8 @@ import {
     GET_CHAT_URL, UPVOTE_URL, 
     DOWNVOTE_URL, GET_POST_URL, 
     POST_REPLY_URL, VOTE_URL, 
-    GET_REPLY_URL } from '../constants/ApiConstants'; 
+    GET_REPLY_URL, 
+    DELETE_POST } from '../constants/ApiConstants'; 
 import * as types from '../constants/ActionTypes'; 
 import {callApi} from '../utils/ApiUtils'; 
 import { SetLikedPosts, GetLikedPosts } from '../utils/Storage'; 
@@ -62,6 +63,24 @@ export const Downvote = (postID, userID, karma) => async (dispatch) => {
         })
 }
 
+export const DeletePost = (postID) => async (dispatch) => { 
+    let body = { 
+        postID: postID
+    }
+
+    let token = await AsyncStorage.getItem('token'); 
+
+    let options = { 
+        method: 'delete', 
+        headers: { 
+            'Content-Type' : 'application/json', 
+            'cryptochat-token-x': token
+        }, 
+        body: JSON.stringify(body)
+    }
+
+    const { json } = await callApi(DELETE_POST, options); 
+}
 
 export const PostChat = (id, userID, message) => async (dispatch) => { 
 
@@ -83,8 +102,6 @@ export const PostChat = (id, userID, message) => async (dispatch) => {
     }
 
     const { json } = await callApi(POST_CHAT_URL, options); 
-
-    console.log(json); 
 }
 
 export const PostReply = (id, userID, message, postID) => async (dispatch) => { 

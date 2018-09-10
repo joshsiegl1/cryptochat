@@ -6,6 +6,7 @@ import { View, Modal, TouchableOpacity, Text, Image, StyleSheet} from 'react-nat
 const propTypes = { 
     visible: PropTypes.boolean, 
     item: PropTypes.shape({}), 
+    onDeletePost: PropTypes.func, 
     onModalClose: PropTypes.func, 
 }
 
@@ -21,7 +22,7 @@ class ChatModalUser extends Component {
                        animationType="fade">
                 <View style={styles.modalOuter}>
                 <View style={styles.modalContent}>
-                <TouchableOpacity style={styles.modalButton} onPress={() => this.props.onBlockUser(this.props.item.userID[0].Id)}>
+                <TouchableOpacity style={styles.modalButton} onPress={() => this.props.onDeletePost(this.props.item.postID)}>
                     <Image style={styles.modalImage} source={require("../../assets/block.png")}/>
                     <Text style={styles.modalFont}>Delete Post</Text>
                 </TouchableOpacity>
