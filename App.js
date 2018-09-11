@@ -21,7 +21,7 @@ import UserContainer from './src/containers/UserContainer';
 import BlockedUsersContainer from './src/containers/BlockedUsersContainer'; 
 import WebContainer from './src/containers/WebContainer';
 import IntroContainer from './src/containers/IntroContainer';  
-import MessageContainer from './src/containers/MessageContainer'; 
+import MessageListContainer from './src/containers/MessageListContainer'; 
 import NewTopicContainer from './src/containers/NewTopicContainer'; 
 import AppHeader from './src/components/AppHeader'; 
 import AppHeaderHome from './src/components/AppHeaderHome'; 
@@ -92,7 +92,7 @@ const ModalStack = createStackNavigator({
 
 const MessageStack = createStackNavigator({
   List: { 
-    screen: MessageContainer, 
+    screen: MessageListContainer, 
     navigationOptions: ({navigation}) => ({
       headerTitle: <AppHeader />
     })

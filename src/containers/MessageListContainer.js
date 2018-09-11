@@ -1,14 +1,14 @@
 import React from 'react'; 
 import { connect } from 'react-redux'; 
 
-import Message from '../components/Message'; 
+import MessageList from '../components/MessageList'; 
 
-const MessageContainer = props => <Message {...props} />
+const MessageListContainer = props => <MessageList {...props} /> 
 
 const mapStateToProps = (state) => { 
     return state; 
 }
 
 export default connect(mapStateToProps, { 
-
-})(MessageContainer)
+    
+})(MessageListContainer); 

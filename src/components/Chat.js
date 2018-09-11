@@ -13,6 +13,7 @@ import { accessKey, secretKey } from '../aws_config.js';
 
 import ChatModal from './ChatModal'; 
 import ChatModalUser from './ChatModalUser'; 
+import ChatModalProfile from './ChatModalProfile'; 
 
 import Ad from './Ad'; 
 import { PostChat } from '../actions/ChatActions';
@@ -42,6 +43,10 @@ class Chat extends Component {
             userModal: { 
                 visible: false, 
                 item: null
+            }, 
+            profileModal: { 
+                visible: false, 
+                userID: null
             }
         }
     }
@@ -73,6 +78,19 @@ class Chat extends Component {
                 }
                 
             }
+
+    onProfilePressed = (userID) => { 
+        const { user } = this.props; 
+
+        if (user.phone !== userID[0].Id) { 
+            let profileModal = { 
+                visible: true, 
+                userID: userID
+            }
+
+            this.setState({profileModal: profileModal}); 
+        }
+    }
 
     onMoreDotsPressed = (item) => { 
 
@@ -138,7 +156,7 @@ class Chat extends Component {
         )
     }
 
-    onModalClose = () => this.setState({modal: { visible: false, item: null}, userModal: {visible: false, item: null}})
+    onModalClose = () => this.setState({modal: { visible: false, item: null}, userModal: {visible: false, item: null}, profileModal: {visible: false, userID: null}})
 
     _renderItem = ({item}) => (
         <ChatItem item={item}
@@ -153,7 +171,8 @@ class Chat extends Component {
                   onReplyPressed={this.onReplyPressed}
                   cryptoID={this.props.navigation.state.params.id}
                   fullData={this.props.chat}
-                  onMoreDotsPressed={this.onMoreDotsPressed}/>
+                  onMoreDotsPressed={this.onMoreDotsPressed}
+                  onProfilePressed={this.onProfilePressed}/>
     )
 
     _keyExtractor = (item, index) => item.postID
@@ -348,6 +367,8 @@ class Chat extends Component {
                            item={this.state.userModal.item}
                            onDeletePost={this.onDeletePost}
                            onModalClose={this.onModalClose} />
+            <ChatModalProfile visible={this.state.profileModal.visible}
+                              onModalClose={this.onModalClose}/>
             </KeyboardAvoidingView>
         )
     }

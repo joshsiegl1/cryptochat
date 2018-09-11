@@ -138,6 +138,9 @@ class CoinList extends Component {
                       refreshing={this.state.refreshing}
                       onRefresh={this._onRefresh}/>
                  }
+                 getItemLayout={(data, index) => (
+                     {length: 45, offset: 45 * index, index}
+                 )}
                  data={curratedCurrencies} 
                  extraData={nav} 
                  keyExtractor={this._keyExtractor} 

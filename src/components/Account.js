@@ -38,18 +38,16 @@ class Account extends Component {
             "Delete Account", 
             "Are you sure you want to delete your account?", 
             [{
-                text: "Yes", onPress: () => DeleteAccount()
+                text: "Yes", onPress: async () => { 
+                     DeleteAccount()
+                     await SetPhone(""); 
+                     this.props.navigation.navigate("AuthLoading")
+                }
             }, 
             { 
-                text: "No", onPress: () => onDismiss()
+                text: "No"
             }]
         )
-
-        DeleteAccount(); 
-
-        await SetPhone(""); 
-
-        this.props.navigation.navigate("AuthLoading"); 
     }
 
     formatPhoneNumber = (phoneNumberString) => { 

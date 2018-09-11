@@ -22,7 +22,8 @@ const propTypes = {
     onReplyPressed: PropTypes.func, 
     fullData: PropTypes.shape, 
     cryptoID: PropTypes.num, 
-    onMoreDotsPressed: PropTypes.func
+    onMoreDotsPressed: PropTypes.func, 
+    onProfilePressed: PropTypes.func
 }
 
 class ChatItem extends PureComponent { 
@@ -42,6 +43,12 @@ class ChatItem extends PureComponent {
         const {onMoreDotsPressed, item} = this.props; 
 
         onMoreDotsPressed(item); 
+    }
+
+    _onProfilePressed = () => { 
+        const {onProfilePressed, item} = this.props; 
+
+        onProfilePressed(item.userID); 
     }
 
     render() { 
@@ -107,10 +114,10 @@ class ChatItem extends PureComponent {
         let data = fullData[this.props.crypto]; 
 
         return (<View style={styles.mainContent}>
-                    <View style={styles.profilePicContent}>
+                    <TouchableOpacity style={styles.profilePicContent} onPress={this._onProfilePressed}>
                         <Image style={styles.profilePic} 
                         source={{uri: profilepic, cache: 'reload'}}/>
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.chatContent}>
                         <Text style={styles.user}>{username}</Text>  
                         <View style={styles.body}>
