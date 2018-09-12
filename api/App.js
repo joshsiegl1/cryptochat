@@ -14,6 +14,7 @@ const userRoutes = require('./UserRoutes.js');
 const contentRoutes = require('./ContentRoutes.js'); 
 const twilioRoutes = require("./TwilioRoutes.js"); 
 const cmcRoutes = require("./CmcDataPullRoutes.js"); 
+const messagingRoutes = require("./MessagingRoutes.js"); 
 
 const url = require("./Config.js").MongoDBConnectionString; 
 
@@ -27,17 +28,6 @@ const AuthMiddleware = require("./AuthMiddleware.js");
 var port = process.env.PORT || 3000
 
 app.use(bodyParser.json());
-
-app.use(function(req, res, next) { 
-    console.log(req.accepts('application/json')); 
-    console.log("Fresh " + req.fresh)
-    console.log(req.route)
-    console.log(req.method)
-    console.log(req.hostname)
-    console.log(req.ip)
-    console.log(req.body)
-    next(); 
-})
 
 const pushNotification = (expToken) => { 
 
@@ -66,6 +56,7 @@ app.use('/user', userRoutes);
 app.use('/content', contentRoutes); 
 app.use('/phone', twilioRoutes); 
 app.use('/cmc', cmcRoutes); 
+app.use('/message', messagingRoutes); 
 
 app.post('/chat', AuthMiddleware, (req, res) => {
 
