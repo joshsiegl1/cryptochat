@@ -16,6 +16,40 @@ var express = require("express"),
 
     const crypto = require("crypto"); 
 
+router.get('/usergroups', AuthMiddleware, (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    const User = mongoose.model('User', userSchema); 
+    const Group = mongoose.model('Group', groupSchema); 
+
+    let token = req.get('cryptochat-token-x'); 
+    jwt.verify(token, jwtSecret, function (err, decoded) { 
+        let phoneNum = decoded.phone; 
+        if (!err) { 
+            User.findOne({phone: phoneNum}, function (err, user) { 
+                if (user && !err) { 
+                    let groups = user.groups; 
+                    if (groups.length > 0) { 
+                        let idGroup = []; 
+                        for (let i = 0; i < groups.length; i++) { 
+                            idGroup.push(groups[i].id); 
+                        }
+                        Group.find({
+                            id: { $in: idGroup}
+                        }, function (err, docs) { 
+                            if (!err) res.send(docs);
+                            else res.send(err);  
+                        })
+                    }
+                    else res.send(200, {message: "no groups for this user"})
+                }
+                else res.send(200, {Error: err})
+            })
+        }
+    })
+})
+
 router.post('/create', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection
