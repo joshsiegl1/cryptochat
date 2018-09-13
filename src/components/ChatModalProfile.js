@@ -6,6 +6,7 @@ import { View, Modal, TouchableOpacity, Text, Image, StyleSheet} from 'react-nat
 const propTypes = { 
     visible: PropTypes.boolean, 
     userID: PropTypes.shape({}), 
+    onMessageUser: PropTypes.func, 
     onModalClose: PropTypes.func
 }
 
@@ -22,7 +23,7 @@ class ChatModalProfile extends Component {
                 <View style={styles.modalOuter}>
                 <View style={styles.modalContent}>
 
-                <TouchableOpacity style={styles.modalButton} onPress={() => console.log("meh")}>
+                <TouchableOpacity style={styles.modalButton} onPress={this.props.onMessageUser}>
                     <Image style={styles.modalImage} source={require("../../assets/block.png")}/>
                     <Text style={styles.modalFont}>Send Message</Text>
                 </TouchableOpacity>

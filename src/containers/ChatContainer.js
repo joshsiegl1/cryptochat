@@ -5,6 +5,8 @@ import { GetChat, PostChat, Upvote, Downvote, DeletePost } from '../actions/Chat
 
 import { FlagPost, BlockPost, BlockUser } from '../actions/UserActions'; 
 
+import { CreateMessageGroup } from '../actions/MessageActions'; 
+
 import { getChats, 
     getPhone, 
     getLikedPosts, 
@@ -35,5 +37,6 @@ export default connect(mapStateToProps, {
     FlagPost, 
     BlockPost, 
     BlockUser, 
-    DeletePost
+    DeletePost, 
+    CreateMessageGroup
 })(ChatContainer)

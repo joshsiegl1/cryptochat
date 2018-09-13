@@ -92,6 +92,16 @@ class Chat extends Component {
         }
     }
 
+    onMessageUser = () => { 
+        const { CreateMessageGroup } = this.props; 
+        
+        let userID = this.state.profileModal.userID;
+
+        if (userID !== null && userID !== undefined && userID !== "") { 
+            CreateMessageGroup(userID[0].Id); 
+        }
+    }
+
     onMoreDotsPressed = (item) => { 
 
         const { user } = this.props; 
@@ -368,6 +378,7 @@ class Chat extends Component {
                            onDeletePost={this.onDeletePost}
                            onModalClose={this.onModalClose} />
             <ChatModalProfile visible={this.state.profileModal.visible}
+                              onMessageUser={this.onMessageUser}
                               onModalClose={this.onModalClose}/>
             </KeyboardAvoidingView>
         )
