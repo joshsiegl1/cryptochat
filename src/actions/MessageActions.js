@@ -37,4 +37,14 @@ export const GetUserGroups = () => async (dispatch) => {
     }
 
     const { json } = await callApi(GET_USER_GROUPS, options); 
+
+    if (json.Error) { 
+        Alert.alert("Error", "Could not recieve messages at this moment, please try again later"); 
+    }
+    else if (json) { 
+        dispatch({
+            type: types.GET_USERGROUPS, 
+            userGroups: json
+        })
+    }
 }
