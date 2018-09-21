@@ -213,15 +213,15 @@ class Chat extends Component {
 
         if (!this.state.posting) { 
 
+            let message = this.state.message; 
+            if (message === '') return; 
+
             this.setState({
                 posting: true
             })
 
             const { crypto } = this.props.navigation.state.params; 
             const { phone, PostChat, GetChat } = this.props; 
-
-            let message = this.state.message; 
-            if (message === '') return; 
 
             await PostChat(crypto, phone, message); 
 
