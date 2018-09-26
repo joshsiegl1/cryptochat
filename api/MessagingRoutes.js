@@ -24,6 +24,7 @@ router.get('/message/:group', (req, res) => {
     const db = mongoose.connection; 
 
     var messages = mongoose.model('Message', messageSchema); 
+    var user = mongoose.model('User', userSchema); 
 
     messages.find({id: group})
             .populate({

@@ -50,6 +50,8 @@ export const UNBLOCK_USER = `${GET_CRYPTO_HOSTNAME()}/user/unblockuser`;
 export const DELETE_POST = `${GET_CRYPTO_HOSTNAME()}/user/deletepost`; 
 export const GET_USER_GROUPS = `${GET_CRYPTO_HOSTNAME()}/message/usergroups`; 
 export const CREATE_MESSAGE_GROUP = `${GET_CRYPTO_HOSTNAME()}/message/create`; 
+export const GET_MESSAGES = `${GET_CRYPTO_HOSTNAME()}/message/:group`; 
+export const POST_MESSAGE = `${GET_CRYPTO_HOSTNAME()}/message/message`; 
 
 export const ADD_CATEGORY = `${GET_CRYPTO_HOSTNAME()}/content/category`; 
 
