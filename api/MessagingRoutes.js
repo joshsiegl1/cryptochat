@@ -15,6 +15,58 @@ var express = require("express"),
     const jwtSecret = require("./Config.js").jwtSecret; 
 
     const crypto = require("crypto"); 
+    const uuid = require("uuid/v4"); 
+
+router.get('/message/:group', (req, res) => { 
+    var group = req.params.group; 
+
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    var messages = mongoose.model('Message', messageSchema); 
+
+    messages.find({id: group})
+            .populate({
+                path: 'userID', 
+                model: 'User'
+            })
+            .sort({date: 'desc'})
+            .exec(function(err, messages) { 
+                if (err) { 
+                    res.send(err); 
+                }
+                else { 
+                    res.send({
+                        messages, 
+                        time: new Date()
+                    })
+                }
+            })
+})
+
+router.post('/message', AuthMiddleware, (req, res) => { 
+    mongoose.connect(url, {useMongoClient: true})
+    const db = mongoose.connection; 
+
+    const Message = mongoose.model('Message', messageSchema)
+
+    let m = { 
+        postID: uuid(), 
+        body: req.body.body, 
+        userID: req.body.userID, 
+        inReplyTo: '', 
+        id: req.body.id, 
+        replies: []
+    }
+
+    var newMessage = new Message(m); 
+
+    newMessage.save((err) => { 
+        if (err) console.log(err); 
+    })
+
+    res.send("Success"); 
+})
 
 router.get('/usergroups', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
