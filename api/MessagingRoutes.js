@@ -23,10 +23,10 @@ router.get('/message/:group', (req, res) => {
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection; 
 
-    var messages = mongoose.model('Message', messageSchema); 
+    var Message = mongoose.model('Message', messageSchema); 
     var user = mongoose.model('User', userSchema); 
 
-    messages.find({id: group})
+    Message.find({id: group})
             .populate({
                 path: 'userID', 
                 model: 'User'

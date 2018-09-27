@@ -2,12 +2,16 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react'; 
 
 import { View, FlatList, TextInput, Button, Text, Image, StyleSheet, 
-Keyboard, KeyboardAvoidingView } from 'react-native'; 
+Keyboard, KeyboardAvoidingView, Dimensions } from 'react-native'; 
 
 import MessageItem from './MessageItem'; 
 
 const propTypes = { 
-
+    GetMessages: PropTypes.func, 
+    PostMessage: PropTypes.func, 
+    messages: PropTypes.shape({}), 
+    user: PropTypes.shape({}), 
+    currentTime: PropTypes.shape({})
 }
 
 class Message extends Component { 
@@ -21,6 +25,31 @@ class Message extends Component {
             chatHeight: '10%', 
             flatHeight: '90%', 
             hasFocus: false
+        }
+    }
+
+    componentDidMount() { 
+        const { navigation, GetMessages } = this.props; 
+
+        const { group } = navigation.state.params; 
+
+        const { setParams } = this.props.navigation; 
+
+        setParams({title: group}); 
+
+        GetMessages(group); 
+    }
+
+    componentDidUpdate() { 
+        const { navigation, GetMessages, messages } = this.props; 
+
+        const { group } = navigation.state.params; 
+
+        if (Object.keys(messages).length > 0) { 
+            const thisMessage = messages[group]; 
+            if (thisMessage === undefined) { 
+                GetMessages(group); 
+            }
         }
     }
 
@@ -117,7 +146,7 @@ class Message extends Component {
                                placeholder="Message"
                                editable={true}
                                value={message}
-                               onChangeText={(message) => this.setState({message})}
+                               onChangeText={(m) => this.setState({message: m})}
                                onBlur={this.onBlur}
                                onFocus={this.onFocus}
                                >

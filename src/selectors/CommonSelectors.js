@@ -19,10 +19,12 @@ export const getCoinList = createSelector(
 export const getUser = state => state.user.user; 
 export const getUserGroups = state => state.user.userGroups; 
 export const getChats = state => state.chats.chats;
+export const getMessages = state => state.message.messages; 
 export const getPhone = state => state.user.phone;  
 export const getComment = state => state.chats.comment; 
 export const getReplies = state => state.chats.replies; 
 export const getCurrentTime = state => state.chats.time; 
+export const getCurrentMessageTime = state => state.message.time;
 export const getLikedPosts = state => state.user.likedPosts; 
 export const getDislikedPosts = state => state.user.dislikedPosts; 
 export const getValidated = state => state.user.validated

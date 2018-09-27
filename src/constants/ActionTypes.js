@@ -14,6 +14,7 @@ export const ADD_USER = "ADD_USER";
 export const LIKED_POSTS = "LIKED_POSTS"; 
 export const VALIDATE = "VALIDATE"; 
 
+export const GET_MESSAGES = "GET_MESSAGES"; 
 export const GET_USER = "GET_USER"; 
 export const GET_USERGROUPS = "GET_USERGROUPS"; 
 export const UPDATE_PROFILE_PIC = "UPDATE_PROFILE_PIC"; 

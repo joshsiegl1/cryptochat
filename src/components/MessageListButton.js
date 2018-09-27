@@ -18,7 +18,7 @@ class MessageListButton extends PureComponent {
 
         const { id, navigate } = this.props; 
 
-        navigate("Message", {id: id}); 
+        navigate("Message", {id: id, group: id}); 
     }
 
     render() { 
