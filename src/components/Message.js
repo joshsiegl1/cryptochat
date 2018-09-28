@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react'; 
 
 import { View, FlatList, TextInput, Button, Text, Image, StyleSheet, 
-Keyboard, KeyboardAvoidingView, Dimensions } from 'react-native'; 
+Keyboard, KeyboardAvoidingView, Dimensions, TouchableOpacity } from 'react-native'; 
 
 import MessageItem from './MessageItem'; 
 
@@ -19,12 +19,12 @@ class Message extends Component {
         super(props) 
 
         this.state = { 
+            message: '', 
             posting: false, 
-            message: "", 
-            height: '100%', 
-            chatHeight: '10%', 
+            height: '100%',
+            chatHeight: '10%',  
             flatHeight: '90%', 
-            hasFocus: false
+            hasFocus: false, 
         }
     }
 
@@ -90,8 +90,13 @@ class Message extends Component {
 
     render() { 
         const { messages, navigation} = this.props; 
-        const { messageID, postID} = navigation.state.params; 
+        const { group, postID} = navigation.state.params; 
         const { message } = this.state; 
+
+        let messageList = []; 
+        if (Object.keys(messages).length > 0) { 
+            messageList = messages[group]; 
+        }
 
         let textInputStyle = StyleSheet.flatten([styles.chatBar, {height: this.state.height}]); 
         let chatContainerStyle = StyleSheet.flatten([styles.chatBarContainer, {height: this.state.chatHeight}]); 
@@ -132,7 +137,7 @@ class Message extends Component {
                 <FlatList removeClippedSubviews
                           ref={ref => this.flatList = ref}
                           stlye={flatStyle}
-                          data={messages} 
+                          data={messageList} 
                           keyExtractor={this._keyExtractor}
                           renderItem={this._renderItem} />
 
