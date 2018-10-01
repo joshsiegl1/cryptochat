@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Message from '../components/Message'; 
 
-import { getUser, getMessages, getCurrentMessageTime } from '../selectors/CommonSelectors'; 
+import { getUser, getMessages, getCurrentMessageTime, getPhone } from '../selectors/CommonSelectors'; 
 
 import { GetMessages, PostMessage } from '../actions/MessageActions'; 
 
@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
     return { 
         messages: getMessages(state), 
         user: getUser(state), 
-        currentTime: getCurrentMessageTime(state)
+        currentTime: getCurrentMessageTime(state), 
+        phone: getPhone(state)
     }; 
 }
 

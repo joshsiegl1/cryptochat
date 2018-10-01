@@ -27,7 +27,7 @@ class Chat extends Component {
     constructor(props) { 
         super(props)
 
-        this.imagePressed = false; 
+        this.imagePressed = false;   
         
         this.state = { 
             message: '', 

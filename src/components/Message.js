@@ -18,6 +18,8 @@ class Message extends Component {
     constructor(props) { 
         super(props) 
 
+        this.imagePressed = false; 
+
         this.state = { 
             message: '', 
             posting: false, 
@@ -61,8 +63,65 @@ class Message extends Component {
         this.setState({hasFocus: false})
     }
 
+    onImage = async () => { 
+        if (!this.imagePressed) { 
+            this.imagePressed = true; 
+
+            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL); 
+            const { crypto } = this.props.navigation.state.params; 
+            const { phone, PostMessage, GetMessages } = this.props; 
+
+            if (status === 'granted') { 
+                let result = await ImagePicker.launchImageLibraryAsync({
+                    allowsEditing: false, 
+                    base64: true
+                })
+
+                if (!result.cancelled) { 
+                    let fileName = result.uri.split('/').pop(); 
+                    let message = "{" + fileName + "}"; 
+                    let match = /\.(\w+)$/.exec(fileName);
+                    let imagetype = match ? `image/${match[1]}` : `image`; 
+
+                    const file = { 
+                        uri: result.uri, 
+                        name: fileName, 
+                        type: imagetype
+                    }
+
+                    const options = { 
+                        bucket: 'cryptochat-app-45', 
+                        region: 'us-east-1', 
+                        accessKey: accessKey, 
+                        secretKey: secretKey, 
+                        successActionStatus: 201
+                    }
+
+                    RNS3.put(file, options).then(response => { 
+                        if (response.status !== 201) { 
+                            Alert.alert('Error uploading file', 'There was an error uploading the image you selected, please try again'); 
+                        }
+                        
+                    })
+
+                    await PostMessage(crypto, phone, message); 
+                    
+                    await GetMessages(crypto); 
+
+                    this.forceUpdate(); 
+                }
+            }
+            this.messageBox.focus(); 
+            this.imagePressed = false; 
+            Keyboard.dismiss(); 
+        }
+    }
+
     onPost = async () => { 
         if (!this.state.posting) { 
+
+            const { group } = navigation.state.params; 
+            const { phone, PostMessage, GetMessages } = this.props; 
 
             let message = this.state.message;
             if (message === '') return; 
@@ -71,7 +130,11 @@ class Message extends Component {
                 posting: true
             })
 
+            await PostMessage(group, phone, message); 
+
             Keyboard.dismiss(); 
+
+            await GetMessages(group); 
 
             this.setState({
                 message: "", 
@@ -111,12 +174,12 @@ class Message extends Component {
         if (this.state.hasFocus) { 
             link = (
                 <TouchableOpacity onPress={this.onPost}>
-                    <Image style={styles.submitImage} 
-                    source={require("../../assets/ic_send.png")}/> 
+                    <Image style={styles.linkImage} 
+                    source={require("../../assets/ic_link.png")}/> 
                 </TouchableOpacity>
             )
             submit = (
-                <TouchableOpacity onPress={this.onPost}>
+                <TouchableOpacity onPress={this.onImage}>
                     <Image style={styles.submitImage}
                     source={require('../../assets/ic_send.png')} />
                 </TouchableOpacity>
@@ -136,7 +199,7 @@ class Message extends Component {
                 
                 <FlatList removeClippedSubviews
                           ref={ref => this.flatList = ref}
-                          stlye={flatStyle}
+                          style={flatStyle}
                           data={messageList} 
                           keyExtractor={this._keyExtractor}
                           renderItem={this._renderItem} />
