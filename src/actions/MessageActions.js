@@ -38,7 +38,7 @@ export const GetMessages = (group) => async (dispatch) => {
 }
 
 export const PostMessage = (id, userID, message) => async (dispatch) => { 
-    let message = { 
+    let m = { 
         id, 
         userID, 
         body: message
@@ -52,7 +52,7 @@ export const PostMessage = (id, userID, message) => async (dispatch) => {
             'Content-Type' : 'application/json', 
             'cryptochat-token-x' : token
         }, 
-        body: JSON.stringify(message)
+        body: JSON.stringify(m)
     }
 
     const { json } = await callApi(POST_MESSAGE, options); 

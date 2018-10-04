@@ -119,9 +119,9 @@ class Message extends Component {
 
     onPost = async () => { 
         if (!this.state.posting) { 
-
+            const { phone, PostMessage, GetMessages, navigation } = this.props; 
             const { group } = navigation.state.params; 
-            const { phone, PostMessage, GetMessages } = this.props; 
+            
 
             let message = this.state.message;
             if (message === '') return; 
@@ -146,6 +146,8 @@ class Message extends Component {
     _renderItem = ({item}) => (
         <MessageItem item={item}
                      user={this.props.user}
+                     fullData={this.props.messages}
+                     group={this.props.navigation.state.params.group}
         />
     )
 
@@ -173,13 +175,13 @@ class Message extends Component {
 
         if (this.state.hasFocus) { 
             link = (
-                <TouchableOpacity onPress={this.onPost}>
+                <TouchableOpacity onPress={this.onImage}>
                     <Image style={styles.linkImage} 
                     source={require("../../assets/ic_link.png")}/> 
                 </TouchableOpacity>
             )
             submit = (
-                <TouchableOpacity onPress={this.onImage}>
+                <TouchableOpacity onPress={this.onPost}>
                     <Image style={styles.submitImage}
                     source={require('../../assets/ic_send.png')} />
                 </TouchableOpacity>
