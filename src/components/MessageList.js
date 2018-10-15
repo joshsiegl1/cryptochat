@@ -25,7 +25,8 @@ class MessageList extends Component {
         <MessageListButton 
         navigate={this.props.navigation.navigate}
         id={item.id}
-        num={index}
+        participants={item.participants}
+        num={index + 1}
         />
     )
 

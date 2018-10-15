@@ -8,6 +8,6 @@ module.exports = new Schema({
     type: String,
     participants: [{
         _id: {type: String}, 
-        id: String
+        id: {type: String, ref: 'User'}
     }]
 }, {collection: 'groups'})

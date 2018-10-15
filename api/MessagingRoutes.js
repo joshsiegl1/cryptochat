@@ -90,7 +90,11 @@ router.get('/usergroups', AuthMiddleware, (req, res) => {
                         }
                         Group.find({
                             id: { $in: idGroup}
-                        }, function (err, docs) { 
+                        })
+                        .populate({
+                            path: 'participants.id', 
+                            model: 'User'
+                        }).exec(function (err, docs) { 
                             if (!err) res.send(docs);
                             else res.send(err);  
                         })
