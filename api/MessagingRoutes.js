@@ -16,6 +16,60 @@ var express = require("express"),
 
     const crypto = require("crypto"); 
     const uuid = require("uuid/v4"); 
+    const request = require("request"); 
+
+const pushNotification = async (userphone, message, phoneNumbers) => { 
+
+    mongoose.connect(url, {useMongoClient: true})
+    const User = mongoose.model('User', userSchema); 
+
+    let user = ''; 
+    await User.findOne({phone: userphone}, function (err, doc) { 
+        if (!err && doc !== null) { 
+            user = doc.username; 
+        }
+    })
+
+    
+    let users = []; 
+    await User.find({
+        phone: {
+            $in: phoneNumbers
+        }
+    }, function (err, results) { 
+        if (!err && results !== null) { 
+            for (var i = 0; i < results.length; i++) { 
+                if (results[i].pushNotification !== null && results[i].pushNotification !== ''
+                && results[i].pushNotification !== undefined) { 
+                    users.push({
+                        'to' : results[i].pushNotification, 
+                        'body' : user + '\n' + message, 
+                        'badge' : 1, 
+                        'sound' : null, 
+                        'priority' : 'high'
+                    }); 
+                }
+            }
+        }
+    })
+
+    if (users.length > 0) { 
+        request({
+            url: 'https://exp.host/--/api/v2/push/send', 
+            method: 'POST', 
+            headers: { 
+                'accept' : 'application/json',           
+                'accept-encoding' : 'gzip, deflate', 
+                'content-type': 'application/json', 
+            }, 
+            json: true, 
+             body: users
+        }, function (error, response, body) { 
+            console.log(response); 
+        })
+
+    }
+}
 
 router.get('/message/:group', (req, res) => { 
     var group = req.params.group; 
@@ -45,11 +99,12 @@ router.get('/message/:group', (req, res) => {
             })
 })
 
-router.post('/message', AuthMiddleware, (req, res) => { 
+router.post('/message', AuthMiddleware, async (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection; 
 
     const Message = mongoose.model('Message', messageSchema)
+    const Group = mongoose.model('Group', groupSchema); 
 
     let m = { 
         postID: uuid(), 
@@ -64,6 +119,17 @@ router.post('/message', AuthMiddleware, (req, res) => {
 
     newMessage.save((err) => { 
         if (err) console.log(err); 
+    })
+
+    await Group.findOne({id: req.body.id}, async (err, result) => { 
+        if (!err && result !== null && result !== undefined) { 
+            let participants = result.participants; 
+            let p = []; 
+            for (let i = 0; i < participants.length; i++) { 
+                p.push(participants[i].id)
+            }
+            await pushNotification(req.body.userID, req.body.body, p); 
+        }
     })
 
     res.send("Success"); 
