@@ -9,6 +9,7 @@ var express = require("express"),
     const userSchema = require("./models/user_model"); 
 
     const url = require("./Config.js").MongoDBConnectionString; 
+    const personalPhone = require("./Config.js").personalPhone; 
 
     const AuthMiddleware = require("./AuthMiddleware.js"); 
     const jwt = require("jsonwebtoken"); 
@@ -41,13 +42,19 @@ const pushNotification = async (userphone, message, phoneNumbers) => {
             for (var i = 0; i < results.length; i++) { 
                 if (results[i].pushNotification !== null && results[i].pushNotification !== ''
                 && results[i].pushNotification !== undefined) { 
-                    users.push({
-                        'to' : results[i].pushNotification, 
-                        'body' : user + '\n' + message, 
-                        'badge' : 1, 
-                        'sound' : null, 
-                        'priority' : 'high'
-                    }); 
+                    //send a push notifcation if the message group contains a phone number other than
+                    //the current user's phone, unless that phone number is my personal phone for test purposes.
+                    if (results[i].phone === personalPhone
+                        || results[i].phone !== userphone)
+                    { 
+                        users.push({
+                            'to' : results[i].pushNotification, 
+                            'body' : user + '\n' + message, 
+                            'badge' : 1, 
+                            'sound' : null, 
+                            'priority' : 'high'
+                        }); 
+                    }
                 }
             }
         }

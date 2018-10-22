@@ -23,9 +23,11 @@ import WebContainer from './src/containers/WebContainer';
 import IntroContainer from './src/containers/IntroContainer';  
 import MessageListContainer from './src/containers/MessageListContainer'; 
 import MessageContainer from './src/containers/MessageContainer'; 
-import NewTopicContainer from './src/containers/NewTopicContainer'; 
+import NewTopicContainer from './src/containers/NewTopicContainer';
+import NewMessageContainer from './src/containers/NewMessageContainer'; 
 import AppHeader from './src/components/AppHeader'; 
 import AppHeaderHome from './src/components/AppHeaderHome'; 
+import AppHeaderMessage from './src/components/AppHeaderMessage';
 
 import AuthLoadingScreen from './src/components/AuthLoadingScreen'; 
 
@@ -95,11 +97,17 @@ const MessageStack = createStackNavigator({
   List: { 
     screen: MessageListContainer, 
     navigationOptions: ({navigation}) => ({
-      headerTitle: <AppHeader />
+      headerTitle: <AppHeaderMessage nav={navigation} />
     })
   }, 
   Message: { 
     screen: MessageContainer, 
+    navigationOptions: ({navigation}) => ({
+      headerTitle: <AppHeader />
+    })
+  }, 
+  NewMessage: { 
+    screen: NewMessageContainer, 
     navigationOptions: ({navigation}) => ({
       headerTitle: <AppHeader />
     })
