@@ -11,12 +11,51 @@ class NewMessage extends Component {
         super(props)
 
         this.state = { 
-            username: ""
+            numbers: [], 
+            phonenumber: ""
         }
     }
 
+    onAddPressed = () => { 
+        let numbers = this.state.numbers; 
+        numbers.push(this.state.phonenumber); 
+
+        this.setState({numbers, phonenumber: ""}); 
+    }
+
+    onDonePressed = () => { 
+
+    }
+
     render() { 
-        return (<View />)
+
+        let displayDone = this.state.numbers.length > 0 ? true : false; 
+
+        return (<View style={styles.main}>
+                <View style={styles.inputView}>
+                    <Text style={styles.usernameText}>Username</Text>
+                    <TextInput style={styles.input}
+                           placeholder={"Search Phone Number"}
+                           value={this.state.phonenumber}
+                           onChangeText={(text) => this.setState({phonenumber: text})}/>
+                </View>
+                <View style={{
+                    marginTop: 25, 
+                    justifyContent: 'center', 
+                    alignItems: 'center'
+                }}>
+                    <Text style={styles.instructionText}>
+                        Search a phone number to add to the chat group
+                    </Text>
+                    <TouchableOpacity style={[styles.addButton, {marginTop: 25}]} onPress={this.onAddPressed}>
+                        <Text style={{color: 'white'}}>Add</Text>
+                    </TouchableOpacity>
+                    {displayDone && (
+                    <TouchableOpacity style={[styles.addButton, {marginTop: 25}]} onPress={this.onDonePressed}>
+                        <Text style={{color: 'white'}}>Done</Text>
+                    </TouchableOpacity>)}
+                </View>
+            </View>)
     }
 }
 
@@ -52,7 +91,16 @@ const styles = StyleSheet.create({
         borderColor: '#373F51'
     }, 
     inputView: { 
-
+        marginTop: 50, 
+        width: '100%', 
+        height: 50, 
+        backgroundColor: 'white', 
+        display: 'flex', 
+        flexDirection: 'row',
+        justifyContent: 'flex-start', 
+        padding: 10, 
+        textAlign: 'center', 
+        alignItems: 'center'
     }
 })
 
