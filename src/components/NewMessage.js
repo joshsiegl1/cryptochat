@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 
 import { View, Text, TextInput, KeyboardAvoidingView, 
         StyleSheet, TouchableOpacity, ScrollView, Image, Keyboard, 
-        TouchableWithoutFeedback, Alert, ActivityIndicator } from 'react-native'; 
+        TouchableWithoutFeedback, Alert, ActivityIndicator, FlatList } from 'react-native'; 
 
 
 class NewMessage extends Component { 
@@ -27,11 +27,26 @@ class NewMessage extends Component {
 
     }
 
+    _renderItem = ({item}) => (
+        <View style={styles.numberView}>
+            <Text>
+                {item}
+            </Text>
+        </View>
+    )
+
+    _keyExtractor = (item, index) => item; 
+
     render() { 
 
         let displayDone = this.state.numbers.length > 0 ? true : false; 
 
         return (<View style={styles.main}>
+                <FlatList data={this.state.numbers}
+                          keyExtractor={this._keyExtractor}
+                          renderItem={this._renderItem}
+                          style={{width: '100%', height: 100}}
+                />
                 <View style={styles.inputView}>
                     <Text style={styles.usernameText}>Username</Text>
                     <TextInput style={styles.input}
@@ -101,6 +116,13 @@ const styles = StyleSheet.create({
         padding: 10, 
         textAlign: 'center', 
         alignItems: 'center'
+    }, 
+    numberView: { 
+        padding: 5, 
+        backgroundColor: 'white', 
+        borderColor: 'lightgray', 
+        borderBottomWidth: 1, 
+        width: '100%'
     }
 })
 
