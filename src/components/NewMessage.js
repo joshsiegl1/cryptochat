@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
+import { parsePhoneNumber } from 'libphonenumber-js'; 
+
 import { View, Text, TextInput, KeyboardAvoidingView, 
         StyleSheet, TouchableOpacity, ScrollView, Image, Keyboard, 
         TouchableWithoutFeedback, Alert, ActivityIndicator, FlatList } from 'react-native'; 
@@ -17,10 +19,20 @@ class NewMessage extends Component {
     }
 
     onAddPressed = () => { 
-        let numbers = this.state.numbers; 
-        numbers.push(this.state.phonenumber); 
 
-        this.setState({numbers, phonenumber: ""}); 
+        try { 
+            let number = parsePhoneNumber(this.state.phonenumber, 'US'); 
+
+            let numbers = this.state.numbers; 
+            numbers.push(number.number); 
+
+            this.setState({numbers, phonenumber: ""}); 
+        }
+        catch (e) { 
+            Alert.alert("Invalid Phone Number", "That phone number is not valid"); 
+
+            this.setState({phonenumber: ""}); 
+        }
     }
 
     onDonePressed = () => { 

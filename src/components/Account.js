@@ -10,6 +10,8 @@ import { SetPhone } from '../utils/UserStorage';
 import { RNS3 } from 'react-native-aws3'
 import {accessKey, secretKey } from '../aws_config.js'; 
 
+import { parsePhoneNumber } from 'libphonenumber-js'; 
+
 const propTypes = { 
     user: PropTypes.shape({}), 
     Phone: PropTypes.string, 
@@ -51,9 +53,10 @@ class Account extends Component {
     }
 
     formatPhoneNumber = (phoneNumberString) => { 
-        var cleaned = ("" + phoneNumberString).replace(/\D/g, '');
-        var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-        return (!match) ? phoneNumberString : "(" + match[1] + ") " + match[2] + "-" + match[3];
+
+        const number = parsePhoneNumber(phoneNumberString); 
+        return number.format("NATIONAL"); 
+        
     }
 
     onProfilePictureChange = async () => { 
