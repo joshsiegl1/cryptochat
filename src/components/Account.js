@@ -53,10 +53,8 @@ class Account extends Component {
     }
 
     formatPhoneNumber = (phoneNumberString) => { 
-
         const number = parsePhoneNumber(phoneNumberString); 
-        return number.format("NATIONAL"); 
-        
+        return number.format("NATIONAL");  
     }
 
     onProfilePictureChange = async () => { 

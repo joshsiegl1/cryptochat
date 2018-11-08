@@ -24,7 +24,7 @@ class NewMessage extends Component {
             let number = parsePhoneNumber(this.state.phonenumber, 'US'); 
 
             let numbers = this.state.numbers; 
-            numbers.push(number.number); 
+            numbers.push(number.format("INTERNATIONAL")); 
 
             this.setState({numbers, phonenumber: ""}); 
         }
@@ -39,15 +39,30 @@ class NewMessage extends Component {
 
     }
 
+    _removeItem = (item) => { 
+        let numbers = this.state.numbers; 
+        let index = this.state.numbers.indexOf(item); 
+        numbers.splice(index, 1); 
+        this.setState({numbers}); 
+    }
+
     _renderItem = ({item}) => (
         <View style={styles.numberView}>
             <Text>
                 {item}
             </Text>
+            <TouchableOpacity onPress={() => this._removeItem(item)}>
+                <Image style={styles.remove} source={require("../../assets/remove.png")} />
+            </TouchableOpacity>
         </View>
     )
 
     _keyExtractor = (item, index) => item; 
+
+    formatPhoneNumber = (phoneNumberString) => { 
+        const number = parsePhoneNumber(phoneNumberString); 
+        return number.format("INTERNATIONAL"); 
+    }
 
     render() { 
 
@@ -57,12 +72,12 @@ class NewMessage extends Component {
                 <FlatList data={this.state.numbers}
                           keyExtractor={this._keyExtractor}
                           renderItem={this._renderItem}
-                          style={{width: '100%', height: 100}}
+                          style={{width: '100%', height: 200, borderBottomColor: 'lightgray', borderBottomWidth: 1}}
                 />
                 <View style={styles.inputView}>
-                    <Text style={styles.usernameText}>Username</Text>
+                    <Text style={styles.usernameText}>Phone Number</Text>
                     <TextInput style={styles.input}
-                           placeholder={"Search Phone Number"}
+                           placeholder={"Add a phone number"}
                            value={this.state.phonenumber}
                            onChangeText={(text) => this.setState({phonenumber: text})}/>
                 </View>
@@ -72,7 +87,7 @@ class NewMessage extends Component {
                     alignItems: 'center'
                 }}>
                     <Text style={styles.instructionText}>
-                        Search a phone number to add to the chat group
+                        Add a phone number to the group chat, please be sure to include the international codes. ( +1 for the US for example )
                     </Text>
                     <TouchableOpacity style={[styles.addButton, {marginTop: 25}]} onPress={this.onAddPressed}>
                         <Text style={{color: 'white'}}>Add</Text>
@@ -104,7 +119,8 @@ const styles = StyleSheet.create({
         paddingLeft: 10
     }, 
     instructionText: { 
-        color: 'gray'
+        color: 'gray', 
+        padding: 5
     }, 
     addButton: { 
         width: 200, 
@@ -118,7 +134,6 @@ const styles = StyleSheet.create({
         borderColor: '#373F51'
     }, 
     inputView: { 
-        marginTop: 50, 
         width: '100%', 
         height: 50, 
         backgroundColor: 'white', 
@@ -130,12 +145,19 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }, 
     numberView: { 
+        display: 'flex', 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
         padding: 5, 
         backgroundColor: 'white', 
         borderColor: 'lightgray', 
         borderBottomWidth: 1, 
         width: '100%'
-    }
+    }, 
+    remove: { 
+        width: 15, 
+        height: 15
+    }, 
 })
 
 NewMessage.propTypes = { }; 
