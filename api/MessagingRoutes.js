@@ -201,7 +201,7 @@ router.post('/creategroup', AuthMiddleware, (req, res) => {
                         if (!err && otherUsers !== null && otherUsers !== undefined) { 
                             let id = phoneNum; 
                             for (let i = 0; i < phoneNumbers.length; i++) { 
-                                id += i; 
+                                id += phoneNumbers[i]; 
                             }
                             let _id = crypto.createHash('md5').update(id).digest('hex'); 
                             Group.findOne({id: _id}, function (err, group) { 

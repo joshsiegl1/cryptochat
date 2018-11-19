@@ -97,8 +97,10 @@ class Chat extends Component {
         
         let userID = this.state.profileModal.userID;
 
-        if (userID !== null && userID !== undefined && userID !== "") { 
-            CreateMessageGroup(userID[0].Id); 
+        if (userID !== null && userID !== undefined && userID !== "") {
+            let numbers = []; 
+            numbers.push(userID[0].Id);  
+            CreateMessageGroup(numbers); 
         }
     }
 

@@ -49,7 +49,7 @@ export const BLOCK_USER = `${GET_CRYPTO_HOSTNAME()}/user/blockuser`;
 export const UNBLOCK_USER = `${GET_CRYPTO_HOSTNAME()}/user/unblockuser`; 
 export const DELETE_POST = `${GET_CRYPTO_HOSTNAME()}/user/deletepost`; 
 export const GET_USER_GROUPS = `${GET_CRYPTO_HOSTNAME()}/message/usergroups`; 
-export const CREATE_MESSAGE_GROUP = `${GET_CRYPTO_HOSTNAME()}/message/create`; 
+export const CREATE_MESSAGE_GROUP = `${GET_CRYPTO_HOSTNAME()}/message/creategroup`; 
 export const GET_MESSAGES = `${GET_CRYPTO_HOSTNAME()}/message/message/:group`; 
 export const POST_MESSAGE = `${GET_CRYPTO_HOSTNAME()}/message/message`; 
 

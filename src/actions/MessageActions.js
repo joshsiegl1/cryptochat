@@ -58,9 +58,9 @@ export const PostMessage = (id, userID, message) => async (dispatch) => {
     const { json } = await callApi(POST_MESSAGE, options); 
 }
 
-export const CreateMessageGroup = (messageNumber) => async (dispatch) => { 
+export const CreateMessageGroup = (messageNumbers) => async (dispatch) => { 
     let reqbody = { 
-        messageNumber
+        phoneNumbers: messageNumbers
     }
 
     let token = await AsyncStorage.getItem('token'); 

@@ -9,6 +9,9 @@
   },
   "author": "Josh Siegl",
   "license": "MIT",
+  "engines": {
+    "node" : "8.11.1"
+  }, 
   "dependencies": {
     "aws-sdk": "^2.232.1",
     "bcrypt": "1.0.3",
