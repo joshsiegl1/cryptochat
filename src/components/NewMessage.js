@@ -36,7 +36,7 @@ class NewMessage extends Component {
     }
 
     onDonePressed = () => { 
-
+        
     }
 
     _removeItem = (item) => { 
@@ -94,7 +94,7 @@ class NewMessage extends Component {
                     </TouchableOpacity>
                     {displayDone && (
                     <TouchableOpacity style={[styles.addButton, {marginTop: 25}]} onPress={this.onDonePressed}>
-                        <Text style={{color: 'white'}}>Done</Text>
+                        <Text style={{color: 'white'}}>Create Group</Text>
                     </TouchableOpacity>)}
                 </View>
             </View>)

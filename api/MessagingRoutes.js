@@ -180,24 +180,29 @@ router.get('/usergroups', AuthMiddleware, (req, res) => {
     })
 })
 
-router.post('/create', AuthMiddleware, (req, res) => { 
+router.post('/creategroup', AuthMiddleware, (req, res) => { 
     mongoose.connect(url, {useMongoClient: true})
     const db = mongoose.connection
 
     const User = mongoose.model('User', userSchema)
-    const Group = mongoose.model('Group', groupSchema); 
+    const Group = mongoose.model('Group', groupSchema)
 
-    let messageNumber = req.body.messageNumber; 
+    let phoneNumbers = req.body.phoneNumbers; 
 
     let token = req.get('cryptochat-token-x'); 
     jwt.verify(token, jwtSecret, function (err, decoded) { 
-        let phoneNum = decoded.phone; 
+        let phoneNum = decoded.phone
         if (!err) { 
             User.findOne({phone: phoneNum}, function (err, user) { 
                 if (!err && user !== null && user !== undefined) { 
-                    User.findOne({phone: messageNumber}, function (err, otherUser) { 
-                        if (!err && otherUser !== null && otherUser !== undefined) { 
-                            let id = phoneNum + messageNumber; 
+                    User.find({
+                        'phone' : { $in: phoneNumbers}
+                    }, function(err, otherUsers) { 
+                        if (!err && otherUsers !== null && otherUsers !== undefined) { 
+                            let id = phoneNum; 
+                            for (let i = 0; i < phoneNumbers.length; i++) { 
+                                id += i; 
+                            }
                             let _id = crypto.createHash('md5').update(id).digest('hex'); 
                             Group.findOne({id: _id}, function (err, group) { 
                                 if (!err) { 
@@ -205,52 +210,52 @@ router.post('/create', AuthMiddleware, (req, res) => {
                                         res.send(200, group); 
                                     }
                                     else { 
+
+                                        //create the group participants construct
+                                        let participants = []; 
+                                        participants.push({id: phoneNum}); 
+                                        for (let i = 0; i < phoneNumbers.length; i++) { 
+                                            participants.push({id: phoneNumbers[i]}); 
+                                        }
+
                                         const g = { 
                                             id: _id, 
                                             name: '', 
                                             slug: '', 
                                             type: 'private', 
-                                            participants: [
-                                                {
-                                                    id: phoneNum
-                                                }, 
-                                                { 
-                                                    id: messageNumber
-                                                }
-                                            ]
+                                            participants: participants
                                         }
+
                                         let newGroup = new Group(g); 
                                         newGroup.save(function(err, results) { 
                                             if (err) res.send({error: err}); 
                                         })
-                                        let groups = user.groups; 
-                                        groups.push({
+
+                                        let userGroups = user.groups; 
+                                        userGroups.push({
                                             id: _id
                                         })
-                                        let userUpdate = { 
-                                            groups
-                                        }
-                                        User.findOneAndUpdate({phone: phoneNum}, userUpdate, function (err, result) { 
+
+                                        User.findOneAndUpdate({phone: phoneNum}, { groups: userGroups }, function (err, result) { 
                                             if (err) res.send({error: err}); 
                                         })
 
-                                        let otherGroups = otherUser.groups; 
-                                        otherGroups.push({
-                                            id: _id
-                                        })
-                                        let otherUserUpdate = { 
-                                            groups: otherGroups
+                                        for (let i = 0; i < otherUsers.length; i++) { 
+                                            let otherGroups = otherUsers[i].groups; 
+                                            otherGroups.push({
+                                                id: _id
+                                            })
+
+                                            User.findOneAndUpdate({phone: phoneNumbers[i]}, { groups: otherGroups }, function (err, result) { 
+                                                if (err) res.send({err: err}); 
+                                            })
                                         }
 
-                                        User.findOneAndUpdate({phone: messageNumber}, otherUserUpdate, function (err, result) { 
-                                            if (err) res.send({err: err}); 
-                                        })
-
                                         res.send(200, {result: "success"}); 
+                            
                                     }
                                 }
                             })
-
                         }
                     })
                 }
