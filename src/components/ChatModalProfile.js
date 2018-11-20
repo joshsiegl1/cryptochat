@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
+import { Icon } from 'react-native-elements'; 
+
 import { View, Modal, TouchableOpacity, Text, Image, StyleSheet} from 'react-native'; 
 
 const propTypes = { 
@@ -24,7 +26,7 @@ class ChatModalProfile extends Component {
                 <View style={styles.modalContent}>
 
                 <TouchableOpacity style={styles.modalButton} onPress={this.props.onMessageUser}>
-                    <Image style={styles.modalImage} source={require("../../assets/block.png")}/>
+                    <Icon name="mail" size={15} color='#373F51' />
                     <Text style={styles.modalFont}>Send Message</Text>
                 </TouchableOpacity>
 
@@ -74,7 +76,8 @@ const styles = StyleSheet.create({
     }, 
     modalFont: { 
         color: '#373F51', 
-        lineHeight: 15
+        lineHeight: 15, 
+        paddingLeft: 10
     }, 
     modalButton: { 
         flexDirection: 'row', 
