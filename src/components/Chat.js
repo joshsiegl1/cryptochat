@@ -66,7 +66,16 @@ class Chat extends Component {
         
             componentDidUpdate() { 
         
-                const { navigation, GetChat, chat } = this.props;
+                const { navigation, GetChat, chat, 
+                    newUserGroup, ClearNewUserGroup } = this.props;
+
+                if (Object.keys(newUserGroup).length > 0) { 
+                    const id = newUserGroup.id; 
+                    if (id !== "" && id !== undefined) { 
+                        ClearNewUserGroup(); 
+                        navigation.navigate("Message", {id: id, group: id}); 
+                    }
+                }
         
                 const { crypto } = navigation.state.params; 
         
@@ -92,15 +101,21 @@ class Chat extends Component {
         }
     }
 
-    onMessageUser = () => { 
-        const { CreateMessageGroup } = this.props; 
+    onMessageUser = async () => { 
+        const { CreateMessageGroup, navigation, newUserGroup } = this.props; 
         
         let userID = this.state.profileModal.userID;
 
         if (userID !== null && userID !== undefined && userID !== "") {
             let numbers = []; 
             numbers.push(userID[0].Id);  
-            CreateMessageGroup(numbers); 
+            await CreateMessageGroup(numbers); 
+            this.setState({
+                profileModal: { 
+                    visible: false, 
+                    userID: null
+                }
+            })
         }
     }
 

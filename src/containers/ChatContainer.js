@@ -5,14 +5,15 @@ import { GetChat, PostChat, Upvote, Downvote, DeletePost } from '../actions/Chat
 
 import { FlagPost, BlockPost, BlockUser } from '../actions/UserActions'; 
 
-import { CreateMessageGroup } from '../actions/MessageActions'; 
+import { CreateMessageGroup, ClearNewUserGroup } from '../actions/MessageActions'; 
 
 import { getChats, 
     getPhone, 
     getLikedPosts, 
     getDislikedPosts, 
     getCurrentTime, 
-    getUser } from '../selectors/CommonSelectors'; 
+    getUser, 
+    getNewUserGroup } from '../selectors/CommonSelectors'; 
 
 import Chat from '../components/Chat'; 
 
@@ -25,7 +26,8 @@ const mapStateToProps = (state) => {
         user: getUser(state), 
         likedPosts: getLikedPosts(state), 
         dislikedPosts: getDislikedPosts(state), 
-        currentTime: getCurrentTime(state)
+        currentTime: getCurrentTime(state), 
+        newUserGroup: getNewUserGroup(state)
     }
 }
 
@@ -38,5 +40,6 @@ export default connect(mapStateToProps, {
     BlockPost, 
     BlockUser, 
     DeletePost, 
-    CreateMessageGroup
+    CreateMessageGroup, 
+    ClearNewUserGroup
 })(ChatContainer)

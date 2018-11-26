@@ -58,6 +58,13 @@ export const PostMessage = (id, userID, message) => async (dispatch) => {
     const { json } = await callApi(POST_MESSAGE, options); 
 }
 
+export const ClearNewUserGroup = () => async (dispatch) => { 
+    dispatch({
+        type: types.SWITCH_TO_NEW_USERGROUP, 
+        newUserGroup: {}
+    })
+}
+
 export const CreateMessageGroup = (messageNumbers) => async (dispatch) => { 
     let reqbody = { 
         phoneNumbers: messageNumbers
@@ -75,6 +82,16 @@ export const CreateMessageGroup = (messageNumbers) => async (dispatch) => {
     }
 
     const { json } = await callApi(CREATE_MESSAGE_GROUP, options); 
+
+    if (json.Error) { 
+        Alert.alert("Error", "Could not create a message at this time"); 
+    }
+    else if (json) { 
+        dispatch({
+            type: types.SWITCH_TO_NEW_USERGROUP, 
+            newUserGroup: json.userGroup
+        })
+    }
 }
 
 export const GetUserGroups = () => async (dispatch) => { 

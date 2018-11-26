@@ -1,6 +1,7 @@
 import * as types from '../constants/ActionTypes'; 
 
 const initialState = { 
+    newUserGroup: {}, 
     messages: {}, 
     time: new Date()
 }
@@ -15,6 +16,11 @@ const message = (state = initialState, action) => {
                 [action.id]: action.messages
             }, 
             time: action.time
+        }
+        case types.SWITCH_TO_NEW_USERGROUP: 
+        return { 
+            ...state, 
+            newUserGroup: action.newUserGroup
         }
 
         default: 

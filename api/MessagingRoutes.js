@@ -207,7 +207,11 @@ router.post('/creategroup', AuthMiddleware, (req, res) => {
                             Group.findOne({id: _id}, function (err, group) { 
                                 if (!err) { 
                                     if (group) { 
-                                        res.send(200, group); 
+                                        res.send(200, 
+                                            {
+                                                result: "success", 
+                                                userGroup: group
+                                            }); 
                                     }
                                     else { 
 
@@ -228,7 +232,7 @@ router.post('/creategroup', AuthMiddleware, (req, res) => {
 
                                         let newGroup = new Group(g); 
                                         newGroup.save(function(err, results) { 
-                                            if (err) res.send({error: err}); 
+                                            if (err) res.send({Error: err}); 
                                         })
 
                                         let userGroups = user.groups; 
@@ -237,7 +241,7 @@ router.post('/creategroup', AuthMiddleware, (req, res) => {
                                         })
 
                                         User.findOneAndUpdate({phone: phoneNum}, { groups: userGroups }, function (err, result) { 
-                                            if (err) res.send({error: err}); 
+                                            if (err) res.send({Error: err}); 
                                         })
 
                                         for (let i = 0; i < otherUsers.length; i++) { 
@@ -247,11 +251,15 @@ router.post('/creategroup', AuthMiddleware, (req, res) => {
                                             })
 
                                             User.findOneAndUpdate({phone: phoneNumbers[i]}, { groups: otherGroups }, function (err, result) { 
-                                                if (err) res.send({err: err}); 
+                                                if (err) res.send({Error: err}); 
                                             })
                                         }
 
-                                        res.send(200, {result: "success"}); 
+                                        res.send(200, 
+                                            {
+                                                result: "success", 
+                                                userGroup: group
+                                            }); 
                             
                                     }
                                 }
@@ -259,7 +267,13 @@ router.post('/creategroup', AuthMiddleware, (req, res) => {
                         }
                     })
                 }
+                else { 
+                    res.send({Error: "Something went wrong"}); 
+                }
             })
+        }
+        else { 
+            res.send({Error: "Couldn't verify jwt"}); 
         }
     })
 })
