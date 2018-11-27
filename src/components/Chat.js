@@ -69,6 +69,7 @@ class Chat extends Component {
                 const { navigation, GetChat, chat, 
                     newUserGroup, ClearNewUserGroup } = this.props;
 
+                //This is a problem, when creating a chat group it doesn't always return what it should
                 if (newUserGroup !== null) { 
                     if (Object.keys(newUserGroup).length > 0) { 
                         if (newUserGroup.id !== null) { 

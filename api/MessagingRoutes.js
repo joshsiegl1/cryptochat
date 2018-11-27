@@ -258,7 +258,7 @@ router.post('/creategroup', AuthMiddleware, (req, res) => {
                                         res.send(200, 
                                             {
                                                 result: "success", 
-                                                userGroup: group
+                                                userGroup: newGroup
                                             }); 
                             
                                     }
