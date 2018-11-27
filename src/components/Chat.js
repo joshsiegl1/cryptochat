@@ -69,11 +69,15 @@ class Chat extends Component {
                 const { navigation, GetChat, chat, 
                     newUserGroup, ClearNewUserGroup } = this.props;
 
-                if (Object.keys(newUserGroup).length > 0) { 
-                    const id = newUserGroup.id; 
-                    if (id !== "" && id !== undefined) { 
-                        ClearNewUserGroup(); 
-                        navigation.navigate("Message", {id: id, group: id}); 
+                if (newUserGroup !== null) { 
+                    if (Object.keys(newUserGroup).length > 0) { 
+                        if (newUserGroup.id !== null) { 
+                        const id = newUserGroup.id; 
+                            if (id !== "" && id !== undefined) { 
+                                ClearNewUserGroup(); 
+                                navigation.navigate("Message", {id: id, group: id}); 
+                            }
+                        }
                     }
                 }
         

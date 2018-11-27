@@ -48,7 +48,8 @@ class ChatItem extends PureComponent {
     _onProfilePressed = () => { 
         const {onProfilePressed, item} = this.props; 
 
-        onProfilePressed(item.userID); 
+        if (item.userID !== null) 
+            onProfilePressed(item.userID); 
     }
 
     render() { 
