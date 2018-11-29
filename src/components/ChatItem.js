@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
         maxWidth: '85%'
     }, 
     user: { 
-        color: 'black'
+        color: 'black', 
+        fontFamily: 'open-sans-bold'
     }, 
     date: { 
         color: 'lightgray'
@@ -172,7 +173,8 @@ const styles = StyleSheet.create({
     body: { 
         maxWidth: '100%', 
         paddingTop: 10, 
-        paddingBottom: 10
+        paddingBottom: 10, 
+        fontFamily: 'open-sans-regular'
     }, 
     bottom: { 
         flex: 1, 
@@ -184,6 +186,7 @@ const styles = StyleSheet.create({
         display: 'flex', 
         flexDirection: 'row', 
         alignItems: 'center', 
+        fontFamily: 'open-sans-regular'
     }, 
     dots: { 
         paddingLeft: 15, 

@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     }, 
     cryptoButtonText: { 
         paddingLeft: 10, 
-        fontFamily: 'arial', 
+        fontFamily: 'open-sans-semi-bold', 
         lineHeight: 24
     }, 
     touchableOpacity: { 

@@ -229,7 +229,10 @@ export default class App extends React.Component {
         require("./assets/camera_icon.png")
       ]), 
       Font.loadAsync({
-        'arial' : require('./assets/arial.ttf')
+        'arial' : require('./assets/arial.ttf'), 
+        'open-sans-regular' : require("./assets/fonts/OpenSans-Regular.ttf"), 
+        'open-sans-bold' : require("./assets/fonts/OpenSans-Bold.ttf"), 
+        'open-sans-semi-bold' : require("./assets/fonts/OpenSans-SemiBold.ttf")
       })
     ]); 
   }
