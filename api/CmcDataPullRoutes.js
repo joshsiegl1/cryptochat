@@ -11,7 +11,7 @@ const cmc_key = require("./Config").CMC_KEY;
 
 var categorySchema = require('./models/category_model.js'); 
 
-const cmc_url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=1500"; 
+const cmc_url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=2000"; 
 
 router.get('/', async (req, res) => { 
     
