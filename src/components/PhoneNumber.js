@@ -92,9 +92,9 @@ class PhoneNumber extends Component {
                 >
                 <View />
                 </CountryPicker>
-                <CheckBox title="Yes, I'd like to help make Cryptochat better. Allow the creator to text me asking for input and feedback."
+                {/* <CheckBox title="Yes, I'd like to help make Cryptochat better. Allow the creator to text me asking for input and feedback."
                           checked={this.state.help} 
-                          onPress={() => this.setState({help: !this.state.help})}/>
+                          onPress={() => this.setState({help: !this.state.help})}/> */}
                 <Text style={{padding: 10}}>Please read through the <Text style={{color: 'blue'}} onPress={this.onTermsPressed}>Terms of Service</Text></Text>
                 <CheckBox title="I agree to the Terms of Service as outlined in the EULA"
                           checked={this.state.eula}

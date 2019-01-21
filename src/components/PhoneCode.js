@@ -13,7 +13,7 @@ class PhoneCode extends Component {
         super(props); 
 
         this.state = { 
-            code: ''
+            codeDigits: []
         }
     }
 
@@ -24,11 +24,25 @@ class PhoneCode extends Component {
         }
     }
 
-    _onDonePressed = () => { 
-        let code = this.state.code; 
-        if (code !== '') { 
-            const {SubmitCode} = this.props; 
+    getCode = () => { 
+        const { codeDigits } = this.state; 
+        let ret = "invalid"; 
+        if (codeDigits.length >= 5)
+        { 
+            ret = ""; 
+            for (let i = 0; i < codeDigits.length; i++) { 
+                ret += codeDigits[i].toString(); 
+            }
+            return ret; 
+        }
+        else return ret; 
+    }
 
+    _onDonePressed = () => { 
+        const { SubmitCode } = this.props; 
+        let code = this.getCode(); 
+        if (code !== "invalid")
+        { 
             SubmitCode(code); 
         }
         else { 
@@ -36,26 +50,58 @@ class PhoneCode extends Component {
         }
     }
 
+    renderCodeDigits = () => { 
+        let items = []; 
+        for (let i = 0; i < 5; i++) { 
+            let itemName = 'TextInput' + i.toString(); 
+            let nextItem = (i === 4) ? 'TextInput0' : 'TextInput' + (i + 1).toString(); 
+            items.push(<View style={{
+                borderLeftWidth: 1, 
+                borderRightWidth: 1, 
+                borderBottomWidth: 1, 
+                borderTopWidth: 1, 
+                borderColor: 'lightgray', 
+                margin: 5
+            }}>
+                <TextInput
+                ref={input => this[itemName] = input}
+                keyboardType='numeric' 
+                maxLength={1}
+                onChangeText={(text) => { 
+                    this[nextItem].focus(); 
+
+                    let { codeDigits } = this.state; 
+                    codeDigits[i] = text; 
+                    this.setState({codeDigits}); 
+                }} 
+                style={{
+                    textAlign: 'center', 
+                    height: 50, 
+                    width: 50, 
+                    backgroundColor: '#ffffff', 
+                    padding: 10
+                }}/>
+            </View>)
+        }
+        return (items)
+    }
+
     render() { 
+
+        let codeDigits = this.renderCodeDigits(); 
+
         return (<View style={styles.main}> 
                 <View style={styles.textContainer}>
-                <Text style={styles.headerText}>Enter Your Code</Text>
+                <Text style={styles.headerText}>Phone Number Verification</Text>
 
-                <TextInput 
-                style={{
-                    width: 200, 
-                    borderColor: 'black', 
-                    borderWidth: 1, 
-                    color: 'black', 
-                    borderRadius:20,
-                    paddingTop: 5, 
-                    paddingBottom: 5, 
-                    textAlign:'center'}}
-                value={this.state.code}
-                onChangeText={(text) => this.setState({code: text})}
-                keyboardType='numeric' 
-                maxLength={5}
-                autoFocus={true}/>
+                <View style={{
+                    display: 'flex', 
+                    flexDirection: 'row', 
+                }}> 
+                    {codeDigits}
+                </View>
+
+                <Text style={{color: 'lightgray', textAlign: 'center', paddingTop: 20}}>Please enter the verification code you should have receieved via SMS, if you did not receive this code,</Text>
 
                 <View style={{paddingTop: 50}}>
                 <TouchableOpacity style={styles.doneButton} onPress={this._onDonePressed}>
