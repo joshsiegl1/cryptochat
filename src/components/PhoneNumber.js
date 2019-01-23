@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import {View, Text, StyleSheet, TouchableOpacity, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native'; 
+import {View, Text, StyleSheet, Image, TouchableOpacity, Alert, TouchableWithoutFeedback, Keyboard} from 'react-native'; 
 
 import { CheckBox } from 'react-native-elements'; 
 
 import PhoneInput from 'react-native-phone-input'; 
 import CountryPicker from 'react-native-country-picker-modal'; 
+import { LinearGradient } from 'expo'; 
 
 const propTypes = { 
     SendCode: PropTypes.func
@@ -57,6 +58,11 @@ class PhoneNumber extends Component {
 
     render() { 
         return (<View style={styles.main}>
+        <LinearGradient 
+        colors={['#FFC800', '#EDCD61']}
+        style={styles.top}>
+            <Image style={{width: 100, height: 100, marginTop: 120}} source={require('../../assets/verify_message.png')} />
+        </LinearGradient>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
             <View style={styles.textContainer}>
                 <Text style={styles.headerText}>Enter Your Phone Number</Text>
@@ -117,19 +123,30 @@ const styles = StyleSheet.create({
         flex: 1, 
         backgroundColor: 'white'
     }, 
+    top: { 
+        margin: 0, 
+        padding: 0, 
+        width: '100%', 
+        height: 150, 
+        display: 'flex', 
+        justifyContent: 'center', 
+        flexDirection: 'column',
+        alignItems: 'center', 
+        marginBottom: 25
+    }, 
     textContainer: { 
         margin: 32,
         justifyContent: 'center',
         alignItems: 'center',
     }, 
     headerText: { 
-        fontSize: 22, 
-        color: 'black',
+        fontSize: 20, 
+        color: 'gray',
         paddingBottom: 20 
     }, 
     subText: { 
-        fontSize: 16, 
-        color: 'black', 
+        fontSize: 14, 
+        color: 'lightgray', 
         paddingBottom: 40
     }, 
     doneButton: { 
