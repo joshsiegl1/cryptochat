@@ -35,8 +35,14 @@ class NewMessage extends Component {
         }
     }
 
+    ///TODO
+    //make this async, wait for the group to be created, then navigate to newly created group
     onDonePressed = () => { 
-        
+        const { CreateMessageGroup, navigation } = this.props; 
+
+        CreateMessageGroup(this.state.numbers); 
+
+        navigation.navigate('List'); 
     }
 
     _removeItem = (item) => { 
@@ -68,11 +74,12 @@ class NewMessage extends Component {
 
         let displayDone = this.state.numbers.length > 0 ? true : false; 
 
-        return (<View style={styles.main}>
+        return (<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <View style={styles.main}>
                 <FlatList data={this.state.numbers}
                           keyExtractor={this._keyExtractor}
                           renderItem={this._renderItem}
-                          style={{width: '100%', height: 200, borderBottomColor: 'lightgray', borderBottomWidth: 1}}
+                          style={{width: '100%', maxHeight: 200, borderBottomColor: 'lightgray', borderBottomWidth: 1}}
                 />
                 <View style={styles.inputView}>
                     <Text style={styles.usernameText}>Phone Number</Text>
@@ -97,7 +104,8 @@ class NewMessage extends Component {
                         <Text style={{color: 'white'}}>Create Group</Text>
                     </TouchableOpacity>)}
                 </View>
-            </View>)
+            </View>
+            </TouchableWithoutFeedback>)
     }
 }
 

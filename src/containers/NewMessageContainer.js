@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import NewMessage from '../components/NewMessage'; 
 
+import { CreateMessageGroup } from '../actions/MessageActions.js'; 
+
 const NewMessageContainer = props => <NewMessage {...props} />
 
 const mapStateToProps = (state) => { 
@@ -10,5 +12,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { 
-
+    CreateMessageGroup
 })(NewMessageContainer)
