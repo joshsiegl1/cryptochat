@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types'; 
 import React, {Component} from 'react'; 
 
-import {StyleSheet, View, TouchableOpacity, TextInput, Text, Alert} from 'react-native'; 
+import { LinearGradient } from 'expo'; 
+
+import {StyleSheet, View, Image, TouchableOpacity, 
+    TouchableWithoutFeedback, Keyboard, TextInput, Text, Alert} from 'react-native'; 
 
 const propTypes = { 
     SubmitCode: PropTypes.func, 
@@ -91,25 +94,32 @@ class PhoneCode extends Component {
         let codeDigits = this.renderCodeDigits(); 
 
         return (<View style={styles.main}> 
-                <View style={styles.textContainer}>
-                <Text style={styles.headerText}>Phone Number Verification</Text>
+                <LinearGradient 
+                colors={['#FFC800', '#EDCD61']}
+                style={styles.top}>
+                    <Image style={{width: 100, height: 100, marginTop: 120}} source={require('../../assets/verify_message.png')} />
+                </LinearGradient>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                    <View style={styles.textContainer}>
+                    <Text style={styles.headerText}>Phone Number Verification</Text>
 
-                <View style={{
-                    display: 'flex', 
-                    flexDirection: 'row', 
-                }}> 
-                    {codeDigits}
-                </View>
+                    <View style={{
+                        display: 'flex', 
+                        flexDirection: 'row', 
+                    }}> 
+                        {codeDigits}
+                    </View>
 
-                <Text style={{color: 'lightgray', textAlign: 'center', paddingTop: 20}}>Please enter the verification code you should have receieved via SMS, if you did not receive this code,</Text>
+                    <Text style={{color: 'lightgray', textAlign: 'center', paddingTop: 20}}>Please enter the verification code you should have receieved via SMS, if you did not receive this code,</Text>
 
-                <View style={{paddingTop: 50}}>
-                <TouchableOpacity style={styles.doneButton} onPress={this._onDonePressed}>
-                    <Text style={{color: 'white', fontSize: 18}}>Done</Text>
-                </TouchableOpacity>
-                </View>
+                    <View style={{paddingTop: 50}}>
+                    <TouchableOpacity style={styles.doneButton} onPress={this._onDonePressed}>
+                        <Text style={{color: 'white', fontSize: 18}}>Done</Text>
+                    </TouchableOpacity>
+                    </View>
 
-                </View>
+                    </View>
+                </TouchableWithoutFeedback>
                 </View>)
     }
 }
@@ -119,6 +129,17 @@ const styles = StyleSheet.create({
         flex: 1, 
         backgroundColor: 'white'
     }, 
+    top: { 
+        margin: 0, 
+        padding: 0, 
+        width: '100%', 
+        height: 150, 
+        display: 'flex', 
+        justifyContent: 'center', 
+        flexDirection: 'column',
+        alignItems: 'center', 
+        marginBottom: 25
+    }, 
     textContainer: { 
         margin: 32, 
         justifyContent: 'center', 
@@ -126,7 +147,7 @@ const styles = StyleSheet.create({
     }, 
     headerText: { 
         fontSize: 22, 
-        color: 'black',
+        color: 'gray',
         paddingBottom: 20 
     }, 
     doneButton: { 
